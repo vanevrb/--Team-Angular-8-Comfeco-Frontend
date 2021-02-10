@@ -1,6 +1,40 @@
-# TeamAngularOchoComfeco
+# Team Angular 8
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 11.1.2.
+## Integrantes
+
+- Vanessa (@lachica001) - Colombia
+- Renato (@Capixinho) - Perú
+- Fortu (@forttu) - Bolivia
+- Pedro (@PeterMun) - Ecuador
+- Gustavo (@gusram01) - México
+
+### **Etapa 1 (Construyendo el login:)**
+
+**Tiempo de ejecución: 8 días**
+
+> **Construir un login en el cual se pueda registrar un usuario o pueda iniciar sesión en caso de que esté registrado.**
+
+> **Hacer validaciones en cada uno de los inputs (El usuario debería ver un mensaje que le indique en que se está equivocando)**
+
+> **El registro debe contar con: Nick, Correo, password y confirmar contraseña**
+
+> **El inicio de sesión se hará con el Correo y la contraseña**
+
+> **La página del login debe tener un header sencillo sin ningún botón**
+
+> **La página del login debe tener un footer sencillo**
+
+> **El login debe tener en alguna parte los términos y condiciones y Política de privacidad y protección de datos (Estos se deben abrir en una nueva ventana).**
+
+> **El login debe tener la opción de recuperar la contraseña**
+
+> **En la pantalla de recuperar contraseña el header (nav) debe de tener un botón de iniciar sesión.**
+
+### **Pasos extra por penalidad de nivel:**
+
+> **El login tendrá un check de si el usuario quiere mantenerse conectado.**
+
+> **Las personas podrán registrarse con Facebook o con Gmail, así como poder ingresar.**
 
 ## Development server
 
