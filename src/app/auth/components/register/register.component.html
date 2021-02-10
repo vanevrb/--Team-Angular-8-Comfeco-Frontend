@@ -1,0 +1,18 @@
+<form [formGroup]="register" (ngSubmit)="onSubmit()" class="form">
+  <div class="form__item">
+    <label>Nickname</label>
+    <input type="text" formControlName="nick" />
+    <span class="input__error">Error</span>
+  </div>
+  <div class="form__item">
+    <label>Email</label>
+    <input type="email" formControlName="email" />
+    <span class="input__error">Error</span>
+  </div>
+  <div class="form__item">
+    <label>Password</label>
+    <input type="password" formControlName="password" />
+    <span class="input__error">Error</span>
+  </div>
+  <button class="button" type="submit">Signup</button>
+</form>
