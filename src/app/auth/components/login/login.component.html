@@ -1,14 +1,14 @@
 <form [formGroup]="login" (ngSubmit)="onSubmit()" class="form">
   <div class="form__item">
     <label>Email</label>
-    <input type="email" formControlName="email" />
+    <input type="email" formControlName="usuCorreo" />
     <span class="input__error">Error</span>
   </div>
   <div class="form__item">
     <label>Password</label>
-    <input type="password" formControlName="password" />
+    <input type="password" formControlName="usuClave" />
     <span class="input__error">Error</span>
   </div>
-  <button class="button" type="submit">Login</button>
+  <button class="button" type="submit" [disabled]="isLoading">Login</button>
   <a class="link" routerLink="/auth/forgot">Forgot password</a>
 </form>

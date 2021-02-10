@@ -1,18 +1,18 @@
 <form [formGroup]="register" (ngSubmit)="onSubmit()" class="form">
   <div class="form__item">
     <label>Nickname</label>
-    <input type="text" formControlName="nick" />
+    <input type="text" formControlName="usuNickname" />
     <span class="input__error">Error</span>
   </div>
   <div class="form__item">
     <label>Email</label>
-    <input type="email" formControlName="email" />
+    <input type="email" formControlName="usuCorreo" />
     <span class="input__error">Error</span>
   </div>
   <div class="form__item">
     <label>Password</label>
-    <input type="password" formControlName="password" />
+    <input type="password" formControlName="usuClave" />
     <span class="input__error">Error</span>
   </div>
-  <button class="button" type="submit">Signup</button>
+  <button class="button" type="submit" [disabled]="isLoading">Signup</button>
 </form>
