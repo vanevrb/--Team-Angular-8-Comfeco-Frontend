@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { emailPattern } from '../../helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
@@ -11,6 +11,8 @@ import Swal from 'sweetalert2';
 export class RegisterComponent implements OnInit {
   register: FormGroup;
   isLoading = false;
+  // needShowModal: boolean;
+  @Output() showModal = new EventEmitter<boolean>();
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.register = this.createForm();
@@ -18,11 +20,16 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(): void {}
 
+  onClick() {
+    return this.showModal.emit(true);
+  }
+
   createForm() {
     return this.fb.group({
       usuNickname: ['', [Validators.required, Validators.minLength(3)]],
       usuCorreo: ['', [Validators.required, Validators.pattern(emailPattern)]],
       usuClave: ['', [Validators.required, Validators.minLength(6)]],
+      usuClave2: ['', [Validators.required, Validators.minLength(6)]],
     });
   }
 

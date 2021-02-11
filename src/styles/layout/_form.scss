@@ -1,0 +1,29 @@
+.form-box {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  margin: 0 auto;
+  padding: 0.75em 2em;
+  width: 100%;
+  min-height: 270px;
+  background-color: $color-white;
+  box-shadow: 0px 29px 147.5px 102.5px rgba(0, 0, 0, 0.05),
+    0px 29px 95px 0px rgba(0, 0, 0, 0.16);
+}
+.form {
+  width: 100%;
+}
+
+.form-group:not(:last-child) {
+  margin-bottom: 8px;
+}
+
+.form-control {
+  display: block;
+  width: 100%;
+  padding: 8px 12px;
+  color: #555555;
+  background-color: $color-white;
+  border: 1px solid currentColor;
+  border-radius: $border-radius-3;
+}

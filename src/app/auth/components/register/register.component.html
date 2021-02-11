@@ -1,18 +1,73 @@
-<form [formGroup]="register" (ngSubmit)="onSubmit()" class="form">
-  <div class="form__item">
-    <label>Nickname</label>
-    <input type="text" formControlName="usuNickname" />
-    <span class="input__error">Error</span>
-  </div>
-  <div class="form__item">
-    <label>Email</label>
-    <input type="email" formControlName="usuCorreo" />
-    <span class="input__error">Error</span>
-  </div>
-  <div class="form__item">
-    <label>Password</label>
-    <input type="password" formControlName="usuClave" />
-    <span class="input__error">Error</span>
-  </div>
-  <button class="button" type="submit" [disabled]="isLoading">Signup</button>
-</form>
+<section class="content">
+  <app-wrapper-form>
+    <div class="tab-pane fade in active">
+      <form [formGroup]="register" (ngSubmit)="onSubmit()" class="form">
+        <div class="form-group">
+          <label class="form-label">Nickname</label>
+          <input
+            class="form-control"
+            type="text"
+            formControlName="usuNickname"
+          />
+          <span class="input__error">Error</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email</label>
+          <input
+            class="form-control"
+            type="email"
+            formControlName="usuCorreo"
+          />
+          <span class="input__error">Error</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Password</label>
+          <input
+            class="form-control"
+            type="password"
+            formControlName="usuClave"
+          />
+          <span class="input__error">Error</span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Confirm Password</label>
+          <input
+            class="form-control"
+            type="password2"
+            formControlName="usuClave2"
+          />
+          <span class="input__error">Error</span>
+        </div>
+        <div class="form-group">
+          <div class="utility">
+            <div class="animated-checkbox">
+              <label class="semibold-text">
+                <input type="checkbox" name="tycch" id="tycch" required />
+                <span class="label-text">Acepto </span>
+              </label>
+              <a class="link bold" data-toggle="modal" data-target="#tyc">
+                Términos y condiciones
+              </a>
+            </div>
+          </div>
+        </div>
+        <div class="form-group btn-container">
+          <button
+            class="button button-primary"
+            type="submit"
+            [disabled]="isLoading"
+          >
+            Signup
+          </button>
+        </div>
+        <div class="form-group register-terms">
+          Al registrarse acepta la
+          <!--  NEEDS SANITIZER  -->
+          <button class="link bold" (click)="onClick()">
+            Política de privacidad y protección de datos.
+          </button>
+        </div>
+      </form>
+    </div>
+  </app-wrapper-form>
+</section>

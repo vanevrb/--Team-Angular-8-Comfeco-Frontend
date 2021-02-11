@@ -1,16 +1,15 @@
 header {
-    height: 30px;
-    background-color: white;
-    text-align: left;
+  height: 30px;
+  background-color: white;
+  text-align: left;
 }
 header.container {
-    background-color: #8a178c;
-    height: 59px;
-    z-index: 30;
+  background-color: #8a178c;
+  height: 59px;
+  z-index: 30;
 }
 header img {
-    width: 200px;
-    text-align: left !important;
-    margin: 20px;
+  width: 200px;
+  text-align: left;
+  margin: 20px;
 }
-

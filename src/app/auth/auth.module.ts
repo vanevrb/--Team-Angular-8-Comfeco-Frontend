@@ -9,9 +9,19 @@ import { RegisterComponent } from './components/register/register.component';
 import { PasswordComponent } from './components/password/password.component';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ModalTermsComponent } from './components/modal-terms/modal-terms.component';
+import { WrapperFormComponent } from './components/wrapper-form/wrapper-form.component';
+import { FormNavigationComponent } from './components/form-navigation/form-navigation.component';
 
 @NgModule({
-  declarations: [LoginComponent, RegisterComponent, PasswordComponent, LayoutComponent, ModalTermsComponent],
+  declarations: [
+    LoginComponent,
+    RegisterComponent,
+    PasswordComponent,
+    LayoutComponent,
+    ModalTermsComponent,
+    WrapperFormComponent,
+    FormNavigationComponent,
+  ],
   exports: [LoginComponent, RegisterComponent, PasswordComponent],
   imports: [CommonModule, AuthRoutingModule, CoreModule],
 })

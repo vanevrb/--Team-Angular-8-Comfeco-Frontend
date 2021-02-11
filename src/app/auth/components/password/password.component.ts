@@ -18,7 +18,7 @@ export class PasswordComponent implements OnInit {
 
   createForm() {
     return this.fb.group({
-      email: ['', [Validators.required, Validators.pattern(emailPattern)]],
+      usuCorreo: ['', [Validators.required, Validators.pattern(emailPattern)]],
     });
   }
 

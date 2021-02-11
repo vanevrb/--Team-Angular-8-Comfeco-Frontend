@@ -1,0 +1,16 @@
+@mixin link($color: "var(--bg-color3)") {
+  display: inline;
+  color: #{$color};
+  text-decoration: none;
+  text-align: center;
+  background: transparent;
+  border: none;
+
+  cursor: pointer;
+  transition: color 150ms ease-in-out;
+}
+@mixin link-hover($color: "var(--bg-color1)") {
+  color: #{$color};
+  outline: none;
+  text-decoration: none;
+}
