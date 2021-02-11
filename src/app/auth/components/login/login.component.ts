@@ -34,11 +34,11 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
     this.initSwalInfo();
     this.authService.login(this.login.value).subscribe((data) => {
+      this.isLoading = false;
       if (data.error) {
         return this.failSwal(data.mensaje, data.codigo);
       }
       this.successSwal('Login de usuario exitoso');
-      this.isLoading = false;
       this.login.reset();
     });
   }
