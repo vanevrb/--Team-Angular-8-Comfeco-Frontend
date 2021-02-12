@@ -12,6 +12,7 @@
   --bg-color2: #{$color-p-lighten};
   --bg-color3: #{$color-secondary};
   --bg-color4: #{$color-p-darken};
+  --bg-color5: #{$color-bg};
 }
 *,
 *:before,
@@ -37,6 +38,7 @@ body {
   line-height: 1.428571429;
   color: $color-bg;
   background-color: $color-font;
+  margin: 0px;
 }
 
 .fade.in {

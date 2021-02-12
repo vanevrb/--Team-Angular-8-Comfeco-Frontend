@@ -12,6 +12,10 @@ import { ModalTermsComponent } from './components/modal-terms/modal-terms.compon
 import { WrapperFormComponent } from './components/wrapper-form/wrapper-form.component';
 import { FormNavigationComponent } from './components/form-navigation/form-navigation.component';
 
+
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { faSquare, faCheckSquare,} from '@fortawesome/free-solid-svg-icons';
+
 @NgModule({
   declarations: [
     LoginComponent,
@@ -21,6 +25,7 @@ import { FormNavigationComponent } from './components/form-navigation/form-navig
     ModalTermsComponent,
     WrapperFormComponent,
     FormNavigationComponent,
+    
   ],
   exports: [LoginComponent, RegisterComponent, PasswordComponent],
   imports: [CommonModule, AuthRoutingModule, CoreModule],
