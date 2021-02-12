@@ -8,17 +8,11 @@
   // -webkit-overflow-scrolling: touch;
   background: #999;
   overflow: hidden;
-  -webkit-animation-direction: normal;
   animation-direction: normal;
-  -webkit-animation-duration: 250ms;
   animation-duration: 250ms;
-  -webkit-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
-  -webkit-animation-iteration-count: 1;
   animation-iteration-count: 1;
-  -webkit-animation-name: showModal;
   animation-name: showModal;
-  -webkit-animation-timing-function: ease-in;
   animation-timing-function: ease-in;
 }
 .modal.hidden {
@@ -36,20 +30,11 @@
   box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
   overflow: hidden;
   transform: translate3d(0, -3000px, 0) scaleY(3);
-  -webkit-animation-direction: normal;
   animation-direction: normal;
-  -webkit-animation-duration: 350ms;
-  animation-duration: 350ms;
-  -webkit-animation-delay: 300ms;
-  animation-delay: 300ms;
-  -webkit-animation-fill-mode: forwards;
-  animation-fill-mode: forwards;
-  -webkit-animation-iteration-count: 1;
-  animation-iteration-count: 1;
-  -webkit-animation-name: modalContentFade;
+  animation-duration: 500ms;
+  animation-delay: 350ms;
   animation-name: modalContentFade;
-  -webkit-animation-timing-function: ease-in;
-  animation-timing-function: ease-in;
+  animation-fill-mode: both;
 }
 
 .modal__header {
@@ -95,15 +80,6 @@
   overflow: scroll;
 }
 
-@-webkit-keyframes showModal {
-  0% {
-    transform: scale(0);
-  }
-  100% {
-    transform: scale(1);
-  }
-}
-
 @keyframes showModal {
   0% {
     transform: scale(0);
@@ -113,46 +89,12 @@
   }
 }
 
-@-webkit-keyframes modalContentFade {
-  from,
-  60%,
-  75%,
-  90%,
-  to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
-  }
-
-  0% {
-    opacity: 0;
-    transform: translate3d(0, -3000px, 0) scaleY(3);
-  }
-
-  60% {
-    opacity: 1;
-    transform: translate3d(0, 25px, 0) scaleY(0.9);
-  }
-
-  75% {
-    transform: translate3d(0, -10px, 0) scaleY(0.95);
-  }
-
-  90% {
-    transform: translate3d(0, 5px, 0) scaleY(0.985);
-  }
-
-  to {
-    transform: translate3d(0, 0, 0);
-  }
-}
-
 @keyframes modalContentFade {
   from,
   60%,
   75%,
   90%,
   to {
-    -webkit-animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
     animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
   }
 
@@ -180,6 +122,5 @@
 }
 
 .bounceInDown {
-  -webkit-animation-name: bounceInDown;
   animation-name: bounceInDown;
 }

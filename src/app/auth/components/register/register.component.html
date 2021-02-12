@@ -41,10 +41,21 @@
         <div class="form-group">
           <div class="utility">
             <div class="animated-checkbox">
-              <label class="semibold-text">
-                <!-- <fa-icon [icon]="faUser"></fa-icon>                 -->
-                <input type="checkbox" name="tycch"  id="tycch" required />
-                <span class="label-text">Acepto</span>
+              <fa-icon
+                class="fa-icon"
+                [class.checked]="isChecked"
+                [icon]="!isChecked ? iconCheck : iconUncheck"
+                (click)="onChecked()"
+              ></fa-icon>
+              <input
+                type="checkbox"
+                name="accept-terms"
+                id="accept-terms"
+                (input)="onChecked()"
+                required
+              />
+              <label class="label-text semibold-text" for="accept-terms">
+                Acepto
               </label>
               <button class="link bold" (click)="onClick()">
                 Términos y condiciones

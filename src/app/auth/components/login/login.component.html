@@ -55,14 +55,20 @@
         <div class="form-group">
           <div class="utility">
             <div class="animated-checkbox">
-              <label class="semibold-text">
-                <input
-                  type="checkbox"
-                  name="recordar"
-                  id="recordar"
-                  value="recordar"
-                />
-                <span class="">Recordar mis datos </span>
+              <fa-icon
+                class="fa-icon"
+                [class.checked]="isChecked"
+                [icon]="!isChecked ? iconCheck : iconUncheck"
+                (click)="onChecked()"
+              ></fa-icon>
+              <input
+                type="checkbox"
+                name="recordar"
+                id="recordar"
+                (input)="onChecked()"
+              />
+              <label class="label-text semibold-text" for="recordar">
+                Recordar mis datos
               </label>
             </div>
           </div>

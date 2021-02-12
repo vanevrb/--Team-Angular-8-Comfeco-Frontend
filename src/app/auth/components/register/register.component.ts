@@ -2,9 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
+
 import { emailPattern } from '../../helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
 import { ModalService } from '../../../core/services/modal.service';
+
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -13,6 +17,9 @@ import { ModalService } from '../../../core/services/modal.service';
 export class RegisterComponent implements OnInit {
   register: FormGroup;
   isLoading = false;
+  isChecked = false;
+  iconCheck = faSquare;
+  iconUncheck = faCheckSquare;
 
   constructor(
     private fb: FormBuilder,
@@ -23,6 +30,10 @@ export class RegisterComponent implements OnInit {
   }
 
   ngOnInit(): void {}
+
+  onChecked() {
+    this.isChecked = !this.isChecked;
+  }
 
   onClick() {
     this.modalService.openModal();

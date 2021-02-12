@@ -1,8 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
+import Swal from 'sweetalert2';
+import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
+import { faSquare } from '@fortawesome/free-regular-svg-icons';
+
 import { emailPattern } from '../../helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
-import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-login',
@@ -12,12 +16,19 @@ import Swal from 'sweetalert2';
 export class LoginComponent implements OnInit {
   login: FormGroup;
   isLoading = false;
+  isChecked = false;
+  iconCheck = faSquare;
+  iconUncheck = faCheckSquare;
 
   constructor(private fb: FormBuilder, private authService: AuthService) {
     this.login = this.createForm();
   }
 
   ngOnInit(): void {}
+
+  onChecked() {
+    this.isChecked = !this.isChecked;
+  }
 
   createForm() {
     return this.fb.group({

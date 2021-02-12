@@ -21,8 +21,15 @@ header {
       margin: 0 5px;
       font-size: 20px;
       cursor: pointer;
-      color: #D5C5C5;
+      color: #d5c5c5;
       display: inline-block;
+      background-color: $color-primary;
+      width: 31px;
+      height: 30px;
+      border-radius: 15px;
+      svg {
+        color: white;
+      }
     }
   }
 
@@ -37,6 +44,7 @@ header {
 
     nav {
       line-height: 31px;
+      margin-top: -20px;
     }
 
     ul {
