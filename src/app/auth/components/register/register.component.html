@@ -45,15 +45,15 @@
                 <input type="checkbox" name="tycch" id="tycch" required />
                 <span class="label-text">Acepto </span>
               </label>
-              <a class="link bold" data-toggle="modal" data-target="#tyc">
+              <button class="link bold" (click)="onClick()">
                 Términos y condiciones
-              </a>
+              </button>
             </div>
           </div>
         </div>
         <div class="form-group btn-container">
           <button
-            class="button button-primary"
+            class="button button-primary button-block"
             type="submit"
             [disabled]="isLoading"
           >
@@ -63,7 +63,7 @@
         <div class="form-group register-terms">
           Al registrarse acepta la
           <!--  NEEDS SANITIZER  -->
-          <button class="link bold" (click)="onClick()">
+          <button class="link bold">
             Política de privacidad y protección de datos.
           </button>
         </div>

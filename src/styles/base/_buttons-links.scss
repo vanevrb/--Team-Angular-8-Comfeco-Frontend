@@ -1,11 +1,8 @@
 %btn {
-  height: 100%;
-  width: 100%;
-  padding: 1em 1.5em;
+  padding: 1.1em 1.5em;
   color: $color-white;
   font-size: 0.9em;
   font-weight: 600;
-  line-height: 1.428571429;
   letter-spacing: 1px;
   text-align: center;
   text-transform: uppercase;
@@ -28,6 +25,15 @@
 
   &.button-primary {
     background: $color-p-lighten;
+  }
+  &.button-secondary {
+    background: $color-p-darken;
+  }
+  &.button-accent {
+    background: $color-secondary;
+  }
+  &.button-block {
+    width: 100%;
   }
 }
 .button:hover,

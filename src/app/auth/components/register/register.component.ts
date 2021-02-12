@@ -1,8 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import Swal from 'sweetalert2';
 import { emailPattern } from '../../helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
-import Swal from 'sweetalert2';
+import { ModalService } from '../../../core/services/modal.service';
 @Component({
   selector: 'app-register',
   templateUrl: './register.component.html',
@@ -11,17 +12,19 @@ import Swal from 'sweetalert2';
 export class RegisterComponent implements OnInit {
   register: FormGroup;
   isLoading = false;
-  // needShowModal: boolean;
-  @Output() showModal = new EventEmitter<boolean>();
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private modalService: ModalService
+  ) {
     this.register = this.createForm();
   }
 
   ngOnInit(): void {}
 
   onClick() {
-    return this.showModal.emit(true);
+    this.modalService.openModal();
   }
 
   createForm() {
