@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit {
   youtube = faYoutube;
   facebook = faFacebookSquare;
   discord = faDiscord;
+  LogoUrl = 'https://spaceplace.nasa.gov/review/sunburn/sunburn1.sp.png';
   constructor() {}
 
   ngOnInit(): void {}

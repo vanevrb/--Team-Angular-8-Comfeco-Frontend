@@ -2,6 +2,8 @@
 @import url(https://fonts.googleapis.com/css?family=Lato:300,400,400i,700);
 @import url(https://fonts.googleapis.com/css?family=Niconne);
 @import url("https://fonts.googleapis.com/css2?family=Roboto:wght@700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+
 @font-face {
   font-family: "TypoGraphica";
   src: url("https://aprendiendocalculo.com/portal1/fuentes/TypoGraphica.otf");
@@ -32,8 +34,27 @@ body {
     "Helvetica Neue", Arial, sans-serif;
   line-height: 1.428571429;
   color: $color-bg;
-  background-color: $color-white;
   margin: 0px;
+  // background-color: $color-white;
+  background-image: url("../../assets/images/logo-light.svg");
+  background-size: 500px 500px;
+  background-position: 100px;
+  background-blend-mode: color-dodge;
+  background-repeat: space;
+  background-position: unset;
+}
+body::after {
+  content: "";
+  background-color: #9c3a9e;
+  /* margin: 10px; */
+  height: 60vh;
+  /* opacity: 0.7; */
+  /* top: 0; */
+  left: 0;
+  bottom: -100px;
+  right: 0;
+  position: absolute;
+  z-index: -1;
 }
 .fade.in {
   opacity: 1;
@@ -52,4 +73,12 @@ label {
 }
 svg {
   color: currentColor;
+}
+.center {
+  text-align: center;
+}
+.margin-5 {
+}
+.margin-15 {
+  margin: 15px;
 }

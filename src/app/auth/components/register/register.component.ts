@@ -8,6 +8,7 @@ import { faSquare } from '@fortawesome/free-regular-svg-icons';
 import { emailPattern } from '../../helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
 import { ModalService } from '../../../core/services/modal.service';
+import { MyValidatorsService } from '../../../core/services/my-validators.service';
 
 @Component({
   selector: 'app-register',
@@ -21,10 +22,28 @@ export class RegisterComponent implements OnInit {
   iconCheck = faSquare;
   iconUncheck = faCheckSquare;
 
+  get nickErrors() {
+    const field = this.register.get('usuNickname');
+    return !this.register.pristine && field.dirty && field.errors;
+  }
+  get emailErrors() {
+    const field = this.register.get('usuCorreo');
+    return !this.register.pristine && field.dirty && field.errors;
+  }
+  get passErrors() {
+    const field = this.register.get('usuClave');
+    return !this.register.pristine && field.dirty && field.errors;
+  }
+  get confirmErrors() {
+    const field = this.register.get('usuClave2');
+    return !this.register.pristine && field.dirty && field.errors;
+  }
+
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private modalService: ModalService
+    private modalService: ModalService,
+    private myValidators: MyValidatorsService
   ) {
     this.register = this.createForm();
   }
@@ -40,12 +59,20 @@ export class RegisterComponent implements OnInit {
   }
 
   createForm() {
-    return this.fb.group({
-      usuNickname: ['', [Validators.required, Validators.minLength(3)]],
-      usuCorreo: ['', [Validators.required, Validators.pattern(emailPattern)]],
-      usuClave: ['', [Validators.required, Validators.minLength(6)]],
-      usuClave2: ['', [Validators.required, Validators.minLength(6)]],
-    });
+    return this.fb.group(
+      {
+        usuNickname: ['', [Validators.required, Validators.minLength(3)]],
+        usuCorreo: [
+          '',
+          [Validators.required, Validators.pattern(emailPattern)],
+        ],
+        usuClave: ['', [Validators.required, Validators.minLength(6)]],
+        usuClave2: ['', [Validators.required]],
+      },
+      {
+        validators: this.myValidators.confirmPass('usuClave', 'usuClave2'),
+      }
+    );
   }
 
   onSubmit() {
