@@ -24,19 +24,27 @@ export class RegisterComponent implements OnInit {
 
   get nickErrors() {
     const field = this.register.get('usuNickname');
-    return !this.register.pristine && field.dirty && field.errors;
+    return field.touched && field.errors;
   }
   get emailErrors() {
     const field = this.register.get('usuCorreo');
-    return !this.register.pristine && field.dirty && field.errors;
+    return field.touched && field.errors;
   }
   get passErrors() {
     const field = this.register.get('usuClave');
-    return !this.register.pristine && field.dirty && field.errors;
+    return field.touched && field.errors;
   }
   get confirmErrors() {
     const field = this.register.get('usuClave2');
-    return !this.register.pristine && field.dirty && field.errors;
+    return field.touched && field.errors;
+  }
+
+  get checkbox() {
+    return this.register.get('checkBoxAceptar');
+  }
+  get checkboxErrors() {
+    const field = this.register.get('checkBoxAceptar');
+    return field.touched && field.errors;
   }
 
   constructor(
@@ -51,7 +59,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   onChecked() {
-    this.isChecked = !this.isChecked;
+    this.checkbox.patchValue(!this.checkbox.value);
   }
 
   onClick() {
@@ -68,6 +76,7 @@ export class RegisterComponent implements OnInit {
         ],
         usuClave: ['', [Validators.required, Validators.minLength(6)]],
         usuClave2: ['', [Validators.required]],
+        checkBoxAceptar: [false, [Validators.requiredTrue]],
       },
       {
         validators: this.myValidators.confirmPass('usuClave', 'usuClave2'),
@@ -81,12 +90,15 @@ export class RegisterComponent implements OnInit {
       return;
     }
     this.isLoading = true;
+
+    const { usuClave2, checkBoxAceptar, ...dataRegister } = this.register.value;
+
     this.initSwalInfo();
-    this.authService.newUser(this.register.value).subscribe((data) => {
+    this.authService.newUser(dataRegister).subscribe((data) => {
       if (data.error) {
-        return this.failSwal(data.mensaje);
+        return this.failSwal(data.message);
       }
-      this.successSwal(data.mensaje);
+      this.successSwal(data.message);
       this.isLoading = false;
       this.register.reset();
     });

@@ -1,5 +1,5 @@
 export interface Response {
-  codigo: number;
-  mensaje: any;
+  code: number;
+  message: any;
   error?: string;
 }

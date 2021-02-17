@@ -30,8 +30,8 @@ export class AuthService {
       catchError((err) => {
         console.error(err);
         return of({
-          codigo: 400,
-          mensaje: 'Upss, algo salío mal, por favor reintenta más tarde',
+          code: 400,
+          message: 'Upss, algo salío mal, por favor reintenta más tarde',
           error: err,
         });
       })
@@ -53,21 +53,21 @@ export class AuthService {
           console.log(data);
         }),
         map<LoginResponse, Response>((data) => ({
-          codigo: 200,
-          mensaje: data,
+          code: 200,
+          message: data,
         })),
         catchError((err) => {
           console.error(err.error);
           if (err.error.error === 'invalid_grant') {
             return of({
-              codigo: 400,
-              mensaje: 'Parece que la información enviada no es valida',
+              code: 400,
+              message: 'Parece que la información enviada no es valida',
               error: err,
             });
           } else {
             return of({
-              codigo: 500,
-              mensaje: 'algo salio mal, intenta más tarde',
+              code: 500,
+              message: 'algo salio mal, intenta más tarde',
               error: err,
             });
           }
@@ -81,5 +81,9 @@ export class AuthService {
 
   getUser(id: number) {
     return this.http.get(`${this.baseUrl}/api/${id}`);
+  }
+
+  forgotPassword(email: string) {
+    return this.http.get(`${this.baseUrl}/api/usuario/recuperar/${email}`);
   }
 }

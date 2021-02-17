@@ -1,4 +1,4 @@
-import { Component, OnInit, OnChanges, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
@@ -7,60 +7,35 @@ import { faSquare } from '@fortawesome/free-regular-svg-icons';
 
 import { emailPattern } from '../../helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
-import { SaveLocalService } from '../../../core/services/save-local.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss'],
 })
-export class LoginComponent implements OnInit, AfterViewInit {
+export class LoginComponent implements OnInit {
   login: FormGroup;
   isLoading = false;
-  dataRemember: any;
   iconCheck = faSquare;
   iconUncheck = faCheckSquare;
 
   get emailErrors() {
     const field = this.login.get('usuCorreo');
-    return !this.login.pristine && field.dirty && field.errors;
+    return field.touched && field.errors;
   }
   get passErrors() {
     const field = this.login.get('usuClave');
-    return !this.login.pristine && field.dirty && field.errors;
+    return field.touched && field.errors;
   }
 
   get checkbox() {
     return this.login.get('checkBoxRecordar');
   }
 
-  constructor(
-    private fb: FormBuilder,
-    private authService: AuthService,
-    private saveLocal: SaveLocalService
-  ) {
-    // this.saveLocal
-    //   .getItem('r3m3mb3rus3rCOMFECO')
-    //   .then((data) => {
-    //     console.log('get', data);
-    //     this.dataRemember = data;
-    //     this.dataRemember &&
-    //       this.checkbox.patchValue({
-    //         usuCorreo: this.dataRemember,
-    //       });
-    //   })
-    //   .catch((err) => console.error(err));
-  }
+  constructor(private fb: FormBuilder, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.login = this.createForm();
-  }
-
-  ngAfterViewInit() {
-    this.dataRemember &&
-      this.checkbox.patchValue({
-        usuCorreo: this.dataRemember,
-      });
   }
 
   onChecked() {
@@ -80,6 +55,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
      * Validate form changes or invalid data
      */
     if (this.login.pristine || this.login.invalid) {
+      this.login.markAllAsTouched();
       return;
     }
     /**
@@ -87,29 +63,6 @@ export class LoginComponent implements OnInit, AfterViewInit {
      */
     const { checkBoxRecordar, ...loginData } = this.login.value;
     this.isLoading = true;
-
-    /**
-     * Save data if user want to remember data, erased otherwise
-     */
-    // console.log(checkBoxRecordar);
-    if (this.checkbox.value) {
-      this.saveLocal
-        .setItem('r3m3mb3rus3rCOMFECO', loginData['usuCorreo'])
-        .then((data) => {
-          console.log('set', data);
-        })
-        .catch((err) => {
-          console.error(err);
-          this.failSwal('Por favor intenta màs tarde');
-        });
-    } else {
-      this.saveLocal
-        .removeItem('r3m3mb3rus3rCOMFECO')
-        .then((data) => {
-          console.log('remove', data);
-        })
-        .catch((err) => console.error(err));
-    }
 
     /**
      * Trigger sweet alert
@@ -125,7 +78,7 @@ export class LoginComponent implements OnInit, AfterViewInit {
        * Handle error
        */
       if (data.error) {
-        return this.failSwal(data.mensaje, data.codigo);
+        return this.failSwal(data.message, data.code);
       }
 
       /**

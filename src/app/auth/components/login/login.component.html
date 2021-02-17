@@ -30,24 +30,26 @@
           <label class="form-label">CORREO ELECTRÓNICO</label>
           <input
             class="form-control"
+            [class.error]="emailErrors"
             placeholder="Escriba su correo electronico"
             type="email"
             formControlName="usuCorreo"
           />
           <span class="input__error" *ngIf="emailErrors">
-            {{ emailErrors | json }}
+            {{ emailErrors | validationErrors }}
           </span>
         </div>
         <div class="form-group">
           <label class="form-label">CONTRASEÑA</label>
           <input
             class="form-control"
+            [class.error]="passErrors"
             placeholder="Escriba su password"
             type="password"
             formControlName="usuClave"
           />
           <span class="input__error" *ngIf="passErrors">
-            {{ passErrors | json }}
+            {{ passErrors | validationErrors }}
           </span>
         </div>
         <div class="form-group">
@@ -90,7 +92,12 @@
         <div class="form-group">
           <span class="">Mas informacion en:</span>
           <!--  NEEDS SANITIZER  -->
-          <a class="link bold" href="#" target="_blank">www.comfeco.com</a>
+          <a
+            class="link bold"
+            [href]="'https://comfeco.com' | domSanitizer"
+            target="_blank"
+            >www.comfeco.com</a
+          >
         </div>
       </form>
     </div>
