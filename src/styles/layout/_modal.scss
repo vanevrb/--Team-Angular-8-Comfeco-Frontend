@@ -1,0 +1,126 @@
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1500;
+  // -webkit-overflow-scrolling: touch;
+  background: #999;
+  overflow: hidden;
+  animation-direction: normal;
+  animation-duration: 250ms;
+  animation-fill-mode: forwards;
+  animation-iteration-count: 1;
+  animation-name: showModal;
+  animation-timing-function: ease-in;
+}
+.modal.hidden {
+  transform: scale(0);
+}
+
+.modal__content {
+  position: relative;
+  width: 90%;
+  min-width: 280px;
+  height: 90%;
+  margin: 5% auto;
+  background-color: $color-white;
+  border-radius: 6px;
+  box-shadow: 0 3px 9px rgba(0, 0, 0, 0.5);
+  overflow: hidden;
+  transform: translate3d(0, -3000px, 0) scaleY(3);
+  animation-direction: normal;
+  animation-duration: 500ms;
+  animation-delay: 350ms;
+  animation-name: modalContentFade;
+  animation-fill-mode: both;
+}
+
+.modal__header {
+  display: flex;
+  align-items: center;
+  height: 10%;
+  padding: 1em;
+  border-bottom: $border-decoration;
+  .modal__close {
+    position: absolute;
+    top: 0.5em;
+    right: 0.5em;
+    font-size: 2em;
+    font-weight: 900;
+  }
+}
+
+.modal__title {
+  margin: 0;
+  line-height: 1.428571429;
+}
+
+.modal__body {
+  height: 80%;
+  padding: 1em 1.5em;
+  overflow-y: auto;
+  p {
+    text-align: justify;
+  }
+}
+
+.modal__footer {
+  height: 10%;
+  padding: 1em;
+  border-top: $border-decoration;
+}
+
+.modal-scrollbar-measure {
+  position: absolute;
+  top: -9999px;
+  width: 50px;
+  height: 50px;
+  overflow: scroll;
+}
+
+@keyframes showModal {
+  0% {
+    transform: scale(0);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes modalContentFade {
+  from,
+  60%,
+  75%,
+  90%,
+  to {
+    animation-timing-function: cubic-bezier(0.215, 0.61, 0.355, 1);
+  }
+
+  0% {
+    opacity: 0;
+    transform: translate3d(0, -3000px, 0) scaleY(3);
+  }
+
+  60% {
+    opacity: 1;
+    transform: translate3d(0, 25px, 0) scaleY(0.9);
+  }
+
+  75% {
+    transform: translate3d(0, -10px, 0) scaleY(0.95);
+  }
+
+  90% {
+    transform: translate3d(0, 5px, 0) scaleY(0.985);
+  }
+
+  to {
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.bounceInDown {
+  animation-name: bounceInDown;
+}

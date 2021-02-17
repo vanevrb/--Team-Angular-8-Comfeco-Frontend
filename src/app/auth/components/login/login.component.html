@@ -1,0 +1,105 @@
+<!-- 
+<div class="pace pace-inactive">
+  <div
+    class="pace-progress"
+    data-progress-text="100%"
+    data-progress="99"
+    style="transform: translate3d(100%, 0px, 0px)"
+  >
+    <div class="pace-progress-inner"></div>
+  </div>
+  <div class="pace-activity"></div>
+</div>
+<div class="pace pace-inactive">
+  <div
+    class="pace-progress"
+    data-progress-text="100%"
+    data-progress="99"
+    style="transform: translate3d(100%, 0px, 0px)"
+  >
+    <div class="pace-progress-inner"></div>
+  </div>
+  <div class="pace-activity"></div>
+</div> -->
+
+<section class="content">
+  <app-wrapper-form>
+    <div class="tab-pane fade in active" *ngIf="login">
+      <form [formGroup]="login" (ngSubmit)="onSubmit()" class="form">
+        <div class="form-group">
+          <label class="form-label">CORREO ELECTRÓNICO</label>
+          <input
+            class="form-control"
+            [class.error]="emailErrors"
+            placeholder="Escriba su correo electronico"
+            type="email"
+            formControlName="usuCorreo"
+          />
+          <span class="input__error" *ngIf="emailErrors">
+            {{ emailErrors | validationErrors }}
+          </span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CONTRASEÑA</label>
+          <input
+            class="form-control"
+            [class.error]="passErrors"
+            placeholder="Escriba su password"
+            type="password"
+            formControlName="usuClave"
+          />
+          <span class="input__error" *ngIf="passErrors">
+            {{ passErrors | validationErrors }}
+          </span>
+        </div>
+        <div class="form-group">
+          <a class="link bold" routerLink="/auth/forgot" data-toggle="flip">
+            ¿Olvidaste tu contraseña?
+          </a>
+        </div>
+
+        <div class="form-group">
+          <div class="utility">
+            <div class="animated-checkbox">
+              <fa-icon
+                class="fa-icon"
+                [class.checked]="isChecked"
+                [icon]="!checkbox.value ? iconCheck : iconUncheck"
+                (click)="onChecked()"
+              ></fa-icon>
+              <input
+                type="checkbox"
+                name="recordar"
+                id="recordar"
+                formControlName="checkBoxRecordar"
+              />
+              <label class="label-text semibold-text" for="recordar">
+                Recordar mis datos
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <div class="form-group btn-container">
+          <button
+            class="button button-primary button-block"
+            type="submit"
+            [disabled]="isLoading"
+          >
+            INICIAR SESIÓN
+          </button>
+        </div>
+        <div class="form-group">
+          <span class="">Mas informacion en:</span>
+          <!--  NEEDS SANITIZER  -->
+          <a
+            class="link bold"
+            [href]="'https://comfeco.com' | domSanitizer"
+            target="_blank"
+            >www.comfeco.com</a
+          >
+        </div>
+      </form>
+    </div>
+  </app-wrapper-form>
+</section>

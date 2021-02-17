@@ -1,0 +1,7 @@
+.content {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 500px));
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20vh 3vw 0;
+}
