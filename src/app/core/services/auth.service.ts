@@ -38,6 +38,24 @@ export class AuthService {
     );
   }
 
+  restorePassword(dataPassword: any): Observable<any> {
+    return this.http
+      .post(`${this.baseUrl}/api/confirmation/change-password`, dataPassword)
+      .pipe(
+        tap((data) => {
+          console.log(data);
+        }),
+        catchError((err) => {
+          console.error(err);
+          return of({
+            code: 400,
+            message: 'Upss, algo salío mal, por favor reintenta más tarde',
+            error: err,
+          });
+        })
+      );
+  }
+
   login(user: Login): Observable<Response> {
     const param = new URLSearchParams();
     param.set('grant_type', environment.grant_type);
