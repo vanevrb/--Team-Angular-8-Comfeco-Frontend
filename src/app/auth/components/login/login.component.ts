@@ -1,12 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import Swal from 'sweetalert2';
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 
 import { emailPattern } from '../../helpers/emailPattern';
+import { SaveLocalService } from '../../../core/services/save-local.service';
 import { AuthService } from '../../../core/services/auth.service';
+import { environment } from '../../../../environments/environment.prod';
+import { AlertService } from '../../../core/services/alert.service';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +18,7 @@ import { AuthService } from '../../../core/services/auth.service';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
+  private saveEmailStoreKey = 'C0mf3c0-/S4v3-3m41l';
   login: FormGroup;
   isLoading = false;
   iconCheck = faSquare;
@@ -28,25 +33,43 @@ export class LoginComponent implements OnInit {
     return field.touched && field.errors;
   }
 
+  get email() {
+    return this.login.get('usuCorreo');
+  }
   get checkbox() {
     return this.login.get('checkBoxRecordar');
   }
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {}
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private saveLocal: SaveLocalService,
+    private swal: AlertService,
+    private userService: UserService
+  ) {}
 
   ngOnInit(): void {
     this.login = this.createForm();
+    this.getEmailStored();
   }
 
   onChecked() {
     this.checkbox.patchValue(!this.checkbox.value);
   }
 
+  getEmailStored() {
+    return this.saveLocal
+      .getItem(this.saveEmailStoreKey)
+      .then((data) => this.email.patchValue(data))
+      .catch((err) => this.email.patchValue(''));
+  }
+
   createForm() {
     return this.fb.group({
       usuCorreo: ['', [Validators.required, Validators.pattern(emailPattern)]],
       usuClave: ['', [Validators.required, Validators.minLength(6)]],
-      checkBoxRecordar: [false],
+      checkBoxRecordar: [true],
     });
   }
 
@@ -65,9 +88,18 @@ export class LoginComponent implements OnInit {
     this.isLoading = true;
 
     /**
+     * Store the email if checkbox is checked or erase otherwise
+     */
+    if (this.checkbox.value) {
+      this.saveLocal.setItem(this.saveEmailStoreKey, this.email.value);
+    } else {
+      this.saveLocal.removeItem(this.saveEmailStoreKey);
+    }
+
+    /**
      * Trigger sweet alert
      */
-    this.initSwalInfo();
+    this.swal.sendForm();
 
     /**
      * Bring data from api
@@ -78,47 +110,34 @@ export class LoginComponent implements OnInit {
        * Handle error
        */
       if (data.error) {
-        return this.failSwal(data.message, data.code);
+        const message =
+          data.code === 400
+            ? 'Verifica Email / Constraseña'
+            : 'Ups, algo salío mal';
+        return this.swal.failSwal(data.message, message);
       }
 
       /**
-       * Send succes alert
+       * Save token
        */
-      this.successSwal('Login de usuario exitoso');
+      this.saveLocal.setItem(environment.LOCAL_KEY_FOR_SAVE, data.message);
+
+      this.userService.username = this.email.value;
 
       /**
        * Restart form
        */
       this.login.reset();
-    });
-  }
 
-  initSwalInfo() {
-    return Swal.fire({
-      icon: 'info',
-      title: 'Registro enviado',
-      text: 'Por favor espere...',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      showConfirmButton: false,
-      willOpen: () => Swal.showLoading(),
-    });
-  }
+      /**
+       * Send succes alert
+       */
+      this.swal.successSwal('Login de usuario exitoso');
 
-  successSwal(data: string) {
-    return Swal.fire({
-      icon: 'success',
-      title: '¡Gracias!',
-      text: data,
-      timer: 3500,
-    });
-  }
-  failSwal(err: string, code = 500) {
-    return Swal.fire({
-      icon: 'error',
-      title:
-        code === 400 ? 'Verifica Email / Constraseña' : 'Ups, algo salío mal',
-      text: err,
+      /**
+       * go homepage
+       */
+      this.router.navigateByUrl('/home');
     });
   }
 }

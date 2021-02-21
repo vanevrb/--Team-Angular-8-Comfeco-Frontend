@@ -1,0 +1,14 @@
+<div class="container" *ngIf="username$ | async as username">
+  <article class="menu__container" *ngIf="username">
+    <div class="menu__header">
+      <div class="menu__avatar"></div>
+      <h2 class="menu__title">Welcome {{ username }}</h2>
+    </div>
+    <div class="menu__body">
+      <p class="menu__text"></p>
+    </div>
+    <div class="menu__actions">
+      <button class="link" (click)="logout()">Logout</button>
+    </div>
+  </article>
+</div>

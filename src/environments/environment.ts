@@ -8,6 +8,7 @@ export const environment = {
   grant_type: 'password',
   TOKEN_USERNAME: 'comfecoClientId',
   TOKEN_PASSWORD: 'comfeco123',
+  LOCAL_KEY_FOR_SAVE: 'C0mf3c0-/key',
 };
 
 /*

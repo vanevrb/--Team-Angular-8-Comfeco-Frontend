@@ -47,19 +47,17 @@
   line-height: $font-size-input;
   transition: border-color ease-in-out 0.15s;
 }
-// .form-control::before {
-//   content: "";
-//   display: block;
-//   height: 1px;
-//   padding-bottom: 15px;
-// }
+
 .fa-icon {
   font-size: 1.3em;
   padding-right: 0.5em;
   cursor: pointer;
-}
-.fa-icon.checked {
-  color: $color-secondary;
+  &.error {
+    color: $color-danger;
+  }
+  &.checked {
+    color: $color-secondary;
+  }
 }
 
 .form-group input[type="checkbox"] {

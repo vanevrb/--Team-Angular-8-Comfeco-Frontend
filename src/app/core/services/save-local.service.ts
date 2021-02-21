@@ -6,23 +6,28 @@ import { from, Observable } from 'rxjs';
   providedIn: 'root',
 })
 export class SaveLocalService {
-  async setItem(key: string, item: any) {
-    await localForage.setItem(key, item).catch((err) => {
-      console.error(err);
-      return;
-    });
-    return true;
+  setItem(key: string, item: any) {
+    return localForage
+      .setItem(key, item)
+      .then((val) => val)
+      .catch((err) => err);
+  }
+
+  getItem(key: string) {
+    return localForage
+      .getItem(key)
+      .then((val) => val)
+      .catch((err) => err);
   }
 
   // getItem(key: string): Observable<string> {
   //   return from(localForage.getItem(key));
   // }
 
-  async removeItem(key: string) {
-    await localForage.removeItem(key).catch((err) => {
-      console.error(err);
-      return;
-    });
-    return true;
+  removeItem(key: string) {
+    return localForage
+      .removeItem(key)
+      .then((val) => val)
+      .catch((err) => err);
   }
 }

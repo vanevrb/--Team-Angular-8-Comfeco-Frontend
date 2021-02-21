@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
@@ -6,7 +6,7 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './form-navigation.component.html',
   styleUrls: ['./form-navigation.component.scss'],
 })
-export class FormNavigationComponent implements OnInit {
+export class FormNavigationComponent {
   get route() {
     const route = this.activatedRoute.snapshot.url[0].path;
 
@@ -14,6 +14,4 @@ export class FormNavigationComponent implements OnInit {
   }
 
   constructor(private activatedRoute: ActivatedRoute) {}
-
-  ngOnInit(): void {}
 }

@@ -1,26 +1,15 @@
-<ul class="nav__links nav-tabs" *ngIf="route; else forgot">
+<ul class="nav__links nav-tabs">
   <li class="nav__item" routerLinkActive="active">
     <a class="nav__link" routerLink="/auth/login" data-toggle="tab"
       >Iniciar Sesión</a
     >
   </li>
   <li class="nav__item" routerLinkActive="active">
-    <a class="nav__link" routerLink="/auth/signup" data-toggle="tab"
-      >Regístrate</a
+    <a
+      class="nav__link"
+      [routerLink]="route ? '/auth/signup' : '/auth/forgot'"
+      data-toggle="tab"
+      >{{ !route ? "Olvide Mi Pass" : "Regístrate" }}</a
     >
   </li>
 </ul>
-<ng-template #forgot>
-  <ul class="nav__links nav-tabs">
-    <li class="nav__item" routerLinkActive="active">
-      <a class="nav__link" routerLink="/auth/login" data-toggle="tab"
-        >Iniciar Sesión</a
-      >
-    </li>
-    <li class="nav__item" routerLinkActive="active">
-      <a class="nav__link" routerLink="/auth/forgot" data-toggle="tab"
-        >Olvide mi contraseña</a
-      >
-    </li>
-  </ul>
-</ng-template>

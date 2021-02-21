@@ -67,9 +67,9 @@ export class AuthService {
         headers: this.httpHeaders,
       })
       .pipe(
-        tap((data) => {
-          console.log(data);
-        }),
+        // tap((data) => {
+        //   console.log(data);
+        // }),
         map<LoginResponse, Response>((data) => ({
           code: 200,
           message: data,

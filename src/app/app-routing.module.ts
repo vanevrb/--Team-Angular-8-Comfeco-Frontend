@@ -1,10 +1,16 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { HomeGuard } from './core/guards/home.guard';
 
 const routes: Routes = [
   {
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
+  },
+  {
+    path: 'conditions',
+    loadChildren: () =>
+      import('./conditions/conditions.module').then((m) => m.ConditionsModule),
   },
   {
     path: 'home',

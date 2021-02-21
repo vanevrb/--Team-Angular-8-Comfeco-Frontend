@@ -1,0 +1,34 @@
+<nav class="socials">
+  <ul class="icons-social">
+    <li class="label">Síguenos en las redes:</li>
+    <li>
+      <a
+        [href]="
+          'https://www.facebook.com/groups/2637132626546045' | domSanitizer
+        "
+        target="_blank"
+      >
+        <fa-icon [icon]="facebook"></fa-icon>
+      </a>
+    </li>
+    <li>
+      <a
+        [href]="'https://discord.gg/5Bb5yvzNPr' | domSanitizer"
+        target="_blank"
+      >
+        <fa-icon [icon]="discord"></fa-icon>
+      </a>
+    </li>
+    <li>
+      <a
+        [href]="
+          'https://www.youtube.com/channel/UC0oi8uH1vxDcyt7b_3iByew'
+            | domSanitizer
+        "
+        target="_blank"
+      >
+        <fa-icon [icon]="youtube"></fa-icon>
+      </a>
+    </li>
+  </ul>
+</nav>
