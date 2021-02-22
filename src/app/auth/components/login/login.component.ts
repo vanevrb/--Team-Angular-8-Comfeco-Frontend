@@ -137,7 +137,7 @@ export class LoginComponent implements OnInit {
       /**
        * go homepage
        */
-      this.router.navigateByUrl('/home');
+      this.router.navigate(['home']);
     });
   }
 }

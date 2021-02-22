@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
-import { DecodeService } from './decode.service';
 import { SaveLocalService } from './save-local.service';
 import { environment } from '../../../environments/environment';
+import { DecodeService } from './decode.service';
 
 @Injectable({
   providedIn: 'root',
@@ -27,43 +27,32 @@ export class UserService {
   }
 
   constructor(
-    private decodeService: DecodeService,
-    private saveLocal: SaveLocalService
-  ) {
-    this.userInfo()
-      .then()
-      .catch((err) => console.error(err));
-  }
+    private saveLocal: SaveLocalService,
+    private decodeService: DecodeService
+  ) {}
 
-  userInfo() {
-    return this.saveLocal
-      .getItem(environment.LOCAL_KEY_FOR_SAVE)
-      .then((val: any) => {
-        const tokenInfo = this.decodeService.decode(val.access_token);
-        const actualDate = new Date().getTime().toString().slice(0, 10);
+  async userInfo() {
+    try {
+      const val = (await this.saveLocal.getItem(
+        environment.LOCAL_KEY_FOR_SAVE
+      )) as any;
+      if (!val) {
+        throw new Error('No se ha iniciado sesión');
+      }
 
-        if (+actualDate > val.exp) {
-          throw new Error('Es necesario iniciar sesión nuevamente');
-        }
-        this._username = tokenInfo.user_name;
-        this._user$.next(this._username);
-      })
-      .catch((err) => this._user$.next(this._username));
-  }
+      const tokenInfo = this.decodeService.decode(val.access_token);
+      const actualDate = new Date().getTime().toString().slice(0, 10);
 
-  logout() {
-    this.saveLocal
-      .removeItem(environment.LOCAL_KEY_FOR_SAVE)
-      .then(() => {
-        this._username = undefined;
-        this._user$.next(this._username);
-        return true;
-      })
-      .catch((err) => {
-        console.error(err);
-        this._username = undefined;
-        this._user$.next(this._username);
-        return false;
-      });
+      if (+actualDate > val.exp) {
+        throw new Error('Es necesario iniciar sesión nuevamente');
+      }
+
+      this.username = tokenInfo.user_name;
+      return true;
+    } catch (err) {
+      console.error(err);
+      this.username = undefined;
+      return false;
+    }
   }
 }

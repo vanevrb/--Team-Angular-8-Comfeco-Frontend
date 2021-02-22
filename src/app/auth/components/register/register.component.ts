@@ -13,6 +13,7 @@ import { MyValidatorsService } from '../../../core/services/my-validators.servic
 import { SaveLocalService } from '../../../core/services/save-local.service';
 import { environment } from 'src/environments/environment';
 import { AlertService } from '../../../core/services/alert.service';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -42,6 +43,9 @@ export class RegisterComponent implements OnInit {
     return field.touched && field.errors;
   }
 
+  get email() {
+    return this.register.get('usuCorreo');
+  }
   get checkbox() {
     return this.register.get('checkBoxAceptar');
   }
@@ -57,7 +61,8 @@ export class RegisterComponent implements OnInit {
     private myValidators: MyValidatorsService,
     private router: Router,
     private saveLocal: SaveLocalService,
-    private swal: AlertService
+    private swal: AlertService,
+    private userService: UserService
   ) {
     this.register = this.createForm();
   }
@@ -130,20 +135,26 @@ export class RegisterComponent implements OnInit {
         if (data.error) {
           return this.swal.failSwal(data.message, 'Ups, algo salío mal');
         }
-
         /**
-         * Send succes alert
+         * Save token
          */
-        this.swal.successSwal('Gracias por regsistrarse');
+        this.saveLocal.setItem(environment.LOCAL_KEY_FOR_SAVE, data.message);
+        this.userService.username = this.email.value;
+
         /**
          * Restart form
          */
         this.register.reset();
+
         /**
-         * Save token and go homepage
+         * Send succes alert
          */
-        this.saveLocal.setItem(environment.LOCAL_KEY_FOR_SAVE, data.message);
-        this.router.navigateByUrl('/home');
+        this.swal.successSwal('Login de usuario exitoso');
+
+        /**
+         * go homepage
+         */
+        this.router.navigate(['home']);
       });
   }
 }
