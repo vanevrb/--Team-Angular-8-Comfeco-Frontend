@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import Swal from 'sweetalert2';
+import { switchMap } from 'rxjs/operators';
 import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
 import { faSquare } from '@fortawesome/free-regular-svg-icons';
 
@@ -9,6 +10,10 @@ import { emailPattern } from '../../helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
 import { ModalService } from '../../../core/services/modal.service';
 import { MyValidatorsService } from '../../../core/services/my-validators.service';
+import { SaveLocalService } from '../../../core/services/save-local.service';
+import { environment } from 'src/environments/environment';
+import { AlertService } from '../../../core/services/alert.service';
+import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +23,6 @@ import { MyValidatorsService } from '../../../core/services/my-validators.servic
 export class RegisterComponent implements OnInit {
   register: FormGroup;
   isLoading = false;
-  isChecked = false;
   iconCheck = faSquare;
   iconUncheck = faCheckSquare;
 
@@ -39,6 +43,9 @@ export class RegisterComponent implements OnInit {
     return field.touched && field.errors;
   }
 
+  get email() {
+    return this.register.get('usuCorreo');
+  }
   get checkbox() {
     return this.register.get('checkBoxAceptar');
   }
@@ -51,7 +58,11 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private modalService: ModalService,
-    private myValidators: MyValidatorsService
+    private myValidators: MyValidatorsService,
+    private router: Router,
+    private saveLocal: SaveLocalService,
+    private swal: AlertService,
+    private userService: UserService
   ) {
     this.register = this.createForm();
   }
@@ -85,50 +96,65 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    /**
+     * Validate form changes or invalid data
+     */
     if (this.register.pristine || this.register.invalid) {
       this.register.markAllAsTouched();
       return;
     }
+    /**
+     * Spread operator to separate usefull data
+     */
+    const { usuClave2, checkBoxAceptar, ...dataRegister } = this.register.value;
     this.isLoading = true;
 
-    const { usuClave2, checkBoxAceptar, ...dataRegister } = this.register.value;
+    /**
+     * Trigger sweet alert
+     */
+    this.swal.sendForm();
 
-    this.initSwalInfo();
-    this.authService.newUser(dataRegister).subscribe((data) => {
-      if (data.error) {
-        return this.failSwal(data.message);
-      }
-      this.successSwal(data.message);
-      this.isLoading = false;
-      this.register.reset();
-    });
-  }
+    /**
+     * Bring data from api
+     */
+    this.authService
+      .newUser(dataRegister)
+      .pipe(
+        switchMap(() =>
+          this.authService.login({
+            usuCorreo: dataRegister.usuCorreo,
+            usuClave: dataRegister.usuClave,
+          })
+        )
+      )
+      .subscribe((data) => {
+        this.isLoading = false;
+        /**
+         * Handle error
+         */
+        if (data.error) {
+          return this.swal.failSwal(data.message, 'Ups, algo salío mal');
+        }
+        /**
+         * Save token
+         */
+        this.saveLocal.setItem(environment.LOCAL_KEY_FOR_SAVE, data.message);
+        this.userService.username = this.email.value;
 
-  initSwalInfo() {
-    return Swal.fire({
-      icon: 'info',
-      title: 'Registro enviado',
-      text: 'Por favor espere...',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      showConfirmButton: false,
-      willOpen: () => Swal.showLoading(),
-    });
-  }
+        /**
+         * Restart form
+         */
+        this.register.reset();
 
-  successSwal(data: string) {
-    return Swal.fire({
-      icon: 'success',
-      title: '¡Gracias!',
-      text: data,
-      timer: 3500,
-    });
-  }
-  failSwal(err: string) {
-    return Swal.fire({
-      icon: 'error',
-      title: 'Ups, algo salío mal',
-      text: err,
-    });
+        /**
+         * Send succes alert
+         */
+        this.swal.successSwal('Login de usuario exitoso');
+
+        /**
+         * go homepage
+         */
+        this.router.navigate(['home']);
+      });
   }
 }
