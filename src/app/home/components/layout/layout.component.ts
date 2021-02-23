@@ -5,17 +5,59 @@ import { Component, OnInit, ViewChild ,AfterViewInit,ElementRef} from '@angular/
   templateUrl: './layout.component.html',
   styleUrls: ['./layout.component.scss']
 })
+
 export class LayoutComponent implements OnInit,AfterViewInit {
-@ViewChild('mi') myDiv:ElementRef;
+  
+  @ViewChild('frame') frame:ElementRef;
+  @ViewChild('slider') slider:ElementRef;
 
+  creators: any[] = [
+    {
+      "name": "Bezael Perez",
+      "image": "https://static.guiainfantil.com/pictures/662-3-un-bebe-dormido-o-muy-atento.jpg",
+      "link": "https://www.comfeco.com/",
+      "lenguage_icon": "js"
+    },
+    {
+      "name": "Bezael Perez",
+      "image": "https://static.guiainfantil.com/pictures/661-3-bebe-con-gorrito-de-flor-durmiendo.jpg",
+      "link": "https://www.comfeco.com/",
+      "lenguage_icon": "js"
+    },
+    {
+      "name": "Bezael Perez",
+      "image": "https://static.guiainfantil.com/pictures/660-3-bebe-dormido-en-un-frutero.jpg",
+      "link": "https://www.comfeco.com/",
+      "lenguage_icon": "js"
 
-  constructor() { }
-  ngAfterViewInit() {
-    // this.myDiv.nativeElement.value ="sa";
-   console.log(this.myDiv.nativeElement) ;
-  }
-  ngOnInit(): void {
+    },
+    {
+      "name": "Bezael Perez",
+      "image": "https://static.guiainfantil.com/pictures/662-3-un-bebe-dormido-o-muy-atento.jpg",
+      "link": "https://www.comfeco.com/",
+      "lenguage_icon": "js"
+
+    },
+    {
+      "name": "Bezael Perez",
+      "image": "https://static.guiainfantil.com/pictures/663-3-dos-gemelas-duermen-a-juego.jpg",
+      "link": "https://www.comfeco.com/",
+      "lenguage_icon": "js"
+
+    }
+  ];
+     // constructor() { }
+  constructor(private elementRef: ElementRef) {
     
+  }
+
+  ngAfterViewInit() {
+
+ this.frame.nativeElement.classList.add('frame');
+ this.slider.nativeElement.classList.add('slider');
+  }
+
+  ngOnInit(): void {
   }
 
 }

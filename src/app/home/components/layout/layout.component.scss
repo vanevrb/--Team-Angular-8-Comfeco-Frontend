@@ -1,0 +1,117 @@
+.slider-container {
+  width: 1000px;
+  position: relative;
+  margin: 10px auto;
+}
+#frame {
+  overflow: hidden;
+}
+.slider {
+  position: relative;
+  transition: 500ms;
+  display: inline-flex;
+}
+.slide {
+  display: inline-block;
+}
+.slider-arrow-left {
+	position: absolute;
+	top: 50%;
+	left: -20px;
+}
+.slider-arrow-right {
+	position: absolute;
+	top: 50%;
+	right: -20px;
+}
+.svg-arrow:hover{
+	opacity:0.6;
+  cursor: pointer;
+}
+
+.select-sliders {
+text-align: center;
+}
+
+.select-sliders .sel {
+    width: 15px;
+    margin: 0 auto;
+    text-align: center;
+    display: inline-block;
+    padding: 0px 4px;
+    color: #F78228;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.select-sliders .radio {
+    background-color: #F78228;
+    cursor: pointer;
+    border: 1px solid #ccc!important;
+    color: #fff;
+    display: inline-block;
+    text-align: center;
+    height: 15px;
+    width: 15px;
+    border-radius: 50%;  
+}
+
+.select-sliders .r {
+    // background-color: #634220;
+    background-color: #521e87;
+ 
+}
+
+.select-sliders span.radio:hover {
+        background-color: #634220;
+
+}
+
+.creator_info{
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    color: black;
+    background-color: #6D6D6D;
+}
+.slider-photo {
+    margin: 9px;
+}
+
+.lenguage_icon {
+    /* margin-top: -18px; */
+    width: 30px;
+    height: 30px;
+    -moz-border-radius: 50%;
+    -webkit-border-radius: 50%;
+    border-radius: 50%;
+    background: #F7DF1E;
+    z-index: 52;
+    position: absolute;
+    align-content: baseline;
+    margin: -35px auto;
+    position: absolute;
+    display: flex;
+    /* justify-content: center; */
+    align-items: center;
+    /* padding: 1.5rem; */
+    /* margin: 0 10%; */
+    flex-direction: column;
+    /* position: absolute; */
+    /* bottom: -14rem; */
+    left: 0;
+    right: 0;
+    /* border-radius: 10px; */
+    padding: 3px;
+    border: 3px solid white;
+}
+.creator_info{
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    // color: black;
+    // background-color: #6D6D6D;
+    color: white;
+    background-color: #521e87;
+    /* margin: -5px; */
+    position: relative;
+    padding: 15px;
+}
