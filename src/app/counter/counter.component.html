@@ -1,0 +1,30 @@
+<div class="counter__container">
+  <div class="counter__days counter__block" *ngIf="days">
+    <div
+      class="counter__digit"
+      [attr.data-digit]="day"
+      *ngFor="let day of days"
+    ></div>
+  </div>
+  <div class="counter__hours counter__block" *ngIf="hours">
+    <div
+      class="counter__digit"
+      [attr.data-digit]="hour"
+      *ngFor="let hour of hours"
+    ></div>
+  </div>
+  <div class="counter__minutes counter__block" *ngIf="minutes">
+    <div
+      class="counter__digit"
+      [attr.data-digit]="minute"
+      *ngFor="let minute of minutes"
+    ></div>
+  </div>
+  <div class="counter__seconds counter__block" *ngIf="seconds">
+    <div
+      class="counter__digit"
+      [attr.data-digit]="second"
+      *ngFor="let second of seconds"
+    ></div>
+  </div>
+</div>

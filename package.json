@@ -27,6 +27,7 @@
     "@types/localforage": "^0.0.34",
     "jwt-decode": "^3.1.2",
     "localforage": "^1.9.0",
+    "luxon": "^1.26.0",
     "rxjs": "~6.6.0",
     "sweetalert2": "^10.14.0",
     "tslib": "^2.0.0",
@@ -37,7 +38,11 @@
     "@angular/cli": "~11.1.2",
     "@angular/compiler-cli": "~11.1.1",
     "@types/jasmine": "~3.6.0",
+<<<<<<< HEAD
     "@types/jquery": "^3.5.5",
+=======
+    "@types/luxon": "^1.26.0",
+>>>>>>> 36bed6ecd09ddb976c45a9104685a8b4ebd46f17
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",

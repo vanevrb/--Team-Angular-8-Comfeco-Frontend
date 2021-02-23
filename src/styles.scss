@@ -1,3 +1,11 @@
+@font-face {
+  font-family: "KaushanScript";
+  src: local("KaushanScript"),
+    url("./assets/fonts/KaushanScript-Regular.otf") format("opentype");
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
+}
 @import "./styles/helpers/index-helpers";
 @import "./styles/base/index-base";
 @import "./styles/vendors/all";

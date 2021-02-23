@@ -50,7 +50,6 @@ export class UserService {
       this.username = tokenInfo.user_name;
       return true;
     } catch (err) {
-      console.error(err);
       this.username = undefined;
       return false;
     }

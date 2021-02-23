@@ -3,14 +3,10 @@ import { CommonModule } from '@angular/common';
 
 import { HomeRoutingModule } from './home-routing.module';
 import { LayoutComponent } from './components/layout/layout.component';
-import { CounterComponent } from './components/counter/counter.component';
-
+import { CounterModule } from '../counter/counter.module';
 
 @NgModule({
-  declarations: [LayoutComponent, CounterComponent],
-  imports: [
-    CommonModule,
-    HomeRoutingModule
-  ]
+  declarations: [LayoutComponent],
+  imports: [CommonModule, HomeRoutingModule, CounterModule],
 })
-export class HomeModule { }
+export class HomeModule {}
