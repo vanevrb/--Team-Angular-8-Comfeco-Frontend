@@ -2,7 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Users } from '../interfaces/Users';
 import { environment } from '../../../environments/environment';
-import { catchError, map, tap } from 'rxjs/operators';
+import { catchError, debounceTime, map, tap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 import { Response } from '../interfaces/Response';
 import { Login } from '../interfaces/Login';
@@ -93,15 +93,22 @@ export class AuthService {
       );
   }
 
-  getUsers(page = 1) {
-    return this.http.get(`${this.baseUrl}/api/usuario/${page}`);
-  }
+  // getUsers(page = 1) {
+  //   return this.http.get(`${this.baseUrl}/api/usuario/${page}`);
+  // }
 
-  getUser(id: number) {
-    return this.http.get(`${this.baseUrl}/api/${id}`);
-  }
+  // getUser(id: number) {
+  //   return this.http.get(`${this.baseUrl}/api/${id}`);
+  // }
 
   forgotPassword(email: string) {
     return this.http.get(`${this.baseUrl}/api/usuario/recuperar/${email}`);
+  }
+
+  canRegisterEmail(email: string) {
+    return this.http.get(`${this.baseUrl}/api/usuario/buscar/correo/${email}`);
+  }
+  canRegisterNick(nick: string) {
+    return this.http.get(`${this.baseUrl}/api/usuario/buscar/nickname/${nick}`);
   }
 }

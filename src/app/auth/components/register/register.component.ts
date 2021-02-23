@@ -80,10 +80,15 @@ export class RegisterComponent implements OnInit {
   createForm() {
     return this.fb.group(
       {
-        usuNickname: ['', [Validators.required, Validators.minLength(3)]],
+        usuNickname: [
+          '',
+          [Validators.required, Validators.minLength(3)],
+          [this.myValidators.validNick(this.authService)],
+        ],
         usuCorreo: [
           '',
           [Validators.required, Validators.pattern(emailPattern)],
+          [this.myValidators.validEmail(this.authService)],
         ],
         usuClave: ['', [Validators.required, Validators.minLength(6)]],
         usuClave2: ['', [Validators.required]],
