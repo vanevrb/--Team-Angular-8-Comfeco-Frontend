@@ -14,6 +14,13 @@
           <span class="input__error" *ngIf="nickErrors">
             {{ nickErrors | validationErrors }}
           </span>
+          <a
+            routerLink="/forgot"
+            class="link input__error"
+            *ngIf="nickErrors && nickErrors.notAvailable"
+          >
+            <strong> ¿Olvido su contraseña? ¡Click Aqui! </strong>
+          </a>
         </div>
         <div class="form-group">
           <label class="form-label">CORREO ELECTRÓNICO</label>
@@ -27,6 +34,13 @@
           <span class="input__error" *ngIf="emailErrors">
             {{ emailErrors | validationErrors }}
           </span>
+          <a
+            routerLink="/forgot"
+            class="link input__error"
+            *ngIf="emailErrors && emailErrors.notAvailable"
+          >
+            <strong> ¿Olvido su contraseña? ¡Click Aqui! </strong>
+          </a>
         </div>
         <div class="form-group">
           <label class="form-label">CONTRASEÑA</label>

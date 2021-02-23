@@ -1,7 +1,12 @@
 <div class="container" *ngIf="username$ | async as username">
+  <button class="button button-primary">
+    <fa-icon [icon]="bell"></fa-icon>
+  </button>
   <article class="menu__container" *ngIf="username">
     <div class="menu__header">
-      <div class="menu__avatar"></div>
+      <div class="menu__avatar">
+        <img [src]="'https://i.pravatar.cc/150' | domSanitizer" alt="avatar" />
+      </div>
       <h2 class="menu__title">Welcome {{ username }}</h2>
     </div>
     <div class="menu__body">

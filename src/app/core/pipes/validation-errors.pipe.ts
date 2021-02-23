@@ -26,7 +26,7 @@ export class ValidationErrorsPipe implements PipeTransform {
       return `Se necesitan por lo menos ${value.minlength['requiredLength']} carácteres`;
     }
     if (value.notAvailable) {
-      return `El usuario ya esta activo, sino recuerda la contraseña dirijase a la sección de olvide contraseña`;
+      return 'Este identificador ya esta activo.';
     }
     return null;
   }
