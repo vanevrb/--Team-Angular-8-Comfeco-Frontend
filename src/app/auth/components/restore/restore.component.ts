@@ -3,8 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
 
 import { emailPattern } from '../../helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
@@ -22,8 +20,6 @@ export class RestoreComponent implements OnInit {
   restore: FormGroup;
   isLoading = false;
   isChecked = false;
-  iconCheck = faSquare;
-  iconUncheck = faCheckSquare;
 
   token: string;
 

@@ -37,12 +37,15 @@
         <div class="form-group">
           <div class="utility">
             <div class="animated-checkbox">
-              <fa-icon
-                class="fa-icon"
-                [ngClass]="{ checked: checkbox.value, error: checkboxErrors }"
-                [icon]="!checkbox.value ? iconCheck : iconUncheck"
+              <span
+                [ngClass]="{
+                  checked: checkbox.value,
+                  error: checkboxErrors,
+                  'far square': !checkbox.value,
+                  'fas check-square': checkbox.value
+                }"
                 (click)="onChecked()"
-              ></fa-icon>
+              ></span>
               <input
                 type="checkbox"
                 name="recordar"

@@ -3,8 +3,6 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { switchMap } from 'rxjs/operators';
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
 
 import { emailPattern } from '../../helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
@@ -23,8 +21,6 @@ import { UserService } from '../../../core/services/user.service';
 export class RegisterComponent implements OnInit {
   register: FormGroup;
   isLoading = false;
-  iconCheck = faSquare;
-  iconUncheck = faCheckSquare;
 
   get nickErrors() {
     const field = this.register.get('usuNickname');
