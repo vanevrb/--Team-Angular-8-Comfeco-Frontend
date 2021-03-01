@@ -12,14 +12,14 @@ import {
 } from '@angular/router';
 
 import { Observable } from 'rxjs';
-import { map, tap } from 'rxjs/operators';
 
 import { UserService } from '../services/user.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class HomeGuard implements CanActivate, CanDeactivate<unknown>, CanLoad {
+export class ProtectRoutesGuard
+  implements CanActivate, CanDeactivate<unknown>, CanLoad {
   private user$: Observable<string | undefined>;
   constructor(private userService: UserService, private router: Router) {
     this.user$ = this.userService.user$;

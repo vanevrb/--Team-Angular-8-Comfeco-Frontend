@@ -29,6 +29,12 @@ export class UserMenuComponent implements OnInit {
     this.isShowSubmenu = !this.isShowSubmenu;
   }
 
+  goMyProfile() {
+    this.isShowSubmenu = false;
+
+    this.router.navigateByUrl('/profile');
+  }
+
   logout() {
     this.saveLocal
       .removeItem(environment.LOCAL_KEY_FOR_SAVE)

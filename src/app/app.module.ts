@@ -3,20 +3,23 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
-import { SharedModule } from './shared/shared.module';
 
 import { AppComponent } from './app.component';
 import { UserMenuModule } from './user-menu/user-menu.module';
+import { HeaderComponent } from '../components/header/header.component';
+import { NavbarComponent } from '../components/navbar/navbar.component';
+import { FooterComponent } from '../components/footer/footer.component';
+import { SocialComponent } from '../components/social/social.component';
 
 @NgModule({
-  declarations: [AppComponent],
-  imports: [
-    BrowserModule,
-    AppRoutingModule,
-    CoreModule,
-    SharedModule,
-    UserMenuModule,
+  declarations: [
+    AppComponent,
+    HeaderComponent,
+    NavbarComponent,
+    FooterComponent,
+    SocialComponent,
   ],
+  imports: [BrowserModule, AppRoutingModule, CoreModule, UserMenuModule],
   providers: [],
   bootstrap: [AppComponent],
 })
