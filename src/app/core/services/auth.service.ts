@@ -93,13 +93,35 @@ export class AuthService {
       );
   }
 
-  // getUsers(page = 1) {
-  //   return this.http.get(`${this.baseUrl}/api/usuario/${page}`);
-  // }
-
-  // getUser(id: number) {
-  //   return this.http.get(`${this.baseUrl}/api/${id}`);
-  // }
+  getUserInfo(email: string) {
+    return this.http
+      .get(`${this.baseUrl}/api/usuario/recuperar/${email}`)
+      .pipe
+      // tap((data) => {
+      //   console.log(data);
+      // })
+      // map<LoginResponse, Response>((data) => ({
+      //   code: 200,
+      //   message: data,
+      // })),
+      // catchError((err) => {
+      //   console.error(err.error);
+      //   if (err.error.error === 'invalid_grant') {
+      //     return of({
+      //       code: 400,
+      //       message: 'Parece que la información enviada no es valida',
+      //       error: err,
+      //     });
+      //   } else {
+      //     return of({
+      //       code: 500,
+      //       message: 'algo salio mal, intenta más tarde',
+      //       error: err,
+      //     });
+      //   }
+      // })
+      ();
+  }
 
   forgotPassword(email: string) {
     return this.http.get(`${this.baseUrl}/api/usuario/recuperar/${email}`);
