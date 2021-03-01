@@ -1,47 +1,61 @@
-<div class="slider-container">
-  <!-- nav arrows -->
-  <div class="slider-arrows">
-    <div class="slider-arrow-left arrowLeft">
-      <svg width="16" height="30" class="svg-arrow">
-        <polyline style="stroke-linejoin:miter; stroke:#00275a; stroke-width:3; fill: none;"
-          points="15 2, 2 15, 15 28" />
-      </svg>
+<div class="slider-temp">
+  <div class="slider-container">
+    <!-- nav arrows -->
+    <div class="slider-arrows">
+      <div class="slider-arrow-left arrowLeft">
+        <svg width="16" height="30" class="svg-arrow">
+          <polyline
+            style="
+              stroke-linejoin: miter;
+              stroke: #00275a;
+              stroke-width: 3;
+              fill: none;
+            "
+            points="15 2, 2 15, 15 28"
+          />
+        </svg>
+      </div>
+      <div class="slider-arrow-right arrowRight">
+        <svg width="16" height="30" class="svg-arrow">
+          <polyline
+            style="
+              stroke-linejoin: miter;
+              stroke: #00275a;
+              stroke-width: 3;
+              fill: none;
+            "
+            points="2 2, 14 15, 2 28"
+          />
+        </svg>
+      </div>
     </div>
-    <div class="slider-arrow-right arrowRight">
-      <svg width="16" height="30" class="svg-arrow">
-        <polyline style="stroke-linejoin:miter; stroke:#00275a; stroke-width:3; fill: none;"
-          points="2 2, 14 15, 2 28" />
-      </svg>
-    </div>
-  </div>
-  <div #frame id="frame">
-    <div #slider id="slider">
-      <!-- Box start -->
-      <div *ngFor="let creator of creators" class="slider-box slide">
-        <div class="slider-photo">
-          <!-- <a href="{{creator.link}}"> -->
+    <div #frame id="frame">
+      <div #slider id="slider">
+        <!-- Box start -->
+        <div *ngFor="let creator of creators" class="slider-box slide">
+          <div class="slider-photo">
+            <!-- <a href="{{creator.link}}"> -->
             <div>
-              <img src='{{creator.image}}' />
+              <img src="{{ creator.image }}" />
             </div>
             <div class="creator_info">
               <div class="lenguage_icon"><i>icon</i></div>
-              <b>{{creator.name}}</b>
+              <b>{{ creator.name }}</b>
             </div>
-          <!-- </a> -->
+            <!-- </a> -->
+          </div>
         </div>
+        <!-- Box end -->
       </div>
-      <!-- Box end -->
     </div>
   </div>
-
+  <div class="select-sliders">
+    <div class="sel"><span class="radio r" ng-click="showevent(1)"></span></div>
+    <div class="sel"><span class="radio r" ng-click="showevent(2)"></span></div>
+    <div class="sel"><span class="radio r" ng-click="showevent(3)"></span></div>
+    <div class="sel"><span class="radio r" ng-click="showevent(4)"></span></div>
+    <div class="sel"><span class="radio r" ng-click="showevent(5)"></span></div>
+  </div>
 </div>
-<div class="select-sliders">
-  <div class="sel"><span class="radio r" ng-click="showevent(1)"></span> </div>
-  <div class="sel"><span class="radio r" ng-click="showevent(2)"></span> </div>
-  <div class="sel"><span class="radio r" ng-click="showevent(3)"></span> </div>
-  <div class="sel"><span class="radio r" ng-click="showevent(4)"></span> </div>
-  <div class="sel"><span class="radio r" ng-click="showevent(5)"></span> </div>
-</div>
-<app-counter>
 
-</app-counter>
+<app-counter> </app-counter>

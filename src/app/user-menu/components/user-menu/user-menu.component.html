@@ -1,19 +1,28 @@
-<div class="container" *ngIf="username$ | async as username">
-  <button class="button button-primary">
+<div class="user-menu__container" *ngIf="username$ | async as username">
+  <button class="button user-menu__notification">
     <span class="far bell"></span>
   </button>
-  <article class="menu__container" *ngIf="username">
-    <div class="menu__header">
-      <div class="menu__avatar">
+  <article class="user-menu__content" *ngIf="username">
+    <div class="user-menu__header">
+      <div class="user-menu__avatar">
         <img [src]="'https://i.pravatar.cc/150' | domSanitizer" alt="avatar" />
+        <span class="far user"></span>
       </div>
-      <h2 class="menu__title">Welcome {{ username }}</h2>
+      <h2
+        class="user-menu__title"
+        [class.active]="isShowSubmenu"
+        (click)="showSubmenu()"
+      >
+        <small>Welcome &nbsp;</small><br />
+        {{ username }}
+      </h2>
     </div>
-    <div class="menu__body">
-      <p class="menu__text"></p>
-    </div>
-    <div class="menu__actions">
-      <button class="link" (click)="logout()">Logout</button>
+
+    <div class="user-menu__actions" [class.active]="isShowSubmenu">
+      <div class="actions__content">
+        <button class="link">Mi perfil</button>
+        <button class="link" (click)="logout()">Cerrar sesión</button>
+      </div>
     </div>
   </article>
 </div>

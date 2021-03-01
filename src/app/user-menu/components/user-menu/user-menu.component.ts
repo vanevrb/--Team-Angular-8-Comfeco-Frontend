@@ -14,6 +14,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class UserMenuComponent implements OnInit {
   username$: Observable<string>;
+  isShowSubmenu = false;
 
   constructor(
     private userService: UserService,
@@ -23,6 +24,10 @@ export class UserMenuComponent implements OnInit {
     this.username$ = this.userService.user$;
   }
   ngOnInit() {}
+
+  showSubmenu() {
+    this.isShowSubmenu = !this.isShowSubmenu;
+  }
 
   logout() {
     this.saveLocal

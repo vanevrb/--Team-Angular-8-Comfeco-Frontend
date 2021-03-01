@@ -1,0 +1,144 @@
+.user-menu__container {
+  display: flex;
+  align-items: center;
+}
+.user-menu__notification {
+  display: flex;
+  min-width: $header-icons-measure;
+  height: $header-icons-measure;
+  padding: 0;
+  margin: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: currentColor;
+  &:active {
+    background-color: $color-secondary;
+  }
+  &:focus {
+    background-color: lighten($color: $color-secondary, $amount: 30);
+  }
+  &:focus,
+  &:active {
+    outline: none;
+  }
+
+  span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+  }
+}
+.user-menu__content {
+  position: relative;
+  width: calc(100% - $header-icons-measure);
+  min-width: 200px;
+  max-width: 300px;
+  padding: 0.2em;
+  background-color: $color-gray1;
+  border-radius: 50px;
+}
+.user-menu__header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+.user-menu__avatar {
+  position: relative;
+  width: $header-icons-measure;
+  height: $header-icons-measure;
+  border-radius: 50%;
+  overflow: hidden;
+  img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    z-index: 1000;
+  }
+  span {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    color: $bg-color;
+    background-color: $color-gray1;
+    z-index: 0;
+  }
+}
+.user-menu__title {
+  position: relative;
+  margin: 0;
+  padding: 0 2em 0 1.2em;
+  font-size: 1rem;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  user-select: none;
+  cursor: pointer;
+
+  &::after {
+    content: "\f078";
+    position: absolute;
+    top: 25%;
+    right: 5%;
+    font-weight: 900;
+    font-family: "Font Awesome 5 Solid";
+  }
+  &.active::after {
+    content: "\f00d";
+  }
+}
+
+.user-menu__actions {
+  position: absolute;
+  display: none;
+  top: 115%;
+  left: 0;
+  width: 100%;
+  z-index: 500;
+  font-size: 1rem;
+  background-color: $color-gray1;
+  border-radius: 10px;
+  &.active {
+    display: initial;
+    animation-duration: 400ms;
+    animation-fill-mode: both;
+    animation-name: fadeInDown;
+  }
+
+  .actions__content {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+    height: 100%;
+    padding: 5%;
+    .link {
+      color: $font-color;
+      margin: 5% 0;
+    }
+    .link:last-child {
+      font-style: italic;
+      font-weight: 900;
+    }
+  }
+}
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translate3d(0, -100%, 0);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}

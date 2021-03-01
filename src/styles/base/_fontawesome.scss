@@ -18,6 +18,12 @@
   text-rendering: auto;
 }
 
+.user::before {
+  content: "\f007";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Regular";
+}
+
 .square::before {
   content: "\f0c8";
   font-weight: 400;

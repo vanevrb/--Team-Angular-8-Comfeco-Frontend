@@ -1,15 +1,11 @@
-<header class="item">
-  <div class="container">
-    <div class="row">
-      <div class="col-sm-6 image__container">
-        <img src="assets/images/logo.svg" />
-      </div>
-      <div class="col-sm-6 nav__container">
-        <app-navbar></app-navbar>
-      </div>
-      <div class="user-menu__container">
-        <ng-content></ng-content>
-      </div>
+<header class="header">
+  <div class="nav__container">
+    <div class="image__container">
+      <img src="assets/images/logo.svg" />
     </div>
+    <app-navbar class="navbar__wrapper"></app-navbar>
+  </div>
+  <div class="user-menu__wrapper">
+    <ng-content></ng-content>
   </div>
 </header>
