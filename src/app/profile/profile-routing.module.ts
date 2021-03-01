@@ -3,6 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { LayoutComponent } from './components/layout/layout.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditionComponent } from './components/edition/edition.component';
+import { BadgesComponent } from './components/badges/badges.component';
+import { GroupsComponent } from './components/groups/groups.component';
+import { EventsComponent } from './components/events/events.component';
 
 const routes: Routes = [
   {
@@ -10,7 +13,7 @@ const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: 'user',
+        path: '',
         component: ProfileComponent,
       },
       {
@@ -18,9 +21,16 @@ const routes: Routes = [
         component: EditionComponent,
       },
       {
-        path: '',
-        redirectTo: 'user',
-        pathMatch: 'full',
+        path: 'badges',
+        component: BadgesComponent,
+      },
+      {
+        path: 'groups',
+        component: GroupsComponent,
+      },
+      {
+        path: 'events',
+        component: EventsComponent,
       },
     ],
   },

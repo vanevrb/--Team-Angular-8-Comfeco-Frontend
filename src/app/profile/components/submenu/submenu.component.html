@@ -1,0 +1,36 @@
+<div class="submenu-general">
+  <ul class="submenu-general__links">
+    <li class="submenu-general__item">
+      <button
+        class="button button-secondary submenu-general__link"
+        [routerLink]="['profile']"
+      >
+        Mi Perfil
+      </button>
+    </li>
+    <li class="submenu-general__item">
+      <button
+        class="button button-secondary submenu-general__link"
+        (click)="navTo('badges')"
+      >
+        Insignias
+      </button>
+    </li>
+    <li class="submenu-general__item">
+      <button
+        class="button button-secondary submenu-general__link"
+        (click)="navTo('groups')"
+      >
+        Grupos
+      </button>
+    </li>
+    <li class="submenu-general__item">
+      <button
+        class="button button-secondary submenu-general__link"
+        (click)="navTo('events')"
+      >
+        Eventos
+      </button>
+    </li>
+  </ul>
+</div>
