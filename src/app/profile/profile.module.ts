@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { ProfileRoutingModule } from './profile-routing.module';
+import { CoreModule } from '../core/core.module';
+
 import { LayoutComponent } from './components/layout/layout.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EditionComponent } from './components/edition/edition.component';
@@ -13,7 +15,6 @@ import { UserInfoCardComponent } from './components/user-info-card/user-info-car
 import { UserBadgesCardComponent } from './components/user-badges-card/user-badges-card.component';
 import { UserActivitiesCardComponent } from './components/user-activities-card/user-activities-card.component';
 import { UserEventsCardComponent } from './components/user-events-card/user-events-card.component';
-import { CoreModule } from '../core/core.module';
 
 @NgModule({
   declarations: [

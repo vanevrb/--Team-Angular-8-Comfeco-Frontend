@@ -4,7 +4,7 @@ import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 
 import Swal from 'sweetalert2';
 
-import { emailPattern } from '../../helpers/emailPattern';
+import { emailPattern } from '../../../core/helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
 import { ModalService } from '../../../core/services/modal.service';
 import { MyValidatorsService } from '../../../core/services/my-validators.service';

@@ -2,16 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { switchMap } from 'rxjs/operators';
-
-import { emailPattern } from '../../helpers/emailPattern';
+import { emailPattern } from '../../../core/helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
 import { ModalService } from '../../../core/services/modal.service';
 import { MyValidatorsService } from '../../../core/services/my-validators.service';
-import { SaveLocalService } from '../../../core/services/save-local.service';
-import { environment } from 'src/environments/environment';
 import { AlertService } from '../../../core/services/alert.service';
-import { UserService } from '../../../core/services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -56,9 +51,7 @@ export class RegisterComponent implements OnInit {
     private modalService: ModalService,
     private myValidators: MyValidatorsService,
     private router: Router,
-    private saveLocal: SaveLocalService,
-    private swal: AlertService,
-    private userService: UserService
+    private swal: AlertService
   ) {
     this.register = this.createForm();
   }

@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { tap, map, switchMap } from 'rxjs/operators';
 
-import { emailPattern } from '../../helpers/emailPattern';
+import { emailPattern } from '../../../core/helpers/emailPattern';
 import { SaveLocalService } from '../../../core/services/save-local.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment.prod';

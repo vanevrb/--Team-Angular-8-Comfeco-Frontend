@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { emailPattern } from '../../helpers/emailPattern';
+import { emailPattern } from '../../../core/helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
 
 @Component({
