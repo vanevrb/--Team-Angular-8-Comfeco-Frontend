@@ -19,11 +19,6 @@
     "@angular/platform-browser": "~11.1.1",
     "@angular/platform-browser-dynamic": "~11.1.1",
     "@angular/router": "~11.1.1",
-    "@fortawesome/angular-fontawesome": "^0.8.2",
-    "@fortawesome/fontawesome-svg-core": "^1.2.34",
-    "@fortawesome/free-brands-svg-icons": "^5.15.2",
-    "@fortawesome/free-regular-svg-icons": "^5.15.2",
-    "@fortawesome/free-solid-svg-icons": "^5.15.2",
     "@types/localforage": "^0.0.34",
     "jwt-decode": "^3.1.2",
     "localforage": "^1.9.0",
@@ -38,11 +33,7 @@
     "@angular/cli": "~11.1.2",
     "@angular/compiler-cli": "~11.1.1",
     "@types/jasmine": "~3.6.0",
-<<<<<<< HEAD
-    "@types/jquery": "^3.5.5",
-=======
     "@types/luxon": "^1.26.0",
->>>>>>> 36bed6ecd09ddb976c45a9104685a8b4ebd46f17
     "@types/node": "^12.11.1",
     "codelyzer": "^6.0.0",
     "jasmine-core": "~3.6.0",

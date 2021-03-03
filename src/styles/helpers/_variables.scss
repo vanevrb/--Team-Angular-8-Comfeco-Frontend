@@ -3,7 +3,11 @@
                     Color
 -------------------------------------------
 */
+$bg-color: #f5f5f5;
+$font-color: #0d0d0d;
+
 $color-white: #fff;
+$color-black: #000;
 
 $color-gray0: #e5e5e5;
 $color-gray1: #ddd;
@@ -17,6 +21,14 @@ $color-p-lighten: #8a178c;
 $color-p-darken: #521e87;
 $color-danger: #c40b00;
 $color-danger-alpha: #c40b0050;
+
+/*
+-------------------------------------------
+                   Measures
+-------------------------------------------
+*/
+
+$header-icons-measure: 50px;
 
 /*
 -------------------------------------------

@@ -1,0 +1,14 @@
+.submenu-general {
+  width: 100%;
+  padding: 5vh 0;
+  &__links {
+    @extend %link;
+    flex-wrap: wrap;
+    width: 70%;
+    height: 100%;
+    margin: 0 auto;
+  }
+  &__item {
+    margin: 0.2em;
+  }
+}

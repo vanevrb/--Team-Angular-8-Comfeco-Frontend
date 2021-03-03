@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { Observable } from 'rxjs';
-import { faBell } from '@fortawesome/free-regular-svg-icons';
 
 import { UserService } from '../../../core/services/user.service';
 import { SaveLocalService } from '../../../core/services/save-local.service';
@@ -15,7 +14,7 @@ import { environment } from '../../../../environments/environment';
 })
 export class UserMenuComponent implements OnInit {
   username$: Observable<string>;
-  bell = faBell;
+  isShowSubmenu = false;
 
   constructor(
     private userService: UserService,
@@ -25,6 +24,16 @@ export class UserMenuComponent implements OnInit {
     this.username$ = this.userService.user$;
   }
   ngOnInit() {}
+
+  showSubmenu() {
+    this.isShowSubmenu = !this.isShowSubmenu;
+  }
+
+  goMyProfile() {
+    this.isShowSubmenu = false;
+
+    this.router.navigateByUrl('/profile');
+  }
 
   logout() {
     this.saveLocal
