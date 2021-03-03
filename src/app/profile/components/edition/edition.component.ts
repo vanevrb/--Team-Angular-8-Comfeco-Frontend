@@ -6,6 +6,8 @@ import { MyValidatorsService } from '../../../core/services/my-validators.servic
 import { AlertService } from '../../../core/services/alert.service';
 import { UserService } from '../../../core/services/user.service';
 import { emailPattern } from 'src/app/core/helpers/emailPattern';
+import { AuthService } from '../../../core/services/auth.service';
+import { UsersInfoResponse } from '../../../core/interfaces';
 
 @Component({
   selector: 'app-edition',
@@ -15,6 +17,7 @@ import { emailPattern } from 'src/app/core/helpers/emailPattern';
 export class EditionComponent implements OnInit {
   editForm: FormGroup;
   isLoading = false;
+  private currUser: UsersInfoResponse;
 
   get nickErrors() {
     const field = this.editForm.get('usuNickname');
@@ -32,18 +35,31 @@ export class EditionComponent implements OnInit {
     const field = this.editForm.get('usuClave2');
     return field.touched && field.errors;
   }
+  get generoErrors() {
+    const field = this.perfil.get('genero');
+    return field.touched && field.errors;
+  }
+  get biografiaErrors() {
+    const field = this.perfil.get('biografia');
+    return field.touched && field.errors;
+  }
 
   get email() {
     return this.editForm.get('usuCorreo');
+  }
+  get perfil() {
+    return this.editForm.get('perfil') as FormGroup;
   }
 
   constructor(
     private fb: FormBuilder,
     private myValidators: MyValidatorsService,
+    private userService: UserService,
+    private authService: AuthService,
     private router: Router,
-    private swal: AlertService,
-    private userService: UserService
+    private swal: AlertService
   ) {
+    this.currUser = this.userService.user;
     this.editForm = this.createForm();
   }
 
@@ -52,20 +68,31 @@ export class EditionComponent implements OnInit {
   createForm() {
     return this.fb.group(
       {
-        usuNickname: ['', [Validators.required, Validators.minLength(3)]],
+        usuNickname: [
+          this.currUser.usuNickname,
+          [Validators.required, Validators.minLength(3)],
+        ],
         usuCorreo: [
-          '',
+          this.currUser.usuCorreo,
           [Validators.required, Validators.pattern(emailPattern)],
         ],
         usuClave: ['', [Validators.required, Validators.minLength(6)]],
         usuClave2: ['', [Validators.required]],
         perfil: this.fb.group({
-          genero: ['', [Validators.required]],
-          fechaNacimiento: ['', [Validators.required]],
-          pais: ['', [Validators.required]],
-          biografia: ['', [Validators.required]],
-          conocimientos: this.fb.array([]),
-          redesSociales: this.fb.array([]),
+          genero: [this.currUser.perfil.genero, [Validators.required]],
+          fechaNacimiento: [this.currUser.perfil.fechaNacimiento],
+          pais: [this.currUser.perfil.pais],
+          biografia: [
+            this.currUser.perfil.biografia,
+            [Validators.maxLength(140)],
+          ],
+          conocimientos: [this.currUser.perfil.conocimientos],
+          redesSociales: this.fb.group({
+            facebook: this.currUser.perfil.redesSociales['facebook'],
+            github: this.currUser.perfil.redesSociales['github'],
+            linkedin: this.currUser.perfil.redesSociales['linkedin'],
+            twitter: this.currUser.perfil.redesSociales['twitter'],
+          }),
         }),
       },
       {
@@ -80,9 +107,18 @@ export class EditionComponent implements OnInit {
      */
     if (this.editForm.pristine || this.editForm.invalid) {
       this.editForm.markAllAsTouched();
+      this.perfil.markAllAsTouched();
       return;
     }
 
-    console.log(this.editForm);
+    const { usuClave2, ...data } = this.editForm.value;
+
+    this.authService
+      .editUserInfo(data, this.userService.accessToken)
+      .subscribe((resp) => {
+        console.log(resp);
+      });
+
+    console.log(data);
   }
 }

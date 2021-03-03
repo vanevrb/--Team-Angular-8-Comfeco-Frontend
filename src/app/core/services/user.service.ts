@@ -44,28 +44,7 @@ export class UserService {
   constructor(
     private saveLocal: SaveLocalService,
     private authService: AuthService
-  ) {
-    this.saveLocal
-      .getItem(environment.LOCAL_KEY_FOR_SAVE)
-      .then((val: TokenResponse) => {
-        if (!val.access_token) {
-          throw new Error('Invalid Token');
-        }
-        console.log(val);
-        return this.authService.getUserInfo(val.access_token).toPromise();
-      })
-      .then((data: any) => {
-        if (data.error) {
-          throw new Error('Invalid User');
-        }
-        this.user = data.message;
-        console.log(data);
-        return true;
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
+  ) {}
 
   async userInfo() {
     try {

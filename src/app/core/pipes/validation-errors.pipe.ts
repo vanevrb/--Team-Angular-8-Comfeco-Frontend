@@ -25,6 +25,9 @@ export class ValidationErrorsPipe implements PipeTransform {
     if (value.minlength) {
       return `Se necesitan por lo menos ${value.minlength['requiredLength']} carácteres`;
     }
+    if (value.maxlength) {
+      return `Máximo ${value.maxlength['requiredLength']} carácteres`;
+    }
     if (value.notAvailable) {
       return 'Este identificador ya esta activo.';
     }

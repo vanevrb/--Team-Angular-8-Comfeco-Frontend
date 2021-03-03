@@ -41,6 +41,7 @@ export class ProtectRoutesGuard
         if (!val) {
           throw new Error('Invalid Token');
         }
+        this.userService.accessToken = val;
         return this.authService.getUserInfo(val).toPromise();
       })
       .then((data: Response) => {
