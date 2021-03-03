@@ -10,6 +10,8 @@
   }
   &__item {
     margin: 0.2em;
+  }
+  &__link {
     &.active-route {
       background-color: darken($color: $color-secondary, $amount: 20);
     }

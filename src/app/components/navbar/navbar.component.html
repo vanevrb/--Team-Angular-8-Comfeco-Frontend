@@ -1,18 +1,40 @@
 <nav class="navbar" *ngIf="user$ | async as user; else socials">
   <ul class="navbar__links">
-    <li class="navbar__item" routerLinkActive="active-route">
-      <a routerLink="/" class="link navbar__link">Home </a>
+    <li class="navbar__item">
+      <a
+        routerLink="/home"
+        class="link navbar__link"
+        routerLinkActive="active-route"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home
+      </a>
     </li>
-    <li class="navbar__item" routerLinkActive="active-route">
-      <a routerLink="/home/communities" class="link navbar__link"
+    <li class="navbar__item">
+      <a
+        routerLink="/communities"
+        class="link navbar__link"
+        routerLinkActive="active-route"
+        [routerLinkActiveOptions]="{ exact: true }"
         >Comunidades
       </a>
     </li>
-    <li class="navbar__item" routerLinkActive="active-route">
-      <a routerLink="#" class="link navbar__link">Talleres </a>
+    <li class="navbar__item">
+      <a
+        routerLink="#"
+        class="link navbar__link"
+        routerLinkActive="active-route"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Talleres
+      </a>
     </li>
-    <li class="navbar__item" routerLinkActive="active-route">
-      <a routerLink="#" class="link navbar__link">Creadores de contenido </a>
+    <li class="navbar__item">
+      <a
+        routerLink="#"
+        class="link navbar__link"
+        routerLinkActive="active-route"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Creadores de contenido
+      </a>
     </li>
   </ul>
 </nav>

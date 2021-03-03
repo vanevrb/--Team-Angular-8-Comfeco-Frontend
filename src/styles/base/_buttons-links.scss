@@ -6,6 +6,7 @@
   letter-spacing: 1px;
   text-align: center;
   text-transform: uppercase;
+  text-decoration: none;
   white-space: nowrap;
   border: none;
   border-radius: $border-radius-10;
@@ -13,8 +14,7 @@
     opacity 150ms ease-in, background-color 150ms ease-in-out;
   -webkit-user-select: none;
   -moz-user-select: none;
-  -ms-user-select: none;
-      user-select: none;
+  user-select: none;
   touch-action: manipulation;
   cursor: pointer;
 }

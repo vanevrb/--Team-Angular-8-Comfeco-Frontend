@@ -21,6 +21,15 @@ const routes: Routes = [
     canLoad: [ProtectRoutesGuard],
   },
   {
+    path: 'communities',
+    loadChildren: () =>
+      import('./communities/communities.module').then(
+        (m) => m.CommunitiesModule
+      ),
+    canActivate: [ProtectRoutesGuard],
+    canLoad: [ProtectRoutesGuard],
+  },
+  {
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
