@@ -6,10 +6,10 @@ import { CoreModule } from './core/core.module';
 import { UserMenuModule } from './user-menu/user-menu.module';
 
 import { AppComponent } from './app.component';
-import { HeaderComponent } from '../components/header/header.component';
-import { NavbarComponent } from '../components/navbar/navbar.component';
-import { FooterComponent } from '../components/footer/footer.component';
-import { SocialComponent } from '../components/social/social.component';
+import { HeaderComponent } from './components/header/header.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { FooterComponent } from './components/footer/footer.component';
+import { SocialComponent } from './components/social/social.component';
 
 @NgModule({
   declarations: [

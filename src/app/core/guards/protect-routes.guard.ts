@@ -24,16 +24,12 @@ import { environment } from '../../../environments/environment';
 })
 export class ProtectRoutesGuard
   implements CanActivate, CanDeactivate<unknown>, CanLoad {
-  // private user$: Observable<UsersInfoResponse | undefined>;
-
   constructor(
     private authService: AuthService,
     private userService: UserService,
     private router: Router,
     private saveLocal: SaveLocalService
-  ) {
-    // this.user$ = this.userService.user$;
-  }
+  ) {}
 
   canActivate(
     route: ActivatedRouteSnapshot,
@@ -41,18 +37,17 @@ export class ProtectRoutesGuard
   ): Promise<boolean> {
     return this.saveLocal
       .getItem(environment.LOCAL_KEY_FOR_SAVE)
-      .then((val: TokenResponse) => {
-        if (!val.access_token) {
+      .then((val: string) => {
+        if (!val) {
           throw new Error('Invalid Token');
         }
-        return this.authService.getUserInfo(val.access_token).toPromise();
+        return this.authService.getUserInfo(val).toPromise();
       })
       .then((data: Response) => {
         if (data.error) {
           throw new Error('Invalid User');
         }
         this.userService.user = data.message;
-        console.log(data);
         return true;
       })
       .catch((err) => {

@@ -20,11 +20,8 @@ import { UsersInfoResponse } from '../interfaces/UsersInfo';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanDeactivate<unknown>, CanLoad {
-  // private user$: Observable<UsersInfoResponse | undefined>;
+  constructor(private userService: UserService, private router: Router) {}
 
-  constructor(private userService: UserService, private router: Router) {
-    // this.user$ = this.userService.user$;
-  }
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
@@ -40,6 +37,7 @@ export class AuthGuard implements CanActivate, CanDeactivate<unknown>, CanLoad {
       })
       .catch((err) => true);
   }
+
   canDeactivate(
     component: unknown,
     currentRoute: ActivatedRouteSnapshot,
@@ -52,6 +50,7 @@ export class AuthGuard implements CanActivate, CanDeactivate<unknown>, CanLoad {
     | UrlTree {
     return true;
   }
+
   canLoad(
     route: Route,
     segments: UrlSegment[]

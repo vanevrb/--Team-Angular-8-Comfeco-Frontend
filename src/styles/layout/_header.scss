@@ -33,5 +33,8 @@
 
   .user-menu__wrapper {
     flex: 1;
+    &:empty {
+      display: none;
+    }
   }
 }

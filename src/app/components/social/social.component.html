@@ -1,7 +1,7 @@
-<nav class="socials">
-  <ul class="icons-social">
-    <li class="label">Síguenos en las redes:</li>
-    <li>
+<nav class="socials navbar">
+  <p class="label">Síguenos en las redes:</p>
+  <ul class="icons-social navbar__links">
+    <li class="navbar__item">
       <a
         [href]="
           'https://www.facebook.com/groups/2637132626546045' | domSanitizer
@@ -11,7 +11,7 @@
         <span class="fab facebook"></span>
       </a>
     </li>
-    <li>
+    <li class="navbar__item">
       <a
         [href]="'https://discord.gg/5Bb5yvzNPr' | domSanitizer"
         target="_blank"
@@ -19,7 +19,7 @@
         <span class="fab discord"></span>
       </a>
     </li>
-    <li>
+    <li class="navbar__item">
       <a
         [href]="
           'https://www.youtube.com/channel/UC0oi8uH1vxDcyt7b_3iByew'

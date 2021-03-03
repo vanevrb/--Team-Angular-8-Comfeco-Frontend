@@ -1,0 +1,21 @@
+<nav class="navbar" *ngIf="user$ | async as user; else socials">
+  <ul class="navbar__links">
+    <li class="navbar__item" routerLinkActive="active-route">
+      <a routerLink="/" class="link navbar__link">Home </a>
+    </li>
+    <li class="navbar__item" routerLinkActive="active-route">
+      <a routerLink="/home/communities" class="link navbar__link"
+        >Comunidades
+      </a>
+    </li>
+    <li class="navbar__item" routerLinkActive="active-route">
+      <a routerLink="#" class="link navbar__link">Talleres </a>
+    </li>
+    <li class="navbar__item" routerLinkActive="active-route">
+      <a routerLink="#" class="link navbar__link">Creadores de contenido </a>
+    </li>
+  </ul>
+</nav>
+<ng-template #socials>
+  <app-social></app-social>
+</ng-template>

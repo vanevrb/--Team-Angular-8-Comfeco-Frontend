@@ -1,131 +1,62 @@
-  <div class="container layout">
-    <!-- <app-sponsors></app-sponsors> -->
-    
-    <div class="row">
-      <div class="col-sm-3 communities">
-        <div  class="f-title "><div class="row"><h1  class="col-sm-9">Comunidades </h1><a href="" class="col-sm-3" style="
-          color: white;
-      "> Ver más</a></div></div>
-        <div class="list_communities">
-          <ul >
-            
-            <li *ngFor="let community of communities">
-              <div class="item-thumbnail ">
-                <a title=" " href="{{community.link}}" target="_blank"> <img alt="{{community.name}}" class="circle" src="{{community.image}}" title="" border="0" height="72" width="72"> </a><span class="title row" style="
-            margin: 0px 0px 0px 0px;
-        "><a class="col-sm-8" title=" " href="{{community.link}}">{{community.name}}</a><div class="col-sm-4"><a href="">Unirme</a></div></span>  </div>
-              <div style="clear: both;"></div>
-            </li>
-              </ul>
-        </div>
+<div class="container layout">
+  <!-- <app-sponsors></app-sponsors> -->
 
+  <div class="row">
+    <div class="col-sm-3 communities">
+      <div class="f-title">
+        <div class="row">
+          <h1 class="col-sm-9">Comunidades</h1>
+          <a href="" class="col-sm-3" style="color: white"> Ver más</a>
+        </div>
       </div>
-      <div class="col-sm-8 center">
-        <h1>Bienvenidos a Community Fest and Code</h1>
-        <h2>¡Conoce gente, aprende y gana!</h2>
-        <p>La próxima edición regresa en el 2022, en la cual se planea involucrar a todos los programadores
-          independientmente del area de conocimiento que se encuentre, todo con un mismo proposito, aprender en
-          comunidad.
-        </p>
-        <h2> Ellos ya creen en esta iniciativa:</h2>
-        <div class="slider-container">
-          <!-- nav arrows -->
-          <div class="slider-arrows">
-            <!-- <div class="slider-arrow-left arrowLeft">
-              <svg width="16" height="30" class="svg-arrow">
-                <polyline style="stroke-linejoin:miter; stroke:#00275a; stroke-width:3; fill: none;"
-                  points="15 2, 2 15, 15 28" />
-              </svg>
-            </div> -->
-            <!-- <div class="slider-arrow-right arrowRight">
-              <svg width="16" height="30" class="svg-arrow">
-                <polyline style="stroke-linejoin:miter; stroke:#00275a; stroke-width:3; fill: none;"
-                  points="2 2, 14 15, 2 28" />
-              </svg>
-            </div> -->
-          </div>
-          <div #frame id="frame">
-            <div #slider id="slider">
-              <!-- Box start -->
-              <div *ngFor="let creator of creators" class="slider-box slide">
-                <div class="slider-photo">
-                  <!-- <a href="{{creator.link}}"> -->
-                  <div>
-                    <img src='{{creator.image}}' />
-                  </div>
-                  <div class="creator_info">
-                    <div class="lenguage_icon"><span class='{{creator.lenguage_icon}}'></span></div>
-                    <b>{{creator.name}}</b>
-                  </div>
-                  <!-- </a> -->
-                </div>
-              </div>
-              <!-- Box end -->
+      <div class="list_communities">
+        <ul>
+          <li *ngFor="let community of communities">
+            <div class="item-thumbnail">
+              <a title=" " href="{{ community.link }}" target="_blank">
+                <img
+                  alt="{{ community.name }}"
+                  class="circle"
+                  src="{{ community.image }}"
+                  title=""
+                  border="0"
+                  height="72"
+                  width="72"
+                /> </a
+              ><span class="title row" style="margin: 0px 0px 0px 0px"
+                ><a class="col-sm-8" title=" " href="{{ community.link }}">{{
+                  community.name
+                }}</a>
+                <div class="col-sm-4"><a href="">Unirme</a></div></span
+              >
             </div>
-          </div>
-
-        </div>
-        <div class="select-sliders">
-          <div class="sel"><span class="radio r" ng-click="showevent(1)"></span> </div>
-          <div class="sel"><span class="radio r" ng-click="showevent(2)"></span> </div>
-          <div class="sel"><span class="radio r" ng-click="showevent(3)"></span> </div>
-          <div class="sel"><span class="radio r" ng-click="showevent(4)"></span> </div>
-          <div class="sel"><span class="radio r" ng-click="showevent(5)"></span> </div>
-        </div>
-        <div class="right">
-          <a href="#" class="button_ap">Apoyar Iniciativa</a>
-        </div>
-        <h2> Sponsors:</h2>
-        <div class="slider-container-sponsors">
-          <!-- nav arrows -->
-          <div class="slider-arrows">
-            <div class="slider-arrow-left arrowLeft">
-              <svg width="16" height="30" class="svg-arrow">
-                <polyline style="stroke-linejoin:miter; stroke:#00275a; stroke-width:3; fill: none;"
-                  points="15 2, 2 15, 15 28" />
-              </svg>
-            </div>
-            <div class="slider-arrow-right arrowRight">
-              <svg width="16" height="30" class="svg-arrow">
-                <polyline style="stroke-linejoin:miter; stroke:#00275a; stroke-width:3; fill: none;"
-                  points="2 2, 14 15, 2 28" />
-              </svg>
-            </div>
-          </div>
-          <div #frame id="frame">
-            <div #slider id="slider">
-              <!-- Box start -->
-              <div *ngFor="let creator of sponsors" class="slider-box slide">
-                <div class="slider-photo">
-                  <!-- <a href="{{creator.link}}"> -->
-                  <div>
-                    <img src='{{creator.image}}' />
-                  </div>
-
-                  <!-- </a> -->
-                </div>
-              </div>
-              <!-- Box end -->
-            </div>
-          </div>
-
-        </div>
-        <div class="select-sliders">
-          <div class="sel"><span class="radio r" ng-click="showevent(1)"></span> </div>
-          <div class="sel"><span class="radio r" ng-click="showevent(2)"></span> </div>
-          <div class="sel"><span class="radio r" ng-click="showevent(3)"></span> </div>
-          <div class="sel"><span class="radio r" ng-click="showevent(4)"></span> </div>
-          <div class="sel"><span class="radio r" ng-click="showevent(5)"></span> </div>
-        </div>
-        <h2>Preparate lo bueno esta por venir</h2>
-
-        <app-counter>
-
-        </app-counter>
-
+            <div style="clear: both"></div>
+          </li>
+        </ul>
       </div>
-      <!-- <div class="col-sm-2">
+    </div>
+    <div class="col-sm-8 center">
+      <h1>Bienvenidos a Community Fest and Code</h1>
+      <h2>¡Conoce gente, aprende y gana!</h2>
+      <p>
+        La próxima edición regresa en el 2022, en la cual se planea involucrar a
+        todos los programadores independientmente del area de conocimiento que
+        se encuentre, todo con un mismo proposito, aprender en comunidad.
+      </p>
+      <h2>Ellos ya creen en esta iniciativa:</h2>
+
+      <div class="right">
+        <a href="#" class="button_ap">Apoyar Iniciativa</a>
+      </div>
+
+      <app-slider></app-slider>
+
+      <app-sponsors></app-sponsors>
+
+      <app-counter> </app-counter>
+    </div>
+    <!-- <div class="col-sm-2">
 
       </div> -->
-    </div>
   </div>
+</div>
