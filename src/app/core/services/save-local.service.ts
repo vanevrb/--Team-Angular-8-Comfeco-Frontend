@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import * as localForage from 'localforage';
-import { from, Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',

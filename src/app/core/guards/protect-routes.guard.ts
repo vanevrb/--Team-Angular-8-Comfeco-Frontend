@@ -14,22 +14,50 @@ import {
 import { Observable } from 'rxjs';
 
 import { UserService } from '../services/user.service';
+import { UsersInfoResponse, TokenResponse, Response } from '../interfaces';
+import { AuthService } from '../services/auth.service';
+import { SaveLocalService } from '../services/save-local.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class ProtectRoutesGuard
   implements CanActivate, CanDeactivate<unknown>, CanLoad {
-  private user$: Observable<string | undefined>;
-  constructor(private userService: UserService, private router: Router) {
-    this.user$ = this.userService.user$;
+  // private user$: Observable<UsersInfoResponse | undefined>;
+
+  constructor(
+    private authService: AuthService,
+    private userService: UserService,
+    private router: Router,
+    private saveLocal: SaveLocalService
+  ) {
+    // this.user$ = this.userService.user$;
   }
 
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
-    return true;
+  ): Promise<boolean> {
+    return this.saveLocal
+      .getItem(environment.LOCAL_KEY_FOR_SAVE)
+      .then((val: TokenResponse) => {
+        if (!val.access_token) {
+          throw new Error('Invalid Token');
+        }
+        return this.authService.getUserInfo(val.access_token).toPromise();
+      })
+      .then((data: Response) => {
+        if (data.error) {
+          throw new Error('Invalid User');
+        }
+        this.userService.user = data.message;
+        console.log(data);
+        return true;
+      })
+      .catch((err) => {
+        return false;
+      });
   }
   canDeactivate(
     component: unknown,

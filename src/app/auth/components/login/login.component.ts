@@ -2,12 +2,19 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { tap, map, switchMap } from 'rxjs/operators';
+
 import { emailPattern } from '../../helpers/emailPattern';
 import { SaveLocalService } from '../../../core/services/save-local.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment.prod';
 import { AlertService } from '../../../core/services/alert.service';
 import { UserService } from '../../../core/services/user.service';
+import {
+  UsersInfoResponse,
+  Response,
+  TokenResponse,
+} from '../../../core/interfaces';
 
 @Component({
   selector: 'app-login',
@@ -99,40 +106,48 @@ export class LoginComponent implements OnInit {
     /**
      * Bring data from api
      */
-    this.authService.login(loginData).subscribe((data) => {
-      this.isLoading = false;
-      /**
-       * Handle error
-       */
-      if (data.error) {
-        const message =
-          data.code === 400
-            ? 'Verifica Email / Constraseña'
-            : 'Ups, algo salío mal';
-        return this.swal.failSwal(data.message, message);
-      }
+    this.authService
+      .login(loginData)
+      .pipe(
+        map<Response, TokenResponse>((data) => data.message),
+        tap((resp) => {
+          this.saveLocal.setItem(
+            environment.LOCAL_KEY_FOR_SAVE,
+            resp.access_token
+          );
+        }),
+        switchMap((resp) => this.authService.getUserInfo(resp.access_token))
+      )
+      .subscribe((data) => {
+        /**
+         * Handle error
+         */
+        if (data.error) {
+          const message =
+            data.code === 400
+              ? 'Verifica Email / Contraseña'
+              : 'Ups, algo salío mal';
+          return this.swal.failSwal(data.message, message);
+        }
 
-      /**
-       * Save token
-       */
-      this.saveLocal.setItem(environment.LOCAL_KEY_FOR_SAVE, data.message);
+        this.userService.user = data.message;
 
-      this.userService.username = this.email.value;
+        /**
+         * Restart form
+         */
+        this.login.reset();
 
-      /**
-       * Restart form
-       */
-      this.login.reset();
+        /**
+         * Send succes alert
+         */
+        this.swal.successSwal('Login de usuario exitoso');
 
-      /**
-       * Send succes alert
-       */
-      this.swal.successSwal('Login de usuario exitoso');
+        this.isLoading = false;
 
-      /**
-       * go homepage
-       */
-      this.router.navigate(['home']);
-    });
+        /**
+         * go homepage
+         */
+        this.router.navigate(['home']);
+      });
   }
 }

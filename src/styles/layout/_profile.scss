@@ -10,5 +10,36 @@
   }
   &__item {
     margin: 0.2em;
+    &.active-route {
+      background-color: darken($color: $color-secondary, $amount: 20);
+    }
   }
+}
+
+.profile__wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  align-items: flex-start;
+  justify-content: center;
+  width: 100%;
+  min-height: 50vh;
+}
+
+.user-info__wrapper,
+.user-events__wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  width: 100%;
+  min-height: 280px;
+}
+.user-info__wrapper {
+  grid-column: 1;
+}
+.user-events__wrapper {
+  grid-column: -1;
+}
+
+.user-info {
+  @include card;
 }

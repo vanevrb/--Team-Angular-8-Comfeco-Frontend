@@ -1,3 +1,15 @@
+%card {
+  position: relative;
+  width: 92%;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  margin: 0 auto;
+  padding: 5%;
+  background-color: $bg-color;
+  text-align: center;
+}
+
 %link {
   display: flex;
   align-items: center;
@@ -8,6 +20,55 @@
   text-align: center;
   list-style: none;
   font-size: 1rem;
+}
+
+@mixin card {
+  @extend %card;
+  &__edit {
+    position: absolute;
+    top: 2%;
+    right: 2%;
+    padding: 0.2em 1em;
+    text-align: right;
+    color: $color-p-darken;
+    font-weight: 600;
+  }
+  &__avatar {
+    width: 50%;
+    max-width: 150px;
+    max-height: 150px;
+    margin: 0 auto;
+    border-radius: 50%;
+    overflow: hidden;
+    img {
+      max-width: 100%;
+      -o-object-fit: contain;
+      object-fit: contain;
+      -o-object-position: center;
+      object-position: center center;
+    }
+  }
+  &__content {
+    width: 100%;
+
+    p {
+      text-align: justify;
+    }
+  }
+  &__badges {
+    display: flex;
+    justify-content: space-around;
+    align-content: center;
+
+    width: 100%;
+    padding: 1em 0;
+    span {
+      padding: 0.3em 1em;
+      color: $bg-color;
+      background-color: $color-primary;
+      border-radius: $border-radius-50;
+    }
+  }
 }
 
 @mixin link($color: "var(--bg-color3)") {

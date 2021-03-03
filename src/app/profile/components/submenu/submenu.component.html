@@ -1,36 +1,52 @@
 <div class="submenu-general">
   <ul class="submenu-general__links">
-    <li class="submenu-general__item">
-      <button
+    <li
+      class="submenu-general__item"
+      routerLinkActive="active-route"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a
         class="button button-secondary submenu-general__link"
         [routerLink]="['profile']"
       >
         Mi Perfil
-      </button>
+      </a>
     </li>
-    <li class="submenu-general__item">
-      <button
+    <li
+      class="submenu-general__item"
+      routerLinkActive="active-route"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a
         class="button button-secondary submenu-general__link"
         (click)="navTo('badges')"
       >
         Insignias
-      </button>
+      </a>
     </li>
-    <li class="submenu-general__item">
-      <button
+    <li
+      class="submenu-general__item"
+      routerLinkActive="active-route"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a
         class="button button-secondary submenu-general__link"
         (click)="navTo('groups')"
       >
         Grupos
-      </button>
+      </a>
     </li>
-    <li class="submenu-general__item">
-      <button
+    <li
+      class="submenu-general__item"
+      routerLinkActive="active-route"
+      [routerLinkActiveOptions]="{ exact: true }"
+    >
+      <a
         class="button button-secondary submenu-general__link"
         (click)="navTo('events')"
       >
         Eventos
-      </button>
+      </a>
     </li>
   </ul>
 </div>

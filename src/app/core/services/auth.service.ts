@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Users } from '../interfaces/Users';
-import { environment } from '../../../environments/environment';
-import { catchError, debounceTime, map, tap } from 'rxjs/operators';
+
 import { Observable, of } from 'rxjs';
-import { Response } from '../interfaces/Response';
-import { Login } from '../interfaces/Login';
-import { LoginResponse } from '../interfaces/loginResponse';
+import { catchError, map, tap } from 'rxjs/operators';
+import { SaveLocalService } from './save-local.service';
+
+import { Users, Response, Login, LoginResponse } from '../interfaces';
+import { environment } from '../../../environments/environment';
+import { UsersInfoResponse } from '../interfaces/UsersInfo';
 @Injectable({
   providedIn: 'root',
 })
@@ -20,13 +21,13 @@ export class AuthService {
     Authorization: `Basic ${this.credentials}`,
   });
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private saveLocal: SaveLocalService) {}
 
   newUser(user: Users): Observable<Response> {
     return this.http.post<Response>(`${this.baseUrl}/api/usuario`, user).pipe(
-      tap((data) => {
-        console.log(data);
-      }),
+      // tap((data) => {
+      //   console.log(data);
+      // }),
       catchError((err) => {
         console.error(err);
         return of({
@@ -42,9 +43,9 @@ export class AuthService {
     return this.http
       .post(`${this.baseUrl}/api/confirmation/change-password`, dataPassword)
       .pipe(
-        tap((data) => {
-          console.log(data);
-        }),
+        // tap((data) => {
+        //   console.log(data);
+        // }),
         catchError((err) => {
           console.error(err);
           return of({
@@ -93,34 +94,36 @@ export class AuthService {
       );
   }
 
-  getUserInfo(email: string) {
+  editUserInfo(user: any) {
+    return this.http.put(`${this.baseUrl}/api/perfil`, user);
+  }
+
+  getUserInfo(token: string): Observable<Response> {
     return this.http
-      .get(`${this.baseUrl}/api/usuario/recuperar/${email}`)
-      .pipe
-      // tap((data) => {
-      //   console.log(data);
-      // })
-      // map<LoginResponse, Response>((data) => ({
-      //   code: 200,
-      //   message: data,
-      // })),
-      // catchError((err) => {
-      //   console.error(err.error);
-      //   if (err.error.error === 'invalid_grant') {
-      //     return of({
-      //       code: 400,
-      //       message: 'Parece que la información enviada no es valida',
-      //       error: err,
-      //     });
-      //   } else {
-      //     return of({
-      //       code: 500,
-      //       message: 'algo salio mal, intenta más tarde',
-      //       error: err,
-      //     });
-      //   }
-      // })
-      ();
+      .get<UsersInfoResponse>(`${this.baseUrl}/api/usuario`, {
+        headers: new HttpHeaders({
+          authorization: `Bearer ${token}`,
+        }),
+      })
+      .pipe(
+        // tap((data) => {
+        //   console.log(data);
+        // }),
+        map<UsersInfoResponse, Response>((data) => ({
+          code: 200,
+          message: data,
+        })),
+        catchError((err) => {
+          console.error(err.error);
+          if (err.message) {
+            return of({
+              code: 500,
+              message: 'algo salio mal, intenta más tarde',
+              error: err,
+            });
+          }
+        })
+      );
   }
 
   forgotPassword(email: string) {

@@ -10,18 +10,20 @@ import {
   UrlTree,
   Router,
 } from '@angular/router';
+
 import { Observable } from 'rxjs';
+
 import { UserService } from '../services/user.service';
-import { map } from 'rxjs/operators';
+import { UsersInfoResponse } from '../interfaces/UsersInfo';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate, CanDeactivate<unknown>, CanLoad {
-  private user$: Observable<string | undefined>;
+  // private user$: Observable<UsersInfoResponse | undefined>;
 
   constructor(private userService: UserService, private router: Router) {
-    this.user$ = this.userService.user$;
+    // this.user$ = this.userService.user$;
   }
   canActivate(
     route: ActivatedRouteSnapshot,

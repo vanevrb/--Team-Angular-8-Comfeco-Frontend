@@ -1,1 +1,25 @@
-<p>user-info-card works!</p>
+<div class="user-info__wrapper" *ngIf="user">
+  <article class="user-info">
+    <button class="link user-info__edit" (click)="goEdit()">
+      Editar perfil
+    </button>
+    <div class="user-info__avatar">
+      <img
+        [src]="'https://i.pravatar.cc/150' | domSanitizer"
+        alt="user avatar"
+      />
+    </div>
+    <div class="user-info__content">
+      <h2>@{{ user.usuNickname }}</h2>
+      <p>
+        {{ user.perfil.biografia }}
+      </p>
+    </div>
+    <div class="user-info__badges">
+      <span *ngFor="let skill of user.perfil.conocimientos">{{ skill }}</span>
+    </div>
+    <div class="user-info__actions">
+      <span *ngFor="let red of user.perfil.redesSociales">{{ red }}</span>
+    </div>
+  </article>
+</div>

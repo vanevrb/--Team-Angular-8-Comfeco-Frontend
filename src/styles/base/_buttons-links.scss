@@ -13,7 +13,8 @@
     opacity 150ms ease-in, background-color 150ms ease-in-out;
   -webkit-user-select: none;
   -moz-user-select: none;
-  user-select: none;
+  -ms-user-select: none;
+      user-select: none;
   touch-action: manipulation;
   cursor: pointer;
 }

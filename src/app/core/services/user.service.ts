@@ -1,35 +1,71 @@
 import { Injectable } from '@angular/core';
+
 import { Subject } from 'rxjs';
+
+import { AuthService } from './auth.service';
 import { SaveLocalService } from './save-local.service';
+import { UsersInfoResponse, TokenResponse } from '../interfaces';
 import { environment } from '../../../environments/environment';
-import { DecodeService } from './decode.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  private _user$: Subject<string | undefined> = new Subject();
+  private _user$: Subject<UsersInfoResponse> = new Subject();
+  private _token$: Subject<string | undefined> = new Subject();
+
+  private _currentUser: UsersInfoResponse;
+
+  private _accessToken: string | undefined;
 
   get user$() {
     return this._user$.asObservable();
   }
 
-  private _username: string | undefined;
-
-  set username(username: string) {
-    this._username = username;
-    this._user$.next(this._username);
+  get accessToken(): string {
+    this._token$.next(this._accessToken);
+    return this._accessToken;
+  }
+  set accessToken(token: string) {
+    this._accessToken = token;
+    this._token$.next(this._accessToken);
   }
 
-  get username() {
-    this._user$.next(this._username);
-    return this._username;
+  set user(user: UsersInfoResponse) {
+    this._currentUser = user;
+    this._user$.next(this._currentUser);
+  }
+
+  get user() {
+    this._user$.next(this._currentUser);
+    return this._currentUser;
   }
 
   constructor(
     private saveLocal: SaveLocalService,
-    private decodeService: DecodeService
-  ) {}
+    private authService: AuthService
+  ) {
+    this.saveLocal
+      .getItem(environment.LOCAL_KEY_FOR_SAVE)
+      .then((val: TokenResponse) => {
+        if (!val.access_token) {
+          throw new Error('Invalid Token');
+        }
+        console.log(val);
+        return this.authService.getUserInfo(val.access_token).toPromise();
+      })
+      .then((data: any) => {
+        if (data.error) {
+          throw new Error('Invalid User');
+        }
+        this.user = data.message;
+        console.log(data);
+        return true;
+      })
+      .catch((err) => {
+        return false;
+      });
+  }
 
   async userInfo() {
     try {
@@ -40,17 +76,14 @@ export class UserService {
         throw new Error('No se ha iniciado sesión');
       }
 
-      const tokenInfo = this.decodeService.decode(val.access_token);
       const actualDate = new Date().getTime().toString().slice(0, 10);
 
       if (+actualDate > val.exp) {
         throw new Error('Es necesario iniciar sesión nuevamente');
       }
 
-      this.username = tokenInfo.user_name;
       return true;
     } catch (err) {
-      this.username = undefined;
       return false;
     }
   }

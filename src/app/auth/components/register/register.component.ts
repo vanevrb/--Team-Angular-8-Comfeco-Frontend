@@ -120,27 +120,27 @@ export class RegisterComponent implements OnInit {
      */
     this.authService
       .newUser(dataRegister)
-      .pipe(
-        switchMap(() =>
-          this.authService.login({
-            usuCorreo: dataRegister.usuCorreo,
-            usuClave: dataRegister.usuClave,
-          })
-        )
-      )
+      // .pipe(
+      //   switchMap(() =>
+      //     this.authService.login({
+      //       usuCorreo: dataRegister.usuCorreo,
+      //       usuClave: dataRegister.usuClave,
+      //     })
+      //   )
+      // )
       .subscribe((data) => {
-        this.isLoading = false;
         /**
          * Handle error
          */
         if (data.error) {
           return this.swal.failSwal(data.message, 'Ups, algo salío mal');
         }
-        /**
-         * Save token
-         */
-        this.saveLocal.setItem(environment.LOCAL_KEY_FOR_SAVE, data.message);
-        this.userService.username = this.email.value;
+
+        console.log(data);
+        // /**
+        //  * Save token
+        //  */
+        // this.saveLocal.setItem(environment.LOCAL_KEY_FOR_SAVE, data.message);
 
         /**
          * Restart form
@@ -150,12 +150,14 @@ export class RegisterComponent implements OnInit {
         /**
          * Send succes alert
          */
-        this.swal.successSwal('Login de usuario exitoso');
+        this.swal.successSwal('Regitro exitoso');
+
+        this.isLoading = false;
 
         /**
          * go homepage
          */
-        this.router.navigate(['home']);
+        this.router.navigate(['auth', 'login']);
       });
   }
 }

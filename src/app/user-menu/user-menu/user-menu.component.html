@@ -1,8 +1,8 @@
-<div class="user-menu__container" *ngIf="username$ | async as username">
+<div class="user-menu__container" *ngIf="user$ | async as user">
   <button class="button user-menu__notification">
     <span class="far bell"></span>
   </button>
-  <article class="user-menu__content" *ngIf="username">
+  <article class="user-menu__content">
     <div class="user-menu__header">
       <div class="user-menu__avatar">
         <img [src]="'https://i.pravatar.cc/150' | domSanitizer" alt="avatar" />
@@ -14,7 +14,7 @@
         (click)="showSubmenu()"
       >
         <small>Welcome &nbsp;</small><br />
-        {{ username }}
+        @{{ user.usuNickname }}
       </h2>
     </div>
 

@@ -1,7 +1,9 @@
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
+
+import { AdminInterceptor } from './interceptors/admin.interceptor';
 
 import { DomSanitizerPipe } from './pipes/dom-sanitizer.pipe';
 import { ValidationErrorsPipe } from './pipes/validation-errors.pipe';

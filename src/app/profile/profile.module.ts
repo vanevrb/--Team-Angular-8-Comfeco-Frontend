@@ -13,13 +13,22 @@ import { UserInfoCardComponent } from './components/user-info-card/user-info-car
 import { UserBadgesCardComponent } from './components/user-badges-card/user-badges-card.component';
 import { UserActivitiesCardComponent } from './components/user-activities-card/user-activities-card.component';
 import { UserEventsCardComponent } from './components/user-events-card/user-events-card.component';
-
+import { CoreModule } from '../core/core.module';
 
 @NgModule({
-  declarations: [LayoutComponent, ProfileComponent, EditionComponent, SubmenuComponent, GroupsComponent, EventsComponent, BadgesComponent, UserInfoCardComponent, UserBadgesCardComponent, UserActivitiesCardComponent, UserEventsCardComponent],
-  imports: [
-    CommonModule,
-    ProfileRoutingModule
-  ]
+  declarations: [
+    LayoutComponent,
+    ProfileComponent,
+    EditionComponent,
+    SubmenuComponent,
+    GroupsComponent,
+    EventsComponent,
+    BadgesComponent,
+    UserInfoCardComponent,
+    UserBadgesCardComponent,
+    UserActivitiesCardComponent,
+    UserEventsCardComponent,
+  ],
+  imports: [CommonModule, ProfileRoutingModule, CoreModule],
 })
-export class ProfileModule { }
+export class ProfileModule {}
