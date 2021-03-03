@@ -47,7 +47,7 @@ body {
 }
 body::after {
   content: "";
-  background-color: #9c3a9e;
+  // background-color: #9c3a9e;
   /* margin: 10px; */
   height: 60vh;
   /* opacity: 0.7; */
@@ -78,6 +78,12 @@ svg {
 }
 .center {
   text-align: center;
+}
+.right {
+  text-align: right;
+}
+.left {
+  text-align: left;
 }
 .margin-5 {
 }
