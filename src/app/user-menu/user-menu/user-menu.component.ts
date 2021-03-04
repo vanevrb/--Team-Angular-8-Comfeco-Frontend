@@ -32,29 +32,6 @@ export class UserMenuComponent implements OnInit {
   }
   ngOnInit() {}
 
-  getCurrUser() {
-    return this.saveLocal
-      .getItem(environment.LOCAL_KEY_FOR_SAVE)
-      .then((val: TokenResponse) => {
-        if (!val.access_token) {
-          throw new Error('Invalid Token');
-        }
-        console.log(val);
-        return this.authService.getUserInfo(val.access_token).toPromise();
-      })
-      .then((data: Response) => {
-        if (data.error) {
-          throw new Error('Invalid User');
-        }
-        this.userService.user = data.message;
-        console.log(data);
-        return true;
-      })
-      .catch((err) => {
-        return false;
-      });
-  }
-
   showSubmenu() {
     this.isShowSubmenu = !this.isShowSubmenu;
   }

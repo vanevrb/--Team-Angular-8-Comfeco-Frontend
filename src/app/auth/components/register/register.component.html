@@ -15,7 +15,7 @@
             {{ nickErrors | validationErrors }}
           </span>
           <a
-            routerLink="/forgot"
+            routerLink="/auth/forgot"
             class="link input__error"
             *ngIf="nickErrors && nickErrors.notAvailable"
           >
@@ -35,7 +35,7 @@
             {{ emailErrors | validationErrors }}
           </span>
           <a
-            routerLink="/forgot"
+            routerLink="/auth/forgot"
             class="link input__error"
             *ngIf="emailErrors && emailErrors.notAvailable"
           >

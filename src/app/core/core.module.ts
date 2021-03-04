@@ -1,10 +1,11 @@
 import { NgModule } from '@angular/core';
 
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { DomSanitizerPipe } from './pipes/dom-sanitizer.pipe';
 import { ValidationErrorsPipe } from './pipes/validation-errors.pipe';
+import { AdminInterceptor } from './interceptors/admin.interceptor';
 
 @NgModule({
   declarations: [DomSanitizerPipe, ValidationErrorsPipe],
@@ -14,6 +15,13 @@ import { ValidationErrorsPipe } from './pipes/validation-errors.pipe';
     ReactiveFormsModule,
     DomSanitizerPipe,
     ValidationErrorsPipe,
+  ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AdminInterceptor,
+      multi: true,
+    },
   ],
 })
 export class CoreModule {}

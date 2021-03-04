@@ -3,25 +3,23 @@ import { Injectable } from '@angular/core';
 
 import { Observable, of } from 'rxjs';
 import { catchError, map, tap } from 'rxjs/operators';
-import { SaveLocalService } from './save-local.service';
 
-import { Users, Response, Login, LoginResponse } from '../interfaces';
+import {
+  UsersInfoResponse,
+  Users,
+  Response,
+  Login,
+  LoginResponse,
+} from '../interfaces';
+
 import { environment } from '../../../environments/environment';
-import { UsersInfoResponse } from '../interfaces/UsersInfo';
 @Injectable({
   providedIn: 'root',
 })
 export class AuthService {
   private baseUrl = environment.BASE_URL;
-  private credentials = btoa(
-    `${environment.TOKEN_USERNAME}:${environment.TOKEN_PASSWORD}`
-  );
-  private httpHeaders = new HttpHeaders({
-    'Content-Type': 'application/x-www-form-urlencoded',
-    Authorization: `Basic ${this.credentials}`,
-  });
 
-  constructor(private http: HttpClient, private saveLocal: SaveLocalService) {}
+  constructor(private http: HttpClient) {}
 
   newUser(user: Users): Observable<Response> {
     return this.http.post<Response>(`${this.baseUrl}/api/usuario`, user).pipe(
@@ -64,9 +62,7 @@ export class AuthService {
     param.set('password', user.usuClave);
 
     return this.http
-      .post<LoginResponse>(`${this.baseUrl}/api/login`, param.toString(), {
-        headers: this.httpHeaders,
-      })
+      .post<LoginResponse>(`${this.baseUrl}/api/login`, param.toString())
       .pipe(
         // tap((data) => {
         //   console.log(data);
