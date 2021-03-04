@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ProtectRoutesGuard } from './core/guards/protect-routes.guard';
 import { AuthGuard } from './core/guards/auth.guard';
+import { UserInfoResolver } from './core/guards/user-info.resolver';
 
 const routes: Routes = [
   {
@@ -17,8 +18,8 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
-    canActivate: [ProtectRoutesGuard],
     canLoad: [ProtectRoutesGuard],
+    resolve: [UserInfoResolver],
   },
   {
     path: 'communities',
@@ -26,15 +27,15 @@ const routes: Routes = [
       import('./communities/communities.module').then(
         (m) => m.CommunitiesModule
       ),
-    canActivate: [ProtectRoutesGuard],
     canLoad: [ProtectRoutesGuard],
+    resolve: [UserInfoResolver],
   },
   {
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
-    canActivate: [ProtectRoutesGuard],
     canLoad: [ProtectRoutesGuard],
+    resolve: [UserInfoResolver],
   },
   {
     path: '',

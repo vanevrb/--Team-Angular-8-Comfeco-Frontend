@@ -60,6 +60,7 @@ export class EditionComponent implements OnInit {
     private swal: AlertService
   ) {
     this.currUser = this.userService.user;
+    console.log(this.currUser);
     this.editForm = this.createForm();
   }
 
@@ -112,13 +113,16 @@ export class EditionComponent implements OnInit {
     }
 
     const { usuClave2, ...data } = this.editForm.value;
+    const updatedUser = {
+      usuId: this.currUser.usuId,
+      ...data,
+    };
+    console.log(updatedUser);
 
     this.authService
-      .editUserInfo(data, this.userService.accessToken)
+      .editUserInfo(updatedUser, this.userService.accessToken)
       .subscribe((resp) => {
         console.log(resp);
       });
-
-    console.log(data);
   }
 }

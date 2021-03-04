@@ -34,26 +34,8 @@ export class ProtectRoutesGuard
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): Promise<boolean> {
-    return this.saveLocal
-      .getItem(environment.LOCAL_KEY_FOR_SAVE)
-      .then((val: string) => {
-        if (!val) {
-          throw new Error('Invalid Token');
-        }
-        this.userService.accessToken = val;
-        return this.authService.getUserInfo(val).toPromise();
-      })
-      .then((data: Response) => {
-        if (data.error) {
-          throw new Error('Invalid User');
-        }
-        this.userService.user = data.message;
-        return true;
-      })
-      .catch((err) => {
-        return false;
-      });
+  ): boolean {
+    return true;
   }
   canDeactivate(
     component: unknown,
