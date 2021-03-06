@@ -90,65 +90,6 @@ export class AuthService {
       );
   }
 
-  editUserInfo(user: any, token: string) {
-    return this.http
-      .put(`${this.baseUrl}/api/perfil`, user, {
-        headers: new HttpHeaders({
-          authorization: `Bearer ${token}`,
-        }),
-      })
-      .pipe(
-        // tap((data) => {
-        //   console.log(data);
-        // }),
-        map<any, Response>((data) => {
-          console.log(data);
-          return {
-            code: 200,
-            message: data,
-          };
-        }),
-        catchError((err) => {
-          console.error(err.error);
-          if (err.message) {
-            return of({
-              code: 500,
-              message: 'algo salio mal, intenta más tarde',
-              error: err,
-            });
-          }
-        })
-      );
-  }
-
-  getUserInfo(token: string): Observable<Response> {
-    return this.http
-      .get<UsersInfoResponse>(`${this.baseUrl}/api/usuario`, {
-        headers: new HttpHeaders({
-          authorization: `Bearer ${token}`,
-        }),
-      })
-      .pipe(
-        // tap((data) => {
-        //   console.log(data);
-        // }),
-        map<UsersInfoResponse, Response>((data) => ({
-          code: 200,
-          message: data,
-        })),
-        catchError((err) => {
-          console.error(err.error);
-          if (err.message) {
-            return of({
-              code: 500,
-              message: 'algo salio mal, intenta más tarde',
-              error: err,
-            });
-          }
-        })
-      );
-  }
-
   forgotPassword(email: string) {
     return this.http.get(`${this.baseUrl}/api/usuario/recuperar/${email}`);
   }

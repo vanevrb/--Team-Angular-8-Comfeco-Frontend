@@ -10,6 +10,7 @@ import { AuthService } from '../../../core/services/auth.service';
 import { environment } from '../../../../environments/environment.prod';
 import { AlertService } from '../../../core/services/alert.service';
 import { UserService } from '../../../core/services/user.service';
+import { EditInfoService } from '../../../core/services/edit-info.service';
 import {
   UsersInfoResponse,
   Response,
@@ -45,6 +46,7 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private editInfoService: EditInfoService,
     private router: Router,
     private saveLocal: SaveLocalService,
     private swal: AlertService,
@@ -116,7 +118,7 @@ export class LoginComponent implements OnInit {
             resp.access_token
           );
         }),
-        switchMap((resp) => this.authService.getUserInfo(resp.access_token))
+        switchMap((resp) => this.editInfoService.getUserInfo(resp.access_token))
       )
       .subscribe((data) => {
         /**

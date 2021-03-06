@@ -1,9 +1,10 @@
+import { Paises, Conocimientos, RedesSociales } from '.';
 export interface Profile {
-  idPerfil: number;
-  genero: string;
+  idPerfil?: number;
+  genero: number;
   fechaNacimiento: string;
-  pais: string;
   biografia: string;
-  conocimientos: Array<string>;
-  redesSociales: Array<string>;
+  pais: Paises;
+  conocimientos: Array<Conocimientos>;
+  redesSociales: Array<RedesSociales>;
 }

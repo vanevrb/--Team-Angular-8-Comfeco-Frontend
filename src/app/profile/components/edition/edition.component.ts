@@ -8,6 +8,9 @@ import { UserService } from '../../../core/services/user.service';
 import { emailPattern } from 'src/app/core/helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
 import { UsersInfoResponse } from '../../../core/interfaces';
+import { zip } from 'rxjs';
+import { EditInfoService } from '../../../core/services/edit-info.service';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-edition',
@@ -36,19 +39,16 @@ export class EditionComponent implements OnInit {
     return field.touched && field.errors;
   }
   get generoErrors() {
-    const field = this.perfil.get('genero');
+    const field = this.editForm.get('genero');
     return field.touched && field.errors;
   }
   get biografiaErrors() {
-    const field = this.perfil.get('biografia');
+    const field = this.editForm.get('biografia');
     return field.touched && field.errors;
   }
 
   get email() {
     return this.editForm.get('usuCorreo');
-  }
-  get perfil() {
-    return this.editForm.get('perfil') as FormGroup;
   }
 
   constructor(
@@ -56,15 +56,32 @@ export class EditionComponent implements OnInit {
     private myValidators: MyValidatorsService,
     private userService: UserService,
     private authService: AuthService,
+    private editInfoService: EditInfoService,
     private router: Router,
     private swal: AlertService
   ) {
     this.currUser = this.userService.user;
-    console.log(this.currUser);
+    zip(
+      this.editInfoService.getCountries(),
+      this.editInfoService.getSkills(),
+      this.editInfoService.getSocials()
+    )
+      .pipe(
+        map(([paises, conocimientos, redes]) => ({
+          paises,
+          conocimientos,
+          redes,
+        }))
+      )
+      .subscribe((data) => {
+        console.log(data);
+      });
     this.editForm = this.createForm();
   }
 
   ngOnInit(): void {}
+
+  getInfo() {}
 
   createForm() {
     return this.fb.group(
@@ -77,23 +94,25 @@ export class EditionComponent implements OnInit {
           this.currUser.usuCorreo,
           [Validators.required, Validators.pattern(emailPattern)],
         ],
-        usuClave: ['', [Validators.required, Validators.minLength(6)]],
-        usuClave2: ['', [Validators.required]],
-        perfil: this.fb.group({
-          genero: [this.currUser.perfil.genero, [Validators.required]],
-          fechaNacimiento: [this.currUser.perfil.fechaNacimiento],
-          pais: [this.currUser.perfil.pais],
-          biografia: [
-            this.currUser.perfil.biografia,
-            [Validators.maxLength(140)],
-          ],
-          conocimientos: [this.currUser.perfil.conocimientos],
-          redesSociales: this.fb.group({
-            facebook: this.currUser.perfil.redesSociales['facebook'],
-            github: this.currUser.perfil.redesSociales['github'],
-            linkedin: this.currUser.perfil.redesSociales['linkedin'],
-            twitter: this.currUser.perfil.redesSociales['twitter'],
-          }),
+        usuClave: [''],
+        usuClave2: [''],
+
+        genero: [
+          this.currUser.perfil.genero,
+          [Validators.required, Validators.min(0), Validators.max(2)],
+        ],
+        fechaNacimiento: [this.currUser.perfil.fechaNacimiento],
+        pais: [this.currUser.perfil.pais],
+        biografia: [
+          this.currUser.perfil.biografia,
+          [Validators.maxLength(140)],
+        ],
+        conocimientos: [this.currUser.perfil.conocimientos],
+        redesSociales: this.fb.group({
+          facebook: this.currUser.perfil.redesSociales['facebook'],
+          github: this.currUser.perfil.redesSociales['github'],
+          linkedin: this.currUser.perfil.redesSociales['linkedin'],
+          twitter: this.currUser.perfil.redesSociales['twitter'],
         }),
       },
       {
@@ -108,18 +127,18 @@ export class EditionComponent implements OnInit {
      */
     if (this.editForm.pristine || this.editForm.invalid) {
       this.editForm.markAllAsTouched();
-      this.perfil.markAllAsTouched();
       return;
     }
 
-    const { usuClave2, ...data } = this.editForm.value;
+    const { usuClave2, perfil, ...data } = this.editForm.value;
+    const { redesSociales, ...upPerfil } = perfil;
     const updatedUser = {
       usuId: this.currUser.usuId,
-      ...data,
+      perfil: upPerfil,
     };
     console.log(updatedUser);
 
-    this.authService
+    this.editInfoService
       .editUserInfo(updatedUser, this.userService.accessToken)
       .subscribe((resp) => {
         console.log(resp);

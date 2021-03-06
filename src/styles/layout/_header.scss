@@ -1,26 +1,26 @@
 .header {
   display: flex;
-  flex-wrap: wrap;
   align-items: center;
   width: 100%;
-  min-height: 80px;
+  min-height: 60px;
   background-color: $bg-color;
   color: $color-p-darken;
   text-align: center;
   font-size: 1.5rem;
   font-weight: 700;
   font-family: "Roboto", sans-serif;
-  padding: 5vw 5vh;
+  padding: 2vh 0;
   .nav__container {
-    flex: 2;
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-start;
-    width: 50%;
+    justify-content: center;
+    width: 90%;
     min-width: 300px;
+    margin: 0 auto;
     .image__container {
-      width: 50%;
-      max-width: 200px;
+      width: 150px;
+      min-width: 150px;
       img {
         max-width: 100%;
         object-fit: contain;

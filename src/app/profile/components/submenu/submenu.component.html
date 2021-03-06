@@ -1,36 +1,37 @@
 <div class="submenu-general">
+  {{ actualPath }}
   <ul class="submenu-general__links">
     <li class="submenu-general__item">
-      <a
+      <button
         class="button button-secondary submenu-general__link"
-        [routerLink]="['profile']"
+        (click)="navTo('')"
       >
         Mi Perfil
-      </a>
+      </button>
     </li>
     <li class="submenu-general__item">
-      <a
+      <button
         class="button button-secondary submenu-general__link"
         (click)="navTo('badges')"
       >
         Insignias
-      </a>
+      </button>
     </li>
     <li class="submenu-general__item">
-      <a
+      <button
         class="button button-secondary submenu-general__link"
         (click)="navTo('groups')"
       >
         Grupos
-      </a>
+      </button>
     </li>
     <li class="submenu-general__item">
-      <a
+      <button
         class="button button-secondary submenu-general__link"
         (click)="navTo('events')"
       >
         Eventos
-      </a>
+      </button>
     </li>
   </ul>
 </div>

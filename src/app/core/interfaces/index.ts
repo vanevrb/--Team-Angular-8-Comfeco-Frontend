@@ -6,8 +6,14 @@ import { Users } from './Users';
 import { UsersInfoResponse } from './UsersInfo';
 import { Roles } from './Roles';
 import { TokenResponse } from './TokenResponse';
+import { Conocimientos } from './Conocimientos';
+import { RedesSociales } from './RedesSociales';
+import { Paises } from './Paises';
 
 export {
+  Conocimientos,
+  RedesSociales,
+  Paises,
   Login,
   Roles,
   LoginResponse,

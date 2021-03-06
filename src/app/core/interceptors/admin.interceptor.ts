@@ -38,7 +38,6 @@ export class AdminInterceptor implements HttpInterceptor {
         return req;
       }
     }
-    console.log(req);
     return req;
   }
 

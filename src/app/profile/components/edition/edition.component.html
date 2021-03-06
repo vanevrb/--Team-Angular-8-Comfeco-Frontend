@@ -69,90 +69,84 @@
         </span>
       </div>
 
-      <div class="form-nested" formGroupName="perfil">
-        <div class="form-group">
-          <label class="form-label">GENERO</label>
-          <select
-            class="form-control"
-            [class.error]="generoErrors"
-            type="text"
-            formControlName="genero"
-          >
-            <option value="">Seleccione una opción</option>
-            <option value="H">Se identifica con hombre</option>
-            <option value="F">Se identifica con mujer</option>
-            <option value="I">Prefiero no contestar</option>
-          </select>
-          <span class="input__error" *ngIf="generoErrors">
-            {{ generoErrors | validationErrors }}
-          </span>
-        </div>
-        <div class="form-group">
-          <label class="form-label">País</label>
-          <input
-            class="form-control"
-            placeholder="Escriba su país"
-            type="text"
-            formControlName="pais"
-          />
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">BIOGRAFÍA</label>
-          <textarea
-            class="form-control"
-            [class.error]="biografiaErrors"
-            placeholder="Escriba un pequeñoo fragmento que lo describa"
-            type="text"
-            formControlName="biografia"
-          ></textarea>
-          <span class="input__error" *ngIf="biografiaErrors">
-            {{ biografiaErrors | validationErrors }}
-          </span>
-        </div>
-
-        <div class="form-group">
-          <label class="form-label">CONOCIMIENTOS</label>
-          <select
-            class="form-control"
-            type="text"
-            formControlName="conocimientos"
-            multiple
-          >
-            <option value="frontend">Front end</option>
-            <option value="backend">Backend</option>
-            <option value="devops">DevOps</option>
-            <option value="videogame">Video Game Developers</option>
-            <option value="uiux">UI/UX</option>
-            <option value="database">Database Developer</option>
-            <option value="cloud">Cloud Computing</option>
-          </select>
-        </div>
-
-        <div class="form-nested__child" formArrayName="redesSociales">
-          REDES SOCIALES
-          <div class="form-group">
-            <label class="form-label">facebook.com/</label>
-            <input class="form-control" placeholder="usuario fb" type="text" />
-            <!-- formControlName="facebook" -->
-          </div>
-          <div class="form-group">
-            <label class="form-label">github.com/</label>
-            <input class="form-control" placeholder="usuario gh" type="text" />
-            <!-- formControlName="github" -->
-          </div>
-          <div class="form-group">
-            <label class="form-label">linkedin.com/in/</label>
-            <input class="form-control" placeholder="usuario ln" type="text" />
-            <!-- formControlName="linkedin" -->
-          </div>
-          <div class="form-group">
-            <label class="form-label">twitter.com/</label>
-            <input class="form-control" placeholder="usuario tw" type="text" />
-            <!-- formControlName="twitter" -->
-          </div>
-        </div>
+      <div class="form-group">
+        <label class="form-label">GENERO</label>
+        <select
+          class="form-control"
+          [class.error]="generoErrors"
+          type="text"
+          formControlName="genero"
+        >
+          <option value="">Seleccione una opción</option>
+          <option value="0">Se identifica con hombre</option>
+          <option value="1">Se identifica con mujer</option>
+          <option value="2">Prefiero no contestar</option>
+        </select>
+        <span class="input__error" *ngIf="generoErrors">
+          {{ generoErrors | validationErrors }}
+        </span>
       </div>
+      <div class="form-group">
+        <label class="form-label">País</label>
+        <input
+          class="form-control"
+          placeholder="Escriba su país"
+          type="text"
+          formControlName="pais"
+        />
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">BIOGRAFÍA</label>
+        <textarea
+          class="form-control"
+          [class.error]="biografiaErrors"
+          placeholder="Escriba un pequeñoo fragmento que lo describa"
+          type="text"
+          formControlName="biografia"
+        ></textarea>
+        <span class="input__error" *ngIf="biografiaErrors">
+          {{ biografiaErrors | validationErrors }}
+        </span>
+      </div>
+      <!-- 
+      <div class="form-group">
+        <label class="form-label">CONOCIMIENTOS</label>
+        <select
+          class="form-control"
+          type="text"
+          formControlName="conocimientos"
+          multiple
+        >
+          <option value="frontend">Front end</option>
+          <option value="backend">Backend</option>
+          <option value="devops">DevOps</option>
+          <option value="videogame">Video Game Developers</option>
+          <option value="uiux">UI/UX</option>
+          <option value="database">Database Developer</option>
+          <option value="cloud">Cloud Computing</option>
+        </select>
+      </div>
+
+      <div class="form-nested__child" formArrayName="redesSociales">
+        REDES SOCIALES
+        <div class="form-group">
+          <label class="form-label">facebook.com/</label>
+          <input class="form-control" placeholder="usuario fb" type="text" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">github.com/</label>
+          <input class="form-control" placeholder="usuario gh" type="text" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">linkedin.com/in/</label>
+          <input class="form-control" placeholder="usuario ln" type="text" />
+        </div>
+        <div class="form-group">
+          <label class="form-label">twitter.com/</label>
+          <input class="form-control" placeholder="usuario tw" type="text" />
+        </div>
+      </div> -->
 
       <div class="form-group btn-container">
         <button

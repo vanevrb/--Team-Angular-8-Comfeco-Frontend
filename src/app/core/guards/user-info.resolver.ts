@@ -5,12 +5,12 @@ import {
   RouterStateSnapshot,
   ActivatedRouteSnapshot,
 } from '@angular/router';
-import { Observable, of } from 'rxjs';
+
+import { Response } from '../interfaces';
 import { SaveLocalService } from '../services/save-local.service';
 import { UserService } from '../services/user.service';
-import { AuthService } from '../services/auth.service';
+import { EditInfoService } from '../services/edit-info.service';
 import { environment } from '../../../environments/environment';
-import { Response } from '../interfaces';
 
 @Injectable({
   providedIn: 'root',
@@ -19,7 +19,7 @@ export class UserInfoResolver implements Resolve<boolean> {
   constructor(
     private saveLocal: SaveLocalService,
     private userService: UserService,
-    private authService: AuthService
+    private editInfoService: EditInfoService
   ) {}
 
   resolve(
@@ -33,7 +33,7 @@ export class UserInfoResolver implements Resolve<boolean> {
           throw new Error('Invalid Token');
         }
         this.userService.accessToken = val;
-        return this.authService.getUserInfo(val).toPromise();
+        return this.editInfoService.getUserInfo(val).toPromise();
       })
       .then((data: Response) => {
         if (data.error) {
