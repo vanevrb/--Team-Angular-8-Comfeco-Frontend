@@ -8,9 +8,12 @@ import { UserService } from '../../../core/services/user.service';
 import { emailPattern } from 'src/app/core/helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
 import { UsersInfoResponse } from '../../../core/interfaces';
-import { zip } from 'rxjs';
+import { zip, Observable } from 'rxjs';
 import { EditInfoService } from '../../../core/services/edit-info.service';
 import { map } from 'rxjs/operators';
+import { EditUsers } from '../../../core/models/EditUsers';
+import { Profile } from '../../../core/interfaces/Profile';
+import { RedesSociales } from '../../../core/interfaces/RedesSociales';
 
 @Component({
   selector: 'app-edition',
@@ -20,6 +23,9 @@ import { map } from 'rxjs/operators';
 export class EditionComponent implements OnInit {
   editForm: FormGroup;
   isLoading = false;
+  renderPaises: any;
+  renderConoc: any;
+
   private currUser: UsersInfoResponse;
 
   get nickErrors() {
@@ -67,16 +73,18 @@ export class EditionComponent implements OnInit {
       this.editInfoService.getSocials()
     )
       .pipe(
-        map(([paises, conocimientos, redes]) => ({
-          paises,
+        map(([pais, conocimientos, redesSociales]) => ({
+          pais,
           conocimientos,
-          redes,
+          redesSociales,
         }))
       )
-      .subscribe((data) => {
-        console.log(data);
+      .toPromise()
+      .then((data) => {
+        this.renderPaises = data.pais;
+
+        this.editForm = this.createForm();
       });
-    this.editForm = this.createForm();
   }
 
   ngOnInit(): void {}
@@ -130,16 +138,41 @@ export class EditionComponent implements OnInit {
       return;
     }
 
-    const { usuClave2, perfil, ...data } = this.editForm.value;
-    const { redesSociales, ...upPerfil } = perfil;
+    const { usuClave2, ...data } = this.editForm.value;
+
     const updatedUser = {
       usuId: this.currUser.usuId,
-      perfil: upPerfil,
     };
-    console.log(updatedUser);
+
+    const redes: RedesSociales = {
+      perfil: { idPerfil: this.currUser.perfil.idPerfil },
+      redSocial: { idRedSocial: 2 },
+      usuario: this.editForm.get('redesSociales').get('github').value,
+    };
+
+    const perfil: Profile = {
+      idPerfil: this.currUser.perfil.idPerfil,
+      genero: +this.editForm.get('genero').value,
+      fechaNacimiento: '',
+      biografia: 'bio',
+      pais: { idPais: +this.editForm.get('pais').value },
+      conocimientos: this.editForm
+        .get('conocimientos')
+        .value.map((item) => ({ idConocimiento: +item })),
+      redesSociales: [redes],
+    };
+
+    const newData = new EditUsers(
+      this.editForm.get('usuNickname').value,
+      this.editForm.get('usuCorreo').value,
+      this.currUser.usuId,
+      perfil
+    );
+
+    console.log(newData);
 
     this.editInfoService
-      .editUserInfo(updatedUser, this.userService.accessToken)
+      .editUserInfo(newData, this.userService.accessToken)
       .subscribe((resp) => {
         console.log(resp);
       });

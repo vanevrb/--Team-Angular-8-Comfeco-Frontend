@@ -1,4 +1,5 @@
 export interface RedesSociales {
-  idRedSocial: string;
-  nombreRedSocial: string;
+  perfil: { idPerfil: number };
+  redSocial: { idRedSocial: number };
+  usuario: string;
 }

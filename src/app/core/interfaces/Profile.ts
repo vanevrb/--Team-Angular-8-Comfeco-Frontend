@@ -1,6 +1,7 @@
 import { Paises, Conocimientos, RedesSociales } from '.';
 export interface Profile {
-  idPerfil?: number;
+  idPerfil: number;
+  avatar?: string;
   genero: number;
   fechaNacimiento: string;
   biografia: string;

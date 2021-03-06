@@ -1,4 +1,4 @@
 export interface Paises {
-  idPais: string;
-  nombrePais: string;
+  idPais: number;
+  nombrePais?: string;
 }

@@ -18,6 +18,13 @@ import { environment } from '../../../environments/environment';
 })
 export class AuthService {
   private baseUrl = environment.BASE_URL;
+  private credentials = btoa(
+    `${environment.TOKEN_USERNAME}:${environment.TOKEN_PASSWORD}`
+  );
+  private basicAuthHeaders = new HttpHeaders({
+    'Content-Type': 'application/x-www-form-urlencoded',
+    Authorization: `Basic ${this.credentials}`,
+  });
 
   constructor(private http: HttpClient) {}
 
@@ -62,7 +69,9 @@ export class AuthService {
     param.set('password', user.usuClave);
 
     return this.http
-      .post<LoginResponse>(`${this.baseUrl}/api/login`, param.toString())
+      .post<LoginResponse>(`${this.baseUrl}/api/login`, param.toString(), {
+        headers: this.basicAuthHeaders,
+      })
       .pipe(
         // tap((data) => {
         //   console.log(data);

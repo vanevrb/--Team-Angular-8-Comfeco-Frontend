@@ -16,12 +16,12 @@ import { AdminInterceptor } from './interceptors/admin.interceptor';
     DomSanitizerPipe,
     ValidationErrorsPipe,
   ],
-  providers: [
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: AdminInterceptor,
-      multi: true,
-    },
-  ],
+  // providers: [
+  //   {
+  //     provide: HTTP_INTERCEPTORS,
+  //     useClass: AdminInterceptor,
+  //     multi: true,
+  //   },
+  // ],
 })
 export class CoreModule {}

@@ -1,7 +1,12 @@
 <button class="button button-primary" routerLink="/profile">Regresar</button>
 <section class="content">
   <div class="tab-pane fade in active">
-    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form">
+    <form
+      [formGroup]="editForm"
+      (ngSubmit)="onSubmit()"
+      class="form"
+      *ngIf="this.renderPaises"
+    >
       <div class="form-group">
         <label class="form-label">NICKNAME</label>
         <input
@@ -78,9 +83,9 @@
           formControlName="genero"
         >
           <option value="">Seleccione una opción</option>
-          <option value="0">Se identifica con hombre</option>
-          <option value="1">Se identifica con mujer</option>
-          <option value="2">Prefiero no contestar</option>
+          <option value="1">Se identifica con hombre</option>
+          <option value="2">Se identifica con mujer</option>
+          <option value="3">Prefiero no contestar</option>
         </select>
         <span class="input__error" *ngIf="generoErrors">
           {{ generoErrors | validationErrors }}
@@ -88,12 +93,17 @@
       </div>
       <div class="form-group">
         <label class="form-label">País</label>
-        <input
+        <select
           class="form-control"
           placeholder="Escriba su país"
           type="text"
           formControlName="pais"
-        />
+        >
+          <option value="">Seleccione una opción:</option>
+          <option *ngFor="let val of this.renderPaises" [value]="val.idPais">
+            {{ val.nombrePais }}
+          </option>
+        </select>
       </div>
 
       <div class="form-group">
@@ -109,7 +119,7 @@
           {{ biografiaErrors | validationErrors }}
         </span>
       </div>
-      <!-- 
+
       <div class="form-group">
         <label class="form-label">CONOCIMIENTOS</label>
         <select
@@ -118,17 +128,18 @@
           formControlName="conocimientos"
           multiple
         >
-          <option value="frontend">Front end</option>
-          <option value="backend">Backend</option>
-          <option value="devops">DevOps</option>
-          <option value="videogame">Video Game Developers</option>
-          <option value="uiux">UI/UX</option>
-          <option value="database">Database Developer</option>
-          <option value="cloud">Cloud Computing</option>
+          <option value="">Selección múltiple</option>
+          <option value="1">Front end</option>
+          <option value="2">Backend</option>
+          <option value="3">DevOps</option>
+          <option value="4">Video Game Developers</option>
+          <option value="5">UI/UX</option>
+          <option value="6">Database Developer</option>
+          <option value="7">Cloud Computing</option>
         </select>
       </div>
 
-      <div class="form-nested__child" formArrayName="redesSociales">
+      <div class="form-nested__child" formGroupName="redesSociales">
         REDES SOCIALES
         <div class="form-group">
           <label class="form-label">facebook.com/</label>
@@ -146,7 +157,7 @@
           <label class="form-label">twitter.com/</label>
           <input class="form-control" placeholder="usuario tw" type="text" />
         </div>
-      </div> -->
+      </div>
 
       <div class="form-group btn-container">
         <button
