@@ -15,6 +15,7 @@ export class UserInfoCardComponent {
 
   constructor(private userService: UserService, private router: Router) {
     this.user = this.userService.user;
+    console.log('user', this.user);
   }
 
   goEdit() {

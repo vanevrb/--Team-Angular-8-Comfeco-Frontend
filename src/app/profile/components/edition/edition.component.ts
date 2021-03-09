@@ -14,6 +14,7 @@ import { map } from 'rxjs/operators';
 import { EditUsers } from '../../../core/models/EditUsers';
 import { Profile } from '../../../core/interfaces/Profile';
 import { RedesSociales } from '../../../core/interfaces/RedesSociales';
+import { Knowledge } from '../../../core/enums/Knowledge';
 
 @Component({
   selector: 'app-edition',
@@ -156,9 +157,9 @@ export class EditionComponent implements OnInit {
       fechaNacimiento: '',
       biografia: 'bio',
       pais: { idPais: +this.editForm.get('pais').value },
-      conocimientos: this.editForm
-        .get('conocimientos')
-        .value.map((item) => ({ idConocimiento: +item })),
+      conocimientos: this.editForm.get('conocimientos').value.map((item) => {
+        return { idConocimiento: +item, nombreConocimiento: Knowledge[item] };
+      }),
       redesSociales: [redes],
     };
 
