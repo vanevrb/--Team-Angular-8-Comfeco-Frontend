@@ -6,6 +6,12 @@
     class="form"
     *ngIf="this.renderPaises"
   >
+    <div class="form-group">
+      <img [src]="currUser.perfil.avatar" alt="avatar" />
+      <button type="button" class="button button-fab" (click)="openWidget()">
+        edit
+      </button>
+    </div>
     <div class="form-group wrapper">
       <div class="form-group">
         <label class="form-label">NICKNAME</label>
@@ -164,6 +170,7 @@
         class="button button-primary button-block"
         type="submit"
         [disabled]="isLoading"
+        *ngIf="!editForm.pristine"
       >
         Guardar Cambios
       </button>

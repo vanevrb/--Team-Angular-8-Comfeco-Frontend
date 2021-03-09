@@ -15,13 +15,14 @@ import { emailPattern } from 'src/app/core/helpers/emailPattern';
 import { UsersInfoResponse } from '../../../core/interfaces';
 import { zip } from 'rxjs';
 import { EditInfoService } from '../../../core/services/edit-info.service';
-import { map } from 'rxjs/operators';
+import { map, switchMap } from 'rxjs/operators';
 import { EditUsers } from '../../../core/models/EditUsers';
 import { Profile } from '../../../core/interfaces/Profile';
 import { RedesSociales } from '../../../core/interfaces/RedesSociales';
 import { Knowledge } from '../../../core/enums/Knowledge';
 import { ProfileDetails } from '../../../core/models/ProfileDetails';
 import { SocialNames } from '../../../core/enums/SocialNames';
+import { CloudinaryService } from '../../../core/services/cloudinary.service';
 
 @Component({
   selector: 'app-edition',
@@ -33,8 +34,9 @@ export class EditionComponent implements OnInit {
   isLoading = false;
   renderPaises: any;
   renderConoc: any;
+  widget: any;
 
-  private currUser: UsersInfoResponse;
+  currUser: UsersInfoResponse;
 
   get nickErrors() {
     const field = this.editForm.get('usuNickname');
@@ -79,9 +81,11 @@ export class EditionComponent implements OnInit {
     private userService: UserService,
     private editInfoService: EditInfoService,
     private router: Router,
-    private swal: AlertService
+    private swal: AlertService,
+    private cloudinaryService: CloudinaryService
   ) {
     this.currUser = this.userService.user;
+    this.widget = this.cloudinaryService.myWidget;
   }
 
   ngOnInit(): void {
@@ -116,6 +120,12 @@ export class EditionComponent implements OnInit {
 
   getRedSocialNombre(id: number) {
     return SocialNames[id];
+  }
+
+  openWidget() {
+    this.editForm.markAsDirty();
+
+    this.widget.open();
   }
 
   createForm() {
@@ -162,28 +172,48 @@ export class EditionComponent implements OnInit {
       return;
     }
 
-    const perfil: Profile = new ProfileDetails(
-      this.currUser.perfil.idPerfil,
-      +this.editForm.get('genero').value,
-      +this.editForm.get('pais').value,
-      this.editForm.get('biografia').value,
-      this.editForm.get('fechaNacimiento').value,
-      this.editForm.get('conocimientos').value,
-      this.redesSociales.value
-    );
+    this.swal.sendForm();
+    this.processUserEditData();
+  }
 
-    const newData = new EditUsers(
-      this.currUser.usuId,
-      this.editForm.get('usuNickname').value,
-      this.editForm.get('usuCorreo').value,
-      perfil
-    );
+  processUserEditData() {
+    this.cloudinaryService.url$
+      .pipe(
+        switchMap((imgUrl) => {
+          console.log(imgUrl);
+          const perfil: Profile = new ProfileDetails(
+            this.currUser.perfil.idPerfil,
+            +this.editForm.get('genero').value,
+            +this.editForm.get('pais').value,
+            this.editForm.get('biografia').value,
+            this.editForm.get('fechaNacimiento').value,
+            this.editForm.get('conocimientos').value,
+            this.redesSociales.value,
+            imgUrl
+          );
 
-    console.log(newData);
+          const newData = new EditUsers(
+            this.currUser.usuId,
+            this.editForm.get('usuNickname').value,
+            this.editForm.get('usuCorreo').value,
+            perfil
+          );
 
-    this.editInfoService
-      .editUserInfo(newData, this.userService.accessToken)
+          console.log(newData);
+          return this.editInfoService.editUserInfo(
+            newData,
+            this.userService.accessToken
+          );
+        }),
+        switchMap((response) => {
+          return this.editInfoService.getUserInfo(this.userService.accessToken);
+        })
+      )
       .subscribe((resp) => {
+        this.userService.user = resp.message;
+        this.currUser = this.userService.user;
+        this.swal.successSwal('Su información fue actualizada');
+        this.router.navigate(['profile']);
         console.log(resp);
       });
   }

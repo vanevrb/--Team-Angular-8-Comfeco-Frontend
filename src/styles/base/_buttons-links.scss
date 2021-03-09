@@ -35,6 +35,9 @@
   &.button-block {
     width: 100%;
   }
+  &:disabled {
+    pointer-events: none;
+  }
 }
 .button:hover,
 .button:active {

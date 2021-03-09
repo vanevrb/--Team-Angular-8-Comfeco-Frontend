@@ -4,10 +4,7 @@
       Editar perfil
     </button>
     <div class="user-info__avatar">
-      <img
-        [src]="'https://i.pravatar.cc/150' | domSanitizer"
-        alt="user avatar"
-      />
+      <img [src]="user.perfil.avatar | domSanitizer" alt="user avatar" />
     </div>
     <div class="user-info__content">
       <h2>@{{ user.usuNickname }}</h2>
