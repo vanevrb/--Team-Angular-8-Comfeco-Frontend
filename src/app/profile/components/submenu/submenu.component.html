@@ -1,9 +1,9 @@
 <div class="submenu-general">
-  {{ actualPath }}
   <ul class="submenu-general__links">
     <li class="submenu-general__item">
       <button
         class="button button-secondary submenu-general__link"
+        [class.active-route]="actualPath === 'profile'"
         (click)="navTo('')"
       >
         Mi Perfil
@@ -12,6 +12,7 @@
     <li class="submenu-general__item">
       <button
         class="button button-secondary submenu-general__link"
+        [class.active-route]="actualPath === 'badges'"
         (click)="navTo('badges')"
       >
         Insignias
@@ -20,6 +21,7 @@
     <li class="submenu-general__item">
       <button
         class="button button-secondary submenu-general__link"
+        [class.active-route]="actualPath === 'groups'"
         (click)="navTo('groups')"
       >
         Grupos
@@ -28,6 +30,7 @@
     <li class="submenu-general__item">
       <button
         class="button button-secondary submenu-general__link"
+        [class.active-route]="actualPath === 'events'"
         (click)="navTo('events')"
       >
         Eventos

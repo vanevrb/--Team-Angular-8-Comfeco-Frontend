@@ -11,6 +11,7 @@ import { SaveLocalService } from '../services/save-local.service';
 import { UserService } from '../services/user.service';
 import { EditInfoService } from '../services/edit-info.service';
 import { environment } from '../../../environments/environment';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -39,6 +40,7 @@ export class UserInfoResolver implements Resolve<boolean> {
         if (data.error) {
           throw new Error('Invalid User');
         }
+
         this.userService.user = data.message;
         return true;
       })

@@ -30,9 +30,6 @@ export class AuthService {
 
   newUser(user: Users): Observable<Response> {
     return this.http.post<Response>(`${this.baseUrl}/api/usuario`, user).pipe(
-      // tap((data) => {
-      //   console.log(data);
-      // }),
       catchError((err) => {
         console.error(err);
         return of({
@@ -48,9 +45,6 @@ export class AuthService {
     return this.http
       .post(`${this.baseUrl}/api/confirmation/change-password`, dataPassword)
       .pipe(
-        // tap((data) => {
-        //   console.log(data);
-        // }),
         catchError((err) => {
           console.error(err);
           return of({
@@ -73,9 +67,6 @@ export class AuthService {
         headers: this.basicAuthHeaders,
       })
       .pipe(
-        // tap((data) => {
-        //   console.log(data);
-        // }),
         map<LoginResponse, Response>((data) => ({
           code: 200,
           message: data,

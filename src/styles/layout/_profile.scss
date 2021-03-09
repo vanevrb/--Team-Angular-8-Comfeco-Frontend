@@ -12,8 +12,9 @@
     margin: 0.2em;
   }
   &__link {
+    font-size: 0.8em;
     &.active-route {
-      background-color: darken($color: $color-secondary, $amount: 20);
+      background-color: darken($color: $color-p-darken, $amount: 18);
     }
   }
 }

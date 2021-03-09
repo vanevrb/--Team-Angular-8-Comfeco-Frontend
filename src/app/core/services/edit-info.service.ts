@@ -55,13 +55,14 @@ export class EditInfoService {
         }),
       })
       .pipe(
-        // tap((data) => {
-        //   console.log(data);
-        // }),
-        map<UsersInfoResponse, Response>((data) => ({
-          code: 200,
-          message: data,
-        })),
+        map<UsersInfoResponse, Response>((data) => {
+          const { roles, usuClave, usuEstado, ...userInfo } = data;
+
+          return {
+            code: 200,
+            message: userInfo,
+          };
+        }),
         catchError((err) => {
           console.error(err.error);
           if (err.message) {

@@ -24,7 +24,6 @@ export class SubmenuComponent implements OnInit, OnDestroy {
       )
       .subscribe((data) => {
         if (data) {
-          console.log(data);
           this.actualPath = data;
         }
       });

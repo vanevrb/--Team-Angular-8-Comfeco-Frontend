@@ -34,6 +34,10 @@ export class RegisterComponent implements OnInit {
     return field.touched && field.errors;
   }
 
+  get activeUsuClave() {
+    return !!this.register.get('usuClave').value;
+  }
+
   get email() {
     return this.register.get('usuCorreo');
   }
@@ -111,46 +115,30 @@ export class RegisterComponent implements OnInit {
     /**
      * Bring data from api
      */
-    this.authService
-      .newUser(dataRegister)
-      // .pipe(
-      //   switchMap(() =>
-      //     this.authService.login({
-      //       usuCorreo: dataRegister.usuCorreo,
-      //       usuClave: dataRegister.usuClave,
-      //     })
-      //   )
-      // )
-      .subscribe((data) => {
-        /**
-         * Handle error
-         */
-        if (data.error) {
-          return this.swal.failSwal(data.message, 'Ups, algo salío mal');
-        }
+    this.authService.newUser(dataRegister).subscribe((data) => {
+      /**
+       * Handle error
+       */
+      if (data.error) {
+        return this.swal.failSwal(data.message, 'Ups, algo salío mal');
+      }
 
-        console.log(data);
-        // /**
-        //  * Save token
-        //  */
-        // this.saveLocal.setItem(environment.LOCAL_KEY_FOR_SAVE, data.message);
+      /**
+       * Restart form
+       */
+      this.register.reset();
 
-        /**
-         * Restart form
-         */
-        this.register.reset();
+      /**
+       * Send succes alert
+       */
+      this.swal.successSwal('Regitro exitoso');
 
-        /**
-         * Send succes alert
-         */
-        this.swal.successSwal('Regitro exitoso');
+      this.isLoading = false;
 
-        this.isLoading = false;
-
-        /**
-         * go homepage
-         */
-        this.router.navigate(['auth', 'login']);
-      });
+      /**
+       * go homepage
+       */
+      this.router.navigate(['auth', 'login']);
+    });
   }
 }

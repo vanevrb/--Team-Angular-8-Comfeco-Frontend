@@ -14,7 +14,7 @@
       <p>
         {{ user.perfil.biografia }}
         <br />
-        <small>{{ user.perfil.pais.nombrePais }}</small>
+        <small>{{ user.perfil.pais && user.perfil.pais.nombrePais }}</small>
       </p>
     </div>
     <div class="user-info__badges">
