@@ -1,4 +1,4 @@
 export interface Conocimientos {
-  idConocimiento: string;
+  idConocimiento: number;
   nombreConocimiento: string;
 }

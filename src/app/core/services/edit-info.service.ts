@@ -4,7 +4,11 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
 import { map, catchError, mergeMap } from 'rxjs/operators';
 
-import { UsersInfoResponse, Response } from '../interfaces';
+import {
+  UsersInfoResponse,
+  Response,
+  RedesSocialesResponse,
+} from '../interfaces';
 
 import { environment } from '../../../environments/environment';
 
@@ -84,7 +88,9 @@ export class EditInfoService {
     return this.http.get(`${this.baseUrl}/api/conocimiento`);
   }
 
-  getSocials() {
-    return this.http.get(`${this.baseUrl}/api/red-social`);
+  getSocials(): Observable<RedesSocialesResponse[]> {
+    return this.http.get<RedesSocialesResponse[]>(
+      `${this.baseUrl}/api/red-social`
+    );
   }
 }

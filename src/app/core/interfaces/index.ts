@@ -9,6 +9,7 @@ import { TokenResponse } from './TokenResponse';
 import { Conocimientos } from './Conocimientos';
 import { RedesSociales } from './RedesSociales';
 import { Paises } from './Paises';
+import { RedesSocialesResponse } from './RedesSocialesResponse';
 
 export {
   Conocimientos,
@@ -22,4 +23,5 @@ export {
   Users,
   UsersInfoResponse,
   TokenResponse,
+  RedesSocialesResponse,
 };

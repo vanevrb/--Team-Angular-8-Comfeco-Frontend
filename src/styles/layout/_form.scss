@@ -12,11 +12,38 @@
 }
 .form {
   width: 100%;
+  margin-bottom: 10%;
 }
 
 .form-group {
+  width: 100%;
+  &.wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    width: 100%;
+    column-gap: 1.5em;
+    .form-group {
+      flex: 1;
+      min-width: 130px;
+    }
+  }
+  textarea {
+    height: 100%;
+    min-height: 65px;
+    resize: none;
+    overflow-x: none;
+    overflow-y: auto;
+  }
   input.error {
     background-color: $color-danger-alpha;
+  }
+  &.btn-container {
+    margin-top: 2em;
+    margin-bottom: 1em;
+  }
+  input[type="date"] {
+    padding-right: 0;
   }
 }
 
@@ -48,17 +75,17 @@
   transition: border-color ease-in-out 0.15s;
 }
 
-.fa-icon {
-  font-size: 1.3em;
-  padding-right: 0.5em;
-  cursor: pointer;
-  &.error {
-    color: $color-danger;
-  }
-  &.checked {
-    color: $color-secondary;
-  }
-}
+// .fa-icon {
+//   font-size: 1.3em;
+//   padding-right: 0.5em;
+//   cursor: pointer;
+//   &.error {
+//     color: $color-danger;
+//   }
+//   &.checked {
+//     color: $color-secondary;
+//   }
+// }
 
 .form-group input[type="checkbox"] + .label-text {
   cursor: pointer;
