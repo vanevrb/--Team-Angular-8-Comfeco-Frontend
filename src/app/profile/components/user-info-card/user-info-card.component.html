@@ -12,9 +12,9 @@
     <div class="user-info__content">
       <h2>@{{ user.usuNickname }}</h2>
       <p>
-        {{ user.perfil.biografia }}
-        <br />
         <small>{{ user.perfil.pais && user.perfil.pais.nombrePais }}</small>
+        <br />
+        {{ user.perfil.biografia }}
       </p>
     </div>
     <div class="user-info__badges">
@@ -23,7 +23,19 @@
       </span>
     </div>
     <div class="user-info__actions">
-      <span *ngFor="let red of user.perfil.redesSociales">{{ red }}</span>
+      <ul>
+        <li *ngFor="let red of user.perfil.redesSociales">
+          <a
+            *ngIf="red.usuario"
+            class="link"
+            [href]="red.redSocial.idRedSocial | redes: red.usuario"
+            target="_blank"
+            referrerpolicy="no-referrer"
+          >
+            {{ red.usuario }}
+          </a>
+        </li>
+      </ul>
     </div>
   </article>
 </div>

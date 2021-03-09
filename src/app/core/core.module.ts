@@ -6,15 +6,17 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { DomSanitizerPipe } from './pipes/dom-sanitizer.pipe';
 import { ValidationErrorsPipe } from './pipes/validation-errors.pipe';
 import { AdminInterceptor } from './interceptors/admin.interceptor';
+import { RedesPipe } from './pipes/redes.pipe';
 
 @NgModule({
-  declarations: [DomSanitizerPipe, ValidationErrorsPipe],
+  declarations: [DomSanitizerPipe, ValidationErrorsPipe, RedesPipe],
   imports: [HttpClientModule, ReactiveFormsModule],
   exports: [
     HttpClientModule,
     ReactiveFormsModule,
     DomSanitizerPipe,
     ValidationErrorsPipe,
+    RedesPipe,
   ],
   // providers: [
   //   {

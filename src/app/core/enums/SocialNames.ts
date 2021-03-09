@@ -3,5 +3,5 @@ export enum SocialNames {
   'FACEBOOK' = 2,
   'TWITTER' = 3,
   'TWITCH' = 4,
-  'YOUTUBE' = 5,
+  'LINKEDIN' = 5,
 }

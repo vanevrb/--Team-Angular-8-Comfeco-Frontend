@@ -26,6 +26,14 @@
     .form-group {
       flex: 1;
       min-width: 130px;
+      input[type="text"] {
+        color: $color-p-lighten;
+        font-weight: 600;
+        font-style: italic;
+        &::placeholder {
+          font-weight: 400;
+        }
+      }
     }
   }
   textarea {
