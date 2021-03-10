@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../core/services/user.service';
-import { UsersInfoResponse } from '../../core/interfaces/UsersInfo';
+import { UsersInfoResponse } from '../../core/interfaces/UsersInfoResponse';
 import { Observable } from 'rxjs';
 
 @Component({

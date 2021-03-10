@@ -11,7 +11,6 @@ import { SaveLocalService } from '../services/save-local.service';
 import { UserService } from '../services/user.service';
 import { EditInfoService } from '../services/edit-info.service';
 import { environment } from '../../../environments/environment';
-import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -20,7 +19,8 @@ export class UserInfoResolver implements Resolve<boolean> {
   constructor(
     private saveLocal: SaveLocalService,
     private userService: UserService,
-    private editInfoService: EditInfoService
+    private editInfoService: EditInfoService,
+    private router: Router
   ) {}
 
   resolve(
@@ -45,6 +45,7 @@ export class UserInfoResolver implements Resolve<boolean> {
         return true;
       })
       .catch((err) => {
+        this.router.navigateByUrl('/');
         return false;
       });
   }

@@ -14,7 +14,7 @@ import {
 import { Observable } from 'rxjs';
 
 import { UserService } from '../services/user.service';
-import { UsersInfoResponse } from '../interfaces/UsersInfo';
+import { UsersInfoResponse } from '../interfaces/UsersInfoResponse';
 
 @Injectable({
   providedIn: 'root',
