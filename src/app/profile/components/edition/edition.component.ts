@@ -202,7 +202,6 @@ export class EditionComponent implements OnInit {
             perfil
           );
 
-          console.log(newData);
           return this.editInfoService.editUserInfo(
             newData,
             this.userService.accessToken
