@@ -31,7 +31,7 @@ import { CloudinaryService } from '../../../core/services/cloudinary.service';
 })
 export class EditionComponent implements OnInit {
   editForm: FormGroup;
-  isLoading = false;
+  isLoading = true;
   renderPaises: any;
   renderConoc: any;
   widget: any;
@@ -114,6 +114,7 @@ export class EditionComponent implements OnInit {
           this.redesSociales.push(
             this.fb.control(!valControl ? '' : valControl.usuario)
           );
+          this.isLoading = false;
         });
       });
   }
@@ -147,7 +148,9 @@ export class EditionComponent implements OnInit {
           [Validators.required, Validators.min(0), Validators.max(2)],
         ],
         fechaNacimiento: [this.currUser.perfil.fechaNacimiento],
-        pais: [this.currUser.perfil.pais.idPais],
+        pais: [
+          this.currUser.perfil.pais ? this.currUser.perfil.pais.idPais : 0,
+        ],
         biografia: [
           this.currUser.perfil.biografia,
           [Validators.maxLength(140)],

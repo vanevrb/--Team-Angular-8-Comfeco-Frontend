@@ -1,5 +1,5 @@
 <button class="button button-primary" routerLink="/profile">Regresar</button>
-<section class="content">
+<section class="content" *ngIf="!isLoading">
   <form
     [formGroup]="editForm"
     (ngSubmit)="onSubmit()"
