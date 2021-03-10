@@ -7,6 +7,36 @@ import { Component, OnInit } from '@angular/core';
 })
 export class UserEventsCardComponent implements OnInit {
 
+  events: any[] = [
+    {
+      name: 'Evento 1',
+      image:
+        'https://cdn.discordapp.com/avatars/785683857487036467/bc9ee60333180bee3e04afd2ed50bdac.png',
+      link: 'https://discord.gg/YEGwbjMf',
+      lenguage_icon: 'fab javascript',
+    },
+    {
+      name: 'Evento 2',
+      image:
+        'https://cdn.discordapp.com/avatars/785683857487036467/bc9ee60333180bee3e04afd2ed50bdac.png',
+      link: 'link',
+      lenguage_icon: 'fab javascript',
+    },
+    {
+      name: 'Evento 3',
+      image:
+        'https://cdn.discordapp.com/avatars/785683857487036467/bc9ee60333180bee3e04afd2ed50bdac.png',
+      link: 'link',
+      lenguage_icon: 'fab javascript',
+    },
+    {
+      name: 'Evento 4',
+      image:
+        'https://cdn.discordapp.com/avatars/785683857487036467/bc9ee60333180bee3e04afd2ed50bdac.png',
+      link: 'link',
+      lenguage_icon: 'fab javascript',
+    },
+  ]
   constructor() { }
 
   ngOnInit(): void {
