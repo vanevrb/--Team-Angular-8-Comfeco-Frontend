@@ -8,11 +8,14 @@ import { SliderModule } from '../slider/slider.module';
 
 import { LayoutComponent } from './components/layout/layout.component';
 import { CommunitiesComponent } from './components/communities/communities.component';
+import { StoreModule } from '@ngrx/store';
+import { usersReducer } from '../store/reducers';
 
 @NgModule({
   declarations: [LayoutComponent, CommunitiesComponent],
   imports: [
     CommonModule,
+    StoreModule.forFeature('user', usersReducer),
     HomeRoutingModule,
     CounterModule,
     SponsorsModule,

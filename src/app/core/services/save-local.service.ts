@@ -12,9 +12,9 @@ export class SaveLocalService {
       .catch((err) => err);
   }
 
-  getItem(key: string) {
+  getItem(key: string): Promise<string> {
     return localForage
-      .getItem(key)
+      .getItem<string>(key)
       .then((val) => val)
       .catch((err) => err);
   }

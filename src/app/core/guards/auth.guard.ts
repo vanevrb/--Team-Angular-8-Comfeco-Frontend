@@ -1,64 +1,39 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  CanDeactivate,
-  CanLoad,
-  Route,
-  UrlSegment,
-  ActivatedRouteSnapshot,
-  RouterStateSnapshot,
-  UrlTree,
-  Router,
-} from '@angular/router';
+import { CanLoad, Route, UrlSegment, Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { EditInfoService } from '../services/edit-info.service';
+import { SaveLocalService } from '../services/save-local.service';
 
-import { UserService } from '../services/user.service';
-import { UsersInfoResponse } from '../interfaces/UsersInfoResponse';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthGuard implements CanActivate, CanDeactivate<unknown>, CanLoad {
-  constructor(private userService: UserService, private router: Router) {}
+export class AuthGuard implements CanLoad {
+  constructor(
+    private editInfo: EditInfoService,
+    private saveLocal: SaveLocalService,
+    private router: Router
+  ) {}
 
-  canActivate(
-    route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot
-  ): Promise<boolean> {
-    return this.userService
-      .userInfo()
+  canLoad(route: Route, segments: UrlSegment[]): Promise<boolean> {
+    return this.saveLocal
+      .getItem(environment.LOCAL_KEY_FOR_SAVE)
+      .then((token) => {
+        if (!token) {
+          throw new Error('');
+        }
+        return this.editInfo.getUserInfo(token).toPromise();
+      })
       .then((data) => {
-        if (!data) {
-          return true;
+        if (data.error) {
+          throw new Error('');
         }
         this.router.navigateByUrl('/home');
         return false;
       })
-      .catch((err) => true);
-  }
-
-  canDeactivate(
-    component: unknown,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return true;
-  }
-
-  canLoad(
-    route: Route,
-    segments: UrlSegment[]
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return true;
+      .catch(() => {
+        return true;
+      });
   }
 }

@@ -18,7 +18,7 @@ import {
   TokenResponse,
 } from '../../../core/interfaces';
 import { Store } from '@ngrx/store';
-import * as UIActions from '../../../store/actions';
+import { uiActions } from '../../../store/actions';
 import { AppState } from '../../../store/reducers';
 
 @Component({
@@ -101,7 +101,7 @@ export class LoginComponent implements OnInit {
      * Spread operator to separate usefull data
      */
     const { checkBoxRecordar, ...loginData } = this.login.value;
-    this.store.dispatch(UIActions.activateLoader());
+    this.store.dispatch(uiActions.activateLoader());
 
     /**
      * Store the email if checkbox is checked or erase otherwise
@@ -141,7 +141,7 @@ export class LoginComponent implements OnInit {
             data.code === 400
               ? 'Verifica Email / Contraseña'
               : 'Ups, algo salío mal';
-          this.store.dispatch(UIActions.stopLoader());
+          this.store.dispatch(uiActions.stopLoader());
 
           return this.swal.failSwal(data.message, message);
         }
@@ -158,7 +158,7 @@ export class LoginComponent implements OnInit {
          */
         this.swal.closeSwal();
 
-        this.store.dispatch(UIActions.stopLoader());
+        this.store.dispatch(uiActions.stopLoader());
 
         /**
          * go homepage

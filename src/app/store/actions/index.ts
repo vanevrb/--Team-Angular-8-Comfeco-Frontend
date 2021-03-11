@@ -1,1 +1,3 @@
-export * from './ui.actions';
+import uiActions from './ui.actions';
+
+export { uiActions };

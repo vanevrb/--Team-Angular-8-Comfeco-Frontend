@@ -11,7 +11,7 @@ import { Observable } from 'rxjs';
 import { map, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/reducers';
-import * as UIActions from '../../../store/actions';
+import { uiActions } from '../../../store/actions';
 
 @Component({
   selector: 'app-register',
@@ -118,7 +118,7 @@ export class RegisterComponent implements OnInit {
      * Spread operator to separate usefull data
      */
     const { usuClave2, checkBoxAceptar, ...dataRegister } = this.register.value;
-    this.store.dispatch(UIActions.activateLoader());
+    this.store.dispatch(uiActions.activateLoader());
 
     /**
      * Trigger sweet alert
@@ -133,7 +133,7 @@ export class RegisterComponent implements OnInit {
        * Handle error
        */
       if (data.error) {
-        this.store.dispatch(UIActions.stopLoader());
+        this.store.dispatch(uiActions.stopLoader());
 
         return this.swal.failSwal(data.message, 'Ups, algo salío mal');
       }
@@ -148,7 +148,7 @@ export class RegisterComponent implements OnInit {
        */
       this.swal.successSwal('Regitro exitoso');
 
-      this.store.dispatch(UIActions.stopLoader());
+      this.store.dispatch(uiActions.stopLoader());
 
       /**
        * go homepage

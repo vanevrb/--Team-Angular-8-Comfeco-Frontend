@@ -1,4 +1,9 @@
 import { createAction } from '@ngrx/store';
 
-export const activateLoader = createAction('[UI] Activate Loader');
-export const stopLoader = createAction('[UI] Stop Loader');
+const activateLoader = createAction('[UI] Activate Loader');
+const stopLoader = createAction('[UI] Stop Loader');
+
+export default {
+  activateLoader,
+  stopLoader,
+};

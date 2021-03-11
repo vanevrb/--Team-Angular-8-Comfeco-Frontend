@@ -18,6 +18,7 @@ import { UsersInfoResponse, TokenResponse, Response } from '../interfaces';
 import { AuthService } from '../services/auth.service';
 import { SaveLocalService } from '../services/save-local.service';
 import { environment } from '../../../environments/environment';
+import { EditInfoService } from '../services/edit-info.service';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +26,8 @@ import { environment } from '../../../environments/environment';
 export class ProtectRoutesGuard
   implements CanActivate, CanDeactivate<unknown>, CanLoad {
   constructor(
-    private authService: AuthService,
-    private userService: UserService,
     private router: Router,
+    private editInfo: EditInfoService,
     private saveLocal: SaveLocalService
   ) {}
 
@@ -50,18 +50,23 @@ export class ProtectRoutesGuard
     return true;
   }
   canLoad(route: Route, segments: UrlSegment[]): Promise<boolean> {
-    return this.userService
-      .userInfo()
-      .then((data) => {
-        if (!data) {
-          throw new Error('protect route');
+    return this.saveLocal
+      .getItem(environment.LOCAL_KEY_FOR_SAVE)
+      .then((token) => {
+        if (!token) {
+          throw new Error('Se necesita registro / login validos');
         }
-
+        return this.editInfo.getUserInfo(token).toPromise();
+      })
+      .then((data) => {
+        if (data.error) {
+          throw new Error('Se necesita registro / login validos');
+        }
         return true;
       })
       .catch((err) => {
+        console.error(err.message);
         this.router.navigateByUrl('/');
-
         return false;
       });
   }
