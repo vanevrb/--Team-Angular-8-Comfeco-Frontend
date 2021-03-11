@@ -1,4 +1,3 @@
-
 .card-group {
     position: relative;
     z-index: 1;
@@ -14,84 +13,87 @@
     -ms-transition: all 0.3s linear 0s;
     -o-transition: all 0.3s linear 0s;
     transition: all 0.3s linear 0s;
-}
-.card-group .card-g-img {
-    background: #000000;
-    height: 400px;
-    overflow: hidden;
-}
-.card-group .card-g-img .share {
-    position: absolute;
-    /* top: 20px; */
-    right: 0px;
-    z-index: 1;
-    background: #E4E4E4;
-    width: 55px;
-    height: 55px;
-    padding: 18px 0;
-    border-radius: 0 0 0 10px;
-    color: #FFFFFF;
-    font-weight: 700;
-    text-align: center;
-    -webkti-box-sizing: border-box;
-    box-sizing: border-box;
-}
-.card-group .card-g-img img {
-    display: block;
-    width: 120%;
-    -webkit-transition: all 0.3s linear 0s;
-    -moz-transition: all 0.3s linear 0s;
-    -ms-transition: all 0.3s linear 0s;
-    -o-transition: all 0.3s linear 0s;
-    transition: all 0.3s linear 0s;
-}
-.card-group .card-g-content {
-    position: absolute;
-    bottom: 0;
-    background: #FFFFFF;
-    width: 100%;
-    padding: 30px;
-    -webkti-box-sizing: border-box;
-    -moz-box-sizing: border-box;
-    box-sizing: border-box;
-    -webkit-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
-    -moz-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
-    -ms-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
-    -o-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
-    transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
-}
-.card-group .card-g-content .lenguage {
-    position: absolute;
-    top: -34px;
-    left: 0;
-    background: #A0BEEC;
-    padding: 10px 15px;
-    color: #FFFFFF;
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-}
-.card-group .card-g-content .title {
-    margin: 0;
-    padding: 0 0 10px;
-    color: #333333;
-    font-size: 26px;
-    font-weight: 700;
-}
-.card-group .card-g-content .sub_title {
-    margin: 0;
-    padding: 0 0 20px;
-    color: #e74c3c;
-    font-size: 20px;
-    font-weight: 400;
-}
-.hover .card-g-content .description {
+    margin-bottom: 20px;
+  
+    .card-g-img {
+      background: #000000;
+      height: 400px;
+      overflow: hidden;
+  
+      .share {
+        position: absolute;
+  
+        /* top: 20px; */
+        right: 0px;
+        z-index: 1;
+        background: #E4E4E4;
+        width: 55px;
+        height: 55px;
+        padding: 18px 0;
+        border-radius: 0 0 0 10px;
+        color: #FFFFFF;
+        font-weight: 700;
+        text-align: center;
+        -webkti-box-sizing: border-box;
+        box-sizing: border-box;
+      }
+  
+      img {
+        display: block;
+        width: 120%;
+        -webkit-transition: all 0.3s linear 0s;
+        -moz-transition: all 0.3s linear 0s;
+        -ms-transition: all 0.3s linear 0s;
+        -o-transition: all 0.3s linear 0s;
+        transition: all 0.3s linear 0s;
+      }
+    }
+  
+    .card-g-content {
+      position: absolute;
+      bottom: 0;
+      background: #FFFFFF;
+      width: 100%;
+      padding: 30px;
+      -webkti-box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      -webkit-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+      -moz-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+      -ms-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+      -o-transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+      transition: all 0.3s cubic-bezier(0.37, 0.75, 0.61, 1.05) 0s;
+  
+      .lenguage {
+        position: absolute;
+        top: -34px;
+        left: 0;
+        background: #A0BEEC;
+        padding: 10px 15px;
+        color: #FFFFFF;
+        font-size: 14px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+  
+      .title {
+        margin: 0;
+        padding: 0 0 10px;
+        color: #333333;
+        font-size: 26px;
+        font-weight: 700;
+      }
+    }
+  }
+  
+  .hover .card-g-content .description {
     // display: none; height: 99px; opacity: 1;
     display: block !important;
     height: auto !important;
     opacity: 1 !important;
-}
-.card-group .card-g-content .card-g-foot {
+  }
+  
+  .card-group .card-g-content .card-g-foot {
     margin: 30px 0 0;
     color: #999999;
-}
+  }
