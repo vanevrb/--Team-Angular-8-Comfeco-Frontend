@@ -1,0 +1,49 @@
+.card-badge {
+    border-radius: 2px;
+    overflow: hidden;
+    background: white;
+    margin-bottom: 20px;
+    position: relative;
+    z-index: 1;
+    display: block;
+    background: #FFFFFF;
+    height: 515px;
+    box-shadow: 0px 1px 2px 1px rgb(0 0 0 / 15%);
+    transition: all 0.3s linear 0s;
+    margin-bottom: 20px;
+    .description {
+          height: 42px;
+    }
+    .card-b-img {
+      display: block;
+      position: relative;
+      background: rgba(255, 255, 255, 1);
+      text-align: center;
+      padding: 30px 0 0px;
+      z-index: 1;
+      overflow: hidden;
+  
+      img {
+        border-radius: 100%;
+        overflow: hidden;
+        width: 150px;
+        height: 150px;
+        box-shadow: 0 1px 0 rgb(0 0 0 / 10%), 0 1px 2px rgb(0 0 0 / 10%);
+      }
+    
+  
+      h1 {
+        font-weight: 200;
+        font-size: 30px;
+        color: #444;
+        letter-spacing: -1px;
+        margin: 0;
+        padding: 0;
+      }
+    }
+  
+    .card-b-body {
+      padding: 0 15px;
+      text-align: center;
+    }
+  }
