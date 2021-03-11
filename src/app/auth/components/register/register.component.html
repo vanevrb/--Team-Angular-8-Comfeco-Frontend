@@ -92,6 +92,8 @@
             type="submit"
             [disabled]="isLoading"
           >
+            <span class="fas sync spin" *ngIf="storeLoader$ | async"></span>
+
             Registrate
           </button>
         </div>

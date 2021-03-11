@@ -54,12 +54,15 @@ export class ProtectRoutesGuard
       .userInfo()
       .then((data) => {
         if (!data) {
-          this.router.navigateByUrl('/');
-          return false;
+          throw new Error('protect route');
         }
 
         return true;
       })
-      .catch((err) => false);
+      .catch((err) => {
+        this.router.navigateByUrl('/');
+
+        return false;
+      });
   }
 }

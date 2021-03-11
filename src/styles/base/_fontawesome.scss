@@ -34,6 +34,23 @@
   font-weight: 400;
   font-family: "Font Awesome 5 Regular";
 }
+
+.sync::before {
+  content: "\f021";
+  font-weight: 900;
+  font-family: "Font Awesome 5 Solid";
+}
+span.spin::before {
+  -webkit-animation-name: spin;
+  animation-name: spin;
+  -webkit-animation-timing-function: linear;
+  animation-timing-function: linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  -webkit-animation-duration: 2000ms;
+  animation-duration: 2000ms;
+}
+
 .check-square::before {
   content: "\f14a";
   font-weight: 900;
@@ -70,4 +87,22 @@
   content: "\f167";
   font-weight: 400;
   font-family: "Font Awesome 5 Brands";
+}
+
+@-webkit-keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(359deg);
+  }
 }

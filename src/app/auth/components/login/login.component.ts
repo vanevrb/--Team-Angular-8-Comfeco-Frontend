@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
+import { Observable } from 'rxjs';
 import { tap, map, switchMap } from 'rxjs/operators';
 
 import { emailPattern } from '../../../core/helpers/emailPattern';
@@ -16,6 +17,9 @@ import {
   Response,
   TokenResponse,
 } from '../../../core/interfaces';
+import { Store } from '@ngrx/store';
+import * as UIActions from '../../../store/actions';
+import { AppState } from '../../../store/reducers';
 
 @Component({
   selector: 'app-login',
@@ -26,6 +30,7 @@ export class LoginComponent implements OnInit {
   private saveEmailStoreKey = 'C0mf3c0-/S4v3-3m41l';
   login: FormGroup;
   isLoading = false;
+  storeLoader$: Observable<boolean>;
 
   get emailErrors() {
     const field = this.login.get('usuCorreo');
@@ -50,12 +55,19 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private saveLocal: SaveLocalService,
     private swal: AlertService,
-    private userService: UserService
+    private userService: UserService,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
     this.login = this.createForm();
     this.getEmailStored();
+    this.storeLoader$ = this.store.select('loader').pipe(
+      map((state) => state.isLoading),
+      tap((flag) => {
+        this.isLoading = flag;
+      })
+    );
   }
 
   onChecked() {
@@ -89,7 +101,7 @@ export class LoginComponent implements OnInit {
      * Spread operator to separate usefull data
      */
     const { checkBoxRecordar, ...loginData } = this.login.value;
-    this.isLoading = true;
+    this.store.dispatch(UIActions.activateLoader());
 
     /**
      * Store the email if checkbox is checked or erase otherwise
@@ -129,6 +141,8 @@ export class LoginComponent implements OnInit {
             data.code === 400
               ? 'Verifica Email / Contraseña'
               : 'Ups, algo salío mal';
+          this.store.dispatch(UIActions.stopLoader());
+
           return this.swal.failSwal(data.message, message);
         }
 
@@ -140,11 +154,11 @@ export class LoginComponent implements OnInit {
         this.login.reset();
 
         /**
-         * Send succes alert
+         * Close alert
          */
-        this.swal.successSwal('Login de usuario exitoso');
+        this.swal.closeSwal();
 
-        this.isLoading = false;
+        this.store.dispatch(UIActions.stopLoader());
 
         /**
          * go homepage

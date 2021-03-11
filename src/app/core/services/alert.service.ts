@@ -17,6 +17,10 @@ export class AlertService {
     });
   }
 
+  closeSwal() {
+    return Swal.close();
+  }
+
   successSwal(data: string) {
     return Swal.fire({
       icon: 'success',

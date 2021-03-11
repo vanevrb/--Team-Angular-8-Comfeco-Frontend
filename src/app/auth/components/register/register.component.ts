@@ -7,6 +7,11 @@ import { AuthService } from '../../../core/services/auth.service';
 import { ModalService } from '../../../core/services/modal.service';
 import { MyValidatorsService } from '../../../core/services/my-validators.service';
 import { AlertService } from '../../../core/services/alert.service';
+import { Observable } from 'rxjs';
+import { map, tap } from 'rxjs/operators';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/reducers';
+import * as UIActions from '../../../store/actions';
 
 @Component({
   selector: 'app-register',
@@ -16,6 +21,7 @@ import { AlertService } from '../../../core/services/alert.service';
 export class RegisterComponent implements OnInit {
   register: FormGroup;
   isLoading = false;
+  storeLoader$: Observable<boolean>;
 
   get nickErrors() {
     const field = this.register.get('usuNickname');
@@ -55,12 +61,19 @@ export class RegisterComponent implements OnInit {
     private modalService: ModalService,
     private myValidators: MyValidatorsService,
     private router: Router,
-    private swal: AlertService
-  ) {
-    this.register = this.createForm();
-  }
+    private swal: AlertService,
+    private store: Store<AppState>
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.register = this.createForm();
+    this.storeLoader$ = this.store.select('loader').pipe(
+      map((state) => state.isLoading),
+      tap((flag) => {
+        this.isLoading = flag;
+      })
+    );
+  }
 
   onChecked() {
     this.checkbox.patchValue(!this.checkbox.value);
@@ -105,7 +118,7 @@ export class RegisterComponent implements OnInit {
      * Spread operator to separate usefull data
      */
     const { usuClave2, checkBoxAceptar, ...dataRegister } = this.register.value;
-    this.isLoading = true;
+    this.store.dispatch(UIActions.activateLoader());
 
     /**
      * Trigger sweet alert
@@ -120,6 +133,8 @@ export class RegisterComponent implements OnInit {
        * Handle error
        */
       if (data.error) {
+        this.store.dispatch(UIActions.stopLoader());
+
         return this.swal.failSwal(data.message, 'Ups, algo salío mal');
       }
 
@@ -133,7 +148,7 @@ export class RegisterComponent implements OnInit {
        */
       this.swal.successSwal('Regitro exitoso');
 
-      this.isLoading = false;
+      this.store.dispatch(UIActions.stopLoader());
 
       /**
        * go homepage
