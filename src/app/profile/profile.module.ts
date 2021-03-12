@@ -1,6 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
+import { StoreModule } from '@ngrx/store';
+import { usersReducer } from '../store/reducers';
+
 import { ProfileRoutingModule } from './profile-routing.module';
 import { CoreModule } from '../core/core.module';
 
@@ -30,6 +33,11 @@ import { UserEventsCardComponent } from './components/user-events-card/user-even
     UserActivitiesCardComponent,
     UserEventsCardComponent,
   ],
-  imports: [CommonModule, ProfileRoutingModule, CoreModule],
+  imports: [
+    CommonModule,
+    StoreModule.forFeature('user', usersReducer),
+    ProfileRoutingModule,
+    CoreModule,
+  ],
 })
 export class ProfileModule {}

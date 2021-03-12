@@ -10,8 +10,10 @@
   font-family: "KaushanScript", Verdana, Geneva, Tahoma, sans-serif;
   .counter__block:nth-child(n) {
     border-radius: $border-radius-10;
-    border: 1px solid $color-bg;
-    background: $color-white;
+    border: 1px solid currentColor;
+    background: $color-gray3;
+    color: $color-white;
+    text-shadow: 1px 1px 3px rgb(247, 223, 30);
   }
   .counter__block {
     position: relative;
@@ -35,6 +37,7 @@
       text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.75);
       transform-origin: center;
       transform-style: preserve-3d;
+      color: $color-secondary;
 
       &::before {
         content: attr(data-digit);

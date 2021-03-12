@@ -4,10 +4,11 @@ import { usersActions } from '../actions';
 import { mergeMap, map, catchError, switchMap, tap } from 'rxjs/operators';
 import { EditInfoService } from '../../core/services/edit-info.service';
 import { Observable, of, from } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { SaveLocalService } from '../../core/services/save-local.service';
 import { environment } from '../../../environments/environment';
 import { Router } from '@angular/router';
+import { AppStateWithUsers } from '../reducers/index';
 
 @Injectable()
 export class UsersEffects {

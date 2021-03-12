@@ -19,7 +19,7 @@ import { AuthService } from '../services/auth.service';
 import { SaveLocalService } from '../services/save-local.service';
 import { environment } from '../../../environments/environment';
 import { EditInfoService } from '../services/edit-info.service';
-import { map, catchError, switchMap } from 'rxjs/operators';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
 import { AppStateWithUsers } from '../../store/reducers/index';
 import { Store } from '@ngrx/store';
 import { usersActions } from 'src/app/store/actions';
@@ -56,17 +56,17 @@ export class ProtectRoutesGuard
   }
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
     return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE)).pipe(
-      switchMap(() => this.editInfo.getUserInfo()),
-      map((resp) => {
-        if (resp.error) {
-          this.router.navigateByUrl('/');
+      map((token) => {
+        if (!token) {
           return false;
         }
         return true;
       }),
-      catchError((err) => {
-        this.router.navigateByUrl('/');
-        return of(false);
+      catchError((err) => of(false)),
+      tap((flag) => {
+        if (!flag) {
+          this.router.navigateByUrl('/');
+        }
       })
     );
   }

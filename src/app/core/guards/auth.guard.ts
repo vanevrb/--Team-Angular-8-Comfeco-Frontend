@@ -10,22 +10,14 @@ import {
 import { EditInfoService } from '../services/edit-info.service';
 import { SaveLocalService } from '../services/save-local.service';
 
-import { environment } from '../../../environments/environment';
 import { Observable, of } from 'rxjs';
-import { map, catchError } from 'rxjs/operators';
-import { Store } from '@ngrx/store';
-import { AppStateWithUsers } from '../../store/reducers/index';
+import { map, catchError, tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthGuard implements CanLoad {
-  constructor(
-    private editInfo: EditInfoService,
-    private saveLocal: SaveLocalService,
-    private router: Router,
-    private store: Store<AppStateWithUsers>
-  ) {}
+  constructor(private editInfo: EditInfoService, private router: Router) {}
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
     return this.editInfo.getUserInfo().pipe(
@@ -33,8 +25,12 @@ export class AuthGuard implements CanLoad {
         if (resp.error) {
           return true;
         }
-        this.router.navigateByUrl('/home');
         return false;
+      }),
+      tap((flag) => {
+        if (!flag) {
+          this.router.navigateByUrl('/home');
+        }
       }),
       catchError((err) => of(true))
     );

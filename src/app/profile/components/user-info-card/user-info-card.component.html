@@ -1,4 +1,4 @@
-<div class="user-info__wrapper" *ngIf="user">
+<div class="user-info__wrapper" *ngIf="user$ | async as user">
   <article class="user-info">
     <button class="link user-info__edit" (click)="goEdit()">
       Editar perfil

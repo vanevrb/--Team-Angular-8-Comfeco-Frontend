@@ -24,6 +24,11 @@
   box-sizing: border-box;
 }
 
+::-moz-selection {
+  color: $color-white;
+  background-color: var(--bg-color3);
+}
+
 ::selection {
   color: $color-white;
   background-color: var(--bg-color3);
@@ -37,7 +42,6 @@ body {
   line-height: 1.428571429;
   color: $color-bg;
   margin: 0px;
-  // background-color: $color-white;
   background-image: url("../../assets/images/logo-light.svg");
   background-size: 500px 500px;
   background-position: 100px;
@@ -45,15 +49,15 @@ body {
   background-repeat: space;
   background-position: unset;
 }
-body::after {
-  content: "";
-  height: 60vh;
-  left: 0;
-  bottom: -100px;
-  right: 0;
-  position: absolute;
-  z-index: -1;
-}
+// body::after {
+//   content: "";
+//   height: 60vh;
+//   left: 0;
+//   bottom: -100px;
+//   right: 0;
+//   position: absolute;
+//   z-index: -1;
+// }
 
 .fade.in {
   opacity: 1;
@@ -64,10 +68,10 @@ body::after {
 }
 
 label {
-  // margin-bottom: 5px;
   font-weight: bold;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 svg {
