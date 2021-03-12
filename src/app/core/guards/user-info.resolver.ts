@@ -34,7 +34,7 @@ export class UserInfoResolver implements Resolve<boolean> {
           throw new Error('Invalid Token');
         }
         this.userService.accessToken = val;
-        return this.editInfoService.getUserInfo(val).toPromise();
+        return this.editInfoService.getUserInfo().toPromise();
       })
       .then((data: Response) => {
         if (data.error) {

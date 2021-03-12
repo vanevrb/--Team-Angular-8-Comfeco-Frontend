@@ -19,6 +19,7 @@ export const initialState: UsersState = {
 const _usersReducer = createReducer(
   initialState,
   on(usersActions.loadUser, (state) => ({ ...state, loadingUsers: true })),
+  on(usersActions.unloadUser, (state) => ({ ...state, loadingUsers: true })),
   on(usersActions.loadErrorUser, (state, { payload }) => ({
     ...state,
     loaded: false,
@@ -27,7 +28,7 @@ const _usersReducer = createReducer(
   })),
   on(usersActions.setUser, (state, { user }) => ({
     ...state,
-    user,
+    user: { ...user },
     loaded: true,
     loadingUsers: false,
   })),

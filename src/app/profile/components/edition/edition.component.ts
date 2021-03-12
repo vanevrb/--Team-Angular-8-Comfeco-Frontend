@@ -208,7 +208,7 @@ export class EditionComponent implements OnInit {
           );
         }),
         switchMap((response) => {
-          return this.editInfoService.getUserInfo(this.userService.accessToken);
+          return this.editInfoService.getUserInfo();
         })
       )
       .subscribe((resp) => {

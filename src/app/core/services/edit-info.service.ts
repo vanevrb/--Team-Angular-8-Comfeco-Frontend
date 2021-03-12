@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
-import { Observable, of } from 'rxjs';
-import { map, catchError, mergeMap } from 'rxjs/operators';
+import { Observable, of, from } from 'rxjs';
+import { map, catchError, switchMap, filter } from 'rxjs/operators';
 
 import {
   UsersInfoResponse,
@@ -11,6 +11,7 @@ import {
 } from '../interfaces';
 
 import { environment } from '../../../environments/environment';
+import { SaveLocalService } from './save-local.service';
 
 @Injectable({
   providedIn: 'root',
@@ -18,7 +19,7 @@ import { environment } from '../../../environments/environment';
 export class EditInfoService {
   private baseUrl = environment.BASE_URL;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private saveLocal: SaveLocalService) {}
 
   editUserInfo(user: any, token: string) {
     return this.http
@@ -51,13 +52,21 @@ export class EditInfoService {
       );
   }
 
-  getUserInfo(token: string): Observable<Response> {
-    return this.http
-      .get<UsersInfoResponse>(`${this.baseUrl}/api/usuario`, {
-        headers: new HttpHeaders({
-          authorization: `Bearer ${token}`,
+  getUserInfo(): Observable<Response> {
+    return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE))
+      .pipe(
+        filter((data) => {
+          console.log('uuuuusssssss', data);
+          return true;
         }),
-      })
+        switchMap((token) =>
+          this.http.get<UsersInfoResponse>(`${this.baseUrl}/api/usuario`, {
+            headers: new HttpHeaders({
+              authorization: `Bearer ${token}`,
+            }),
+          })
+        )
+      )
       .pipe(
         map<UsersInfoResponse, Response>((data) => {
           const { roles, usuClave, usuEstado, ...userInfo } = data;

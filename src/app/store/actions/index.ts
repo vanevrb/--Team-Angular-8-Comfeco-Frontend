@@ -1,3 +1,4 @@
+import usersActions from './users.actions';
 import uiActions from './ui.actions';
 
-export { uiActions };
+export { uiActions, usersActions };

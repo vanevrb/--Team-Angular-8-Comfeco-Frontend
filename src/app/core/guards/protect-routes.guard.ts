@@ -11,7 +11,7 @@ import {
   UrlTree,
 } from '@angular/router';
 
-import { Observable } from 'rxjs';
+import { Observable, of, from } from 'rxjs';
 
 import { UserService } from '../services/user.service';
 import { UsersInfoResponse, TokenResponse, Response } from '../interfaces';
@@ -19,6 +19,10 @@ import { AuthService } from '../services/auth.service';
 import { SaveLocalService } from '../services/save-local.service';
 import { environment } from '../../../environments/environment';
 import { EditInfoService } from '../services/edit-info.service';
+import { map, catchError, switchMap } from 'rxjs/operators';
+import { AppStateWithUsers } from '../../store/reducers/index';
+import { Store } from '@ngrx/store';
+import { usersActions } from 'src/app/store/actions';
 
 @Injectable({
   providedIn: 'root',
@@ -28,7 +32,8 @@ export class ProtectRoutesGuard
   constructor(
     private router: Router,
     private editInfo: EditInfoService,
-    private saveLocal: SaveLocalService
+    private saveLocal: SaveLocalService,
+    private store: Store<AppStateWithUsers>
   ) {}
 
   canActivate(
@@ -49,25 +54,20 @@ export class ProtectRoutesGuard
     | UrlTree {
     return true;
   }
-  canLoad(route: Route, segments: UrlSegment[]): Promise<boolean> {
-    return this.saveLocal
-      .getItem(environment.LOCAL_KEY_FOR_SAVE)
-      .then((token) => {
-        if (!token) {
-          throw new Error('Se necesita registro / login validos');
-        }
-        return this.editInfo.getUserInfo(token).toPromise();
-      })
-      .then((data) => {
-        if (data.error) {
-          throw new Error('Se necesita registro / login validos');
+  canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
+    return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE)).pipe(
+      switchMap(() => this.editInfo.getUserInfo()),
+      map((resp) => {
+        if (resp.error) {
+          this.router.navigateByUrl('/');
+          return false;
         }
         return true;
-      })
-      .catch((err) => {
-        console.error(err.message);
+      }),
+      catchError((err) => {
         this.router.navigateByUrl('/');
-        return false;
-      });
+        return of(false);
+      })
+    );
   }
 }

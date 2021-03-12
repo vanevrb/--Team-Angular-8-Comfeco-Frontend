@@ -12,6 +12,11 @@ import {
   Response,
 } from '../../core/interfaces';
 import { environment } from '../../../environments/environment';
+import { Store } from '@ngrx/store';
+import { AppStateWithUsers } from '../../store/reducers/index';
+import { UsersState } from '../../store/reducers/users.reducer';
+import { map, tap, filter } from 'rxjs/operators';
+import { usersActions } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-user-menu',
@@ -19,18 +24,22 @@ import { environment } from '../../../environments/environment';
   styleUrls: ['./user-menu.component.scss'],
 })
 export class UserMenuComponent implements OnInit {
-  user$: Observable<UsersInfoResponse>;
+  user: Partial<UsersInfoResponse>;
   isShowSubmenu = false;
 
   constructor(
     private router: Router,
     private userService: UserService,
     private authService: AuthService,
-    private saveLocal: SaveLocalService
-  ) {
-    this.user$ = this.userService.user$;
+    private saveLocal: SaveLocalService,
+    private store: Store<AppStateWithUsers>
+  ) {}
+
+  ngOnInit() {
+    this.store.select('user').subscribe((user) => {
+      this.user = user?.user;
+    });
   }
-  ngOnInit() {}
 
   showSubmenu() {
     this.isShowSubmenu = !this.isShowSubmenu;
@@ -42,10 +51,7 @@ export class UserMenuComponent implements OnInit {
     this.router.navigateByUrl('/profile');
   }
   logout() {
-    this.saveLocal.removeItem(environment.LOCAL_KEY_FOR_SAVE).then(() => {
-      this.isShowSubmenu = false;
-      this.userService.user = undefined;
-      this.router.navigateByUrl('/');
-    });
+    this.isShowSubmenu = false;
+    this.store.dispatch(usersActions.unloadUser());
   }
 }

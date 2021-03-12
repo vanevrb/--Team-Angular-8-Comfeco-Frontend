@@ -2,8 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { Observable } from 'rxjs';
-import { tap, map, switchMap } from 'rxjs/operators';
+import { tap, map, switchMap, skipUntil, takeLast } from 'rxjs/operators';
 
 import { emailPattern } from '../../../core/helpers/emailPattern';
 import { SaveLocalService } from '../../../core/services/save-local.service';
@@ -12,14 +11,12 @@ import { environment } from '../../../../environments/environment.prod';
 import { AlertService } from '../../../core/services/alert.service';
 import { UserService } from '../../../core/services/user.service';
 import { EditInfoService } from '../../../core/services/edit-info.service';
+import { from } from 'rxjs';
 import {
   UsersInfoResponse,
   Response,
   TokenResponse,
 } from '../../../core/interfaces';
-import { Store } from '@ngrx/store';
-import { uiActions } from '../../../store/actions';
-import { AppState } from '../../../store/reducers';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +27,6 @@ export class LoginComponent implements OnInit {
   private saveEmailStoreKey = 'C0mf3c0-/S4v3-3m41l';
   login: FormGroup;
   isLoading = false;
-  storeLoader$: Observable<boolean>;
 
   get emailErrors() {
     const field = this.login.get('usuCorreo');
@@ -55,19 +51,12 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private saveLocal: SaveLocalService,
     private swal: AlertService,
-    private userService: UserService,
-    private store: Store<AppState>
+    private userService: UserService
   ) {}
 
   ngOnInit(): void {
     this.login = this.createForm();
     this.getEmailStored();
-    this.storeLoader$ = this.store.select('loader').pipe(
-      map((state) => state.isLoading),
-      tap((flag) => {
-        this.isLoading = flag;
-      })
-    );
   }
 
   onChecked() {
@@ -101,8 +90,7 @@ export class LoginComponent implements OnInit {
      * Spread operator to separate usefull data
      */
     const { checkBoxRecordar, ...loginData } = this.login.value;
-    this.store.dispatch(uiActions.activateLoader());
-
+    this.isLoading = true;
     /**
      * Store the email if checkbox is checked or erase otherwise
      */
@@ -123,14 +111,12 @@ export class LoginComponent implements OnInit {
     this.authService
       .login(loginData)
       .pipe(
-        map<Response, TokenResponse>((data) => data.message),
         tap((resp) => {
           this.saveLocal.setItem(
             environment.LOCAL_KEY_FOR_SAVE,
-            resp.access_token
+            resp.message.access_token
           );
-        }),
-        switchMap((resp) => this.editInfoService.getUserInfo(resp.access_token))
+        })
       )
       .subscribe((data) => {
         /**
@@ -141,12 +127,10 @@ export class LoginComponent implements OnInit {
             data.code === 400
               ? 'Verifica Email / Contraseña'
               : 'Ups, algo salío mal';
-          this.store.dispatch(uiActions.stopLoader());
+          this.isLoading = false;
 
           return this.swal.failSwal(data.message, message);
         }
-
-        this.userService.user = data.message;
 
         /**
          * Restart form
@@ -157,8 +141,7 @@ export class LoginComponent implements OnInit {
          * Close alert
          */
         this.swal.closeSwal();
-
-        this.store.dispatch(uiActions.stopLoader());
+        this.isLoading = false;
 
         /**
          * go homepage

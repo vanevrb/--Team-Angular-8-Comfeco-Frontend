@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { usersActions } from 'src/app/store/actions';
+import { AppStateWithUsers } from '../../../store/reducers/index';
 
 @Component({
   selector: 'app-layout',
@@ -6,7 +9,9 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit {
-  constructor() {}
+  constructor(private store: Store<AppStateWithUsers>) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.store.dispatch(usersActions.loadUser());
+  }
 }
