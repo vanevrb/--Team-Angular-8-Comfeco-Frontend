@@ -3,6 +3,7 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 import { AdminInterceptor } from './interceptors/admin.interceptor';
 
 import { DomSanitizerPipe } from './pipes/dom-sanitizer.pipe';
@@ -19,12 +20,17 @@ import { RedesPipe } from './pipes/redes.pipe';
     ValidationErrorsPipe,
     RedesPipe,
   ],
-  // providers: [
-  //   {
-  //     provide: HTTP_INTERCEPTORS,
-  //     useClass: AdminInterceptor,
-  //     multi: true,
-  //   },
-  // ],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+    //   {
+    //     provide: HTTP_INTERCEPTORS,
+    //     useClass: AdminInterceptor,
+    //     multi: true,
+    //   },
+  ],
 })
 export class CoreModule {}

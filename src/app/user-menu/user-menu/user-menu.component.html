@@ -21,7 +21,13 @@
 
       <div class="user-menu__actions" [class.active]="isShowSubmenu">
         <div class="actions__content">
-          <button class="link" (click)="goMyProfile()">Mi perfil</button>
+          <button
+            class="link"
+            routerLink="/profile"
+            (click)="isShowSubmenu = false"
+          >
+            Mi perfil
+          </button>
           <button class="link" (click)="logout()">Cerrar sesión</button>
         </div>
       </div>

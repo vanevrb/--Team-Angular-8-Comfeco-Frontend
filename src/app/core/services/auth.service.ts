@@ -90,8 +90,10 @@ export class AuthService {
       );
   }
 
-  forgotPassword(email: string) {
-    return this.http.get(`${this.baseUrl}/api/usuario/recuperar/${email}`);
+  forgotPassword(email: string): Observable<Response> {
+    return this.http.get<Response>(
+      `${this.baseUrl}/api/usuario/recuperar/${email}`
+    );
   }
 
   canRegisterEmail(email: string) {

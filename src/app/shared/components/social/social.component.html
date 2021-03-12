@@ -1,8 +1,9 @@
-<nav class="socials navbar">
+<nav class="socials">
   <p class="label">Síguenos en las redes:</p>
-  <ul class="icons-social navbar__links">
-    <li class="navbar__item">
+  <ul class="socials__links">
+    <li class="socials__item">
       <a
+        class="link socials__link"
         [href]="
           'https://www.facebook.com/groups/2637132626546045' | domSanitizer
         "
@@ -11,16 +12,18 @@
         <span class="fab facebook"></span>
       </a>
     </li>
-    <li class="navbar__item">
+    <li class="socials__item">
       <a
+        class="link socials__link"
         [href]="'https://discord.gg/5Bb5yvzNPr' | domSanitizer"
         target="_blank"
       >
         <span class="fab discord"></span>
       </a>
     </li>
-    <li class="navbar__item">
+    <li class="socials__item">
       <a
+        class="link socials__link"
         [href]="
           'https://www.youtube.com/channel/UC0oi8uH1vxDcyt7b_3iByew'
             | domSanitizer

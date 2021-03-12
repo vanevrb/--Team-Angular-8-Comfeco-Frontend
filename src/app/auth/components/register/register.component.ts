@@ -7,6 +7,10 @@ import { AuthService } from '../../../core/services/auth.service';
 import { ModalService } from '../../../core/services/modal.service';
 import { MyValidatorsService } from '../../../core/services/my-validators.service';
 import { AlertService } from '../../../core/services/alert.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/reducers/index';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +19,7 @@ import { AlertService } from '../../../core/services/alert.service';
 })
 export class RegisterComponent implements OnInit {
   register: FormGroup;
-  isLoading = false;
+  isLoading$: Observable<boolean>;
 
   get nickErrors() {
     const field = this.register.get('usuNickname');
@@ -55,10 +59,14 @@ export class RegisterComponent implements OnInit {
     private modalService: ModalService,
     private myValidators: MyValidatorsService,
     private router: Router,
-    private swal: AlertService
+    private swal: AlertService,
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
+    this.isLoading$ = this.store
+      .select('loader')
+      .pipe(map((data) => data.isLoading));
     this.register = this.createForm();
   }
 
@@ -106,13 +114,6 @@ export class RegisterComponent implements OnInit {
      */
     const { usuClave2, checkBoxAceptar, ...dataRegister } = this.register.value;
 
-    this.isLoading = true;
-
-    /**
-     * Trigger sweet alert
-     */
-    this.swal.sendForm();
-
     /**
      * Bring data from api
      */
@@ -121,8 +122,6 @@ export class RegisterComponent implements OnInit {
        * Handle error
        */
       if (data.error) {
-        this.isLoading = false;
-
         return this.swal.failSwal(data.message, 'Ups, algo salío mal');
       }
 
@@ -135,10 +134,9 @@ export class RegisterComponent implements OnInit {
        * Send succes alert
        */
       this.swal.successSwal('Regitro exitoso');
-      this.isLoading = false;
 
       /**
-       * go homepage
+       * go loginpage
        */
       this.router.navigate(['auth', 'login']);
     });

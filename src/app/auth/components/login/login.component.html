@@ -54,8 +54,11 @@
           <button
             class="button button-primary button-block"
             type="submit"
-            [disabled]="isLoading"
+            [disabled]="isLoading$ | async"
           >
+            <ng-container *ngIf="isLoading$ | async">
+              <span class="fas sync spin"></span> &nbsp; &nbsp;
+            </ng-container>
             INICIAR SESIÓN
           </button>
         </div>

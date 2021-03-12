@@ -2,21 +2,20 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { tap, map, switchMap, skipUntil, takeLast } from 'rxjs/operators';
+import { tap, map } from 'rxjs/operators';
 
 import { emailPattern } from '../../../core/helpers/emailPattern';
+
 import { SaveLocalService } from '../../../core/services/save-local.service';
 import { AuthService } from '../../../core/services/auth.service';
-import { environment } from '../../../../environments/environment.prod';
 import { AlertService } from '../../../core/services/alert.service';
 import { UserService } from '../../../core/services/user.service';
 import { EditInfoService } from '../../../core/services/edit-info.service';
-import { from } from 'rxjs';
-import {
-  UsersInfoResponse,
-  Response,
-  TokenResponse,
-} from '../../../core/interfaces';
+
+import { environment } from '../../../../environments/environment';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/reducers/index';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +25,7 @@ import {
 export class LoginComponent implements OnInit {
   private saveEmailStoreKey = 'C0mf3c0-/S4v3-3m41l';
   login: FormGroup;
-  isLoading = false;
+  isLoading$: Observable<boolean>;
 
   get emailErrors() {
     const field = this.login.get('usuCorreo');
@@ -47,14 +46,16 @@ export class LoginComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private editInfoService: EditInfoService,
     private router: Router,
     private saveLocal: SaveLocalService,
     private swal: AlertService,
-    private userService: UserService
+    private store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
+    this.isLoading$ = this.store
+      .select('loader')
+      .pipe(map((data) => data.isLoading));
     this.login = this.createForm();
     this.getEmailStored();
   }
@@ -65,9 +66,9 @@ export class LoginComponent implements OnInit {
 
   getEmailStored() {
     return this.saveLocal
-      .getItem(this.saveEmailStoreKey)
+      .getItem(environment.LOCAL_KEY_EMAIL)
       .then((data) => this.email.patchValue(data))
-      .catch((err) => this.email.patchValue(''));
+      .catch(() => this.email.patchValue(''));
   }
 
   createForm() {
@@ -90,7 +91,6 @@ export class LoginComponent implements OnInit {
      * Spread operator to separate usefull data
      */
     const { checkBoxRecordar, ...loginData } = this.login.value;
-    this.isLoading = true;
     /**
      * Store the email if checkbox is checked or erase otherwise
      */
@@ -101,20 +101,15 @@ export class LoginComponent implements OnInit {
     }
 
     /**
-     * Trigger sweet alert
-     */
-    this.swal.sendForm();
-
-    /**
      * Bring data from api
      */
     this.authService
       .login(loginData)
       .pipe(
-        tap((resp) => {
+        tap(({ message }) => {
           this.saveLocal.setItem(
             environment.LOCAL_KEY_FOR_SAVE,
-            resp.message.access_token
+            message.access_token
           );
         })
       )
@@ -127,7 +122,6 @@ export class LoginComponent implements OnInit {
             data.code === 400
               ? 'Verifica Email / Contraseña'
               : 'Ups, algo salío mal';
-          this.isLoading = false;
 
           return this.swal.failSwal(data.message, message);
         }
@@ -136,12 +130,6 @@ export class LoginComponent implements OnInit {
          * Restart form
          */
         this.login.reset();
-
-        /**
-         * Close alert
-         */
-        this.swal.closeSwal();
-        this.isLoading = false;
 
         /**
          * go homepage

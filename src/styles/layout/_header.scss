@@ -14,20 +14,26 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: center;
+
     width: 90%;
-    min-width: 300px;
+    min-width: 250px;
     margin: 0 auto;
     .image__container {
+      flex: 1;
       width: 150px;
       min-width: 150px;
+      text-align: left;
       img {
         max-width: 100%;
+        -o-object-fit: contain;
         object-fit: contain;
+        -o-object-position: center left;
+        object-position: center left;
       }
     }
     .navbar__wrapper {
-      flex: 1;
+      flex: 2;
+      min-width: 200px;
     }
   }
 
