@@ -10,12 +10,12 @@ import { take } from 'rxjs/operators';
   styleUrls: ['./layout.component.scss'],
 })
 export class LayoutComponent implements OnInit, OnDestroy {
-  controlSub$: Subscription;
+  userStoreSub$: Subscription;
 
   constructor(private store: Store<AppStateWithUsers>) {}
 
   ngOnInit(): void {
-    this.controlSub$ = this.store
+    this.userStoreSub$ = this.store
       .select('user')
       .pipe(take(1))
       .subscribe((user) => {
@@ -28,6 +28,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.controlSub$.unsubscribe();
+    this.userStoreSub$.unsubscribe();
   }
 }

@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
-import { UserService } from './user.service';
 
 @Injectable({
   providedIn: 'root',
@@ -14,7 +13,7 @@ export class CloudinaryService {
     return this._url$.asObservable();
   }
 
-  constructor(private userService: UserService) {
+  constructor() {
     this._urlResult = undefined;
     //@ts-expect-error
     this.myWidget = cloudinary.createUploadWidget(
@@ -27,6 +26,7 @@ export class CloudinaryService {
           // console.log('Done! Here is the image info: ', result.info);
           this._urlResult = result.info.url;
           this._url$.next(this._urlResult);
+          this.myWidget.close();
         }
       }
     );

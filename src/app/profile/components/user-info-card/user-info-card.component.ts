@@ -3,7 +3,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 
 import { UsersInfoResponse } from '../../../core/interfaces/UsersInfoResponse';
-import { UserService } from '../../../core/services/user.service';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppStateWithUsers } from '../../../store/reducers/index';

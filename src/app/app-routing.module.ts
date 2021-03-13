@@ -8,6 +8,7 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./auth/auth.module').then((m) => m.AuthModule),
     canLoad: [AuthGuard],
+    canActivate: [AuthGuard],
   },
   {
     path: 'conditions',
@@ -18,6 +19,7 @@ const routes: Routes = [
     path: 'home',
     loadChildren: () => import('./home/home.module').then((m) => m.HomeModule),
     canLoad: [ProtectRoutesGuard],
+    // canActivate: [ProtectRoutesGuard],
   },
   {
     path: 'communities',
@@ -26,12 +28,14 @@ const routes: Routes = [
         (m) => m.CommunitiesModule
       ),
     canLoad: [ProtectRoutesGuard],
+    // canActivate: [ProtectRoutesGuard],
   },
   {
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
     canLoad: [ProtectRoutesGuard],
+    // canActivate: [ProtectRoutesGuard],
   },
   {
     path: '',

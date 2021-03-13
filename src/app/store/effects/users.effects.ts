@@ -1,14 +1,18 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
+
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { usersActions } from '../actions';
-import { mergeMap, map, catchError, switchMap, tap } from 'rxjs/operators';
-import { EditInfoService } from '../../core/services/edit-info.service';
+
+import { Action } from '@ngrx/store';
+
 import { Observable, of, from } from 'rxjs';
-import { Action, Store } from '@ngrx/store';
+import { map, catchError, switchMap, tap } from 'rxjs/operators';
+
+import { EditInfoService } from '../../core/services/edit-info.service';
 import { SaveLocalService } from '../../core/services/save-local.service';
+
 import { environment } from '../../../environments/environment';
-import { Router } from '@angular/router';
-import { AppStateWithUsers } from '../reducers/index';
 
 @Injectable()
 export class UsersEffects {
@@ -17,7 +21,13 @@ export class UsersEffects {
       ofType(usersActions.loadUser),
       switchMap(() =>
         this.editInfo.getUserInfo().pipe(
-          map(({ message }) => usersActions.setUser({ user: message })),
+          map((resp) => {
+            if (resp.error) {
+              return usersActions.loadErrorUser({ payload: resp.error.error });
+            }
+
+            return usersActions.setUser({ user: resp.message });
+          }),
           catchError(() => of(usersActions.loadErrorUser({ payload: 'error' })))
         )
       )

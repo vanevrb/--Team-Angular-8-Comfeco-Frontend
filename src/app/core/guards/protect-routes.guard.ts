@@ -13,47 +13,37 @@ import {
 
 import { Observable, of, from } from 'rxjs';
 
-import { UserService } from '../services/user.service';
-import { UsersInfoResponse, TokenResponse, Response } from '../interfaces';
-import { AuthService } from '../services/auth.service';
 import { SaveLocalService } from '../services/save-local.service';
 import { environment } from '../../../environments/environment';
-import { EditInfoService } from '../services/edit-info.service';
-import { map, catchError, switchMap, tap } from 'rxjs/operators';
-import { AppStateWithUsers } from '../../store/reducers/index';
+import { map, catchError, tap } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
-import { usersActions } from 'src/app/store/actions';
+import { AppStateWithUsers } from '../../store/reducers/index';
 
 @Injectable({
   providedIn: 'root',
 })
-export class ProtectRoutesGuard
-  implements CanActivate, CanDeactivate<unknown>, CanLoad {
+export class ProtectRoutesGuard implements CanActivate, CanLoad {
   constructor(
     private router: Router,
-    private editInfo: EditInfoService,
-    private saveLocal: SaveLocalService,
-    private store: Store<AppStateWithUsers>
+    private store: Store<AppStateWithUsers>,
+    private saveLocal: SaveLocalService
   ) {}
-
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
-  ): boolean {
-    return true;
+  ): Observable<boolean> {
+    // return this.store.select('user').pipe(
+    //   map((user) => {
+    //     console.log(user);
+    //     if (!user.error && user.user != null) {
+    //       return true;
+    //     }
+    //     return false;
+    //   })
+    // );
+    return of(true);
   }
-  canDeactivate(
-    component: unknown,
-    currentRoute: ActivatedRouteSnapshot,
-    currentState: RouterStateSnapshot,
-    nextState?: RouterStateSnapshot
-  ):
-    | Observable<boolean | UrlTree>
-    | Promise<boolean | UrlTree>
-    | boolean
-    | UrlTree {
-    return true;
-  }
+
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
     return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE)).pipe(
       map((token) => {

@@ -19,10 +19,6 @@ export class SaveLocalService {
       .catch((err) => err);
   }
 
-  // getItem(key: string): Observable<string> {
-  //   return from(localForage.getItem(key));
-  // }
-
   removeItem(key: string) {
     return localForage
       .removeItem(key)

@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 
 import { MyValidatorsService } from '../../../core/services/my-validators.service';
 import { AlertService } from '../../../core/services/alert.service';
-import { UserService } from '../../../core/services/user.service';
 import { emailPattern } from 'src/app/core/helpers/emailPattern';
 import { UsersInfoResponse } from '../../../core/interfaces';
 import { zip } from 'rxjs';
@@ -78,13 +77,12 @@ export class EditionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private myValidators: MyValidatorsService,
-    private userService: UserService,
     private editInfoService: EditInfoService,
     private router: Router,
     private swal: AlertService,
     private cloudinaryService: CloudinaryService
   ) {
-    this.currUser = this.userService.user;
+    // this.currUser = this.userService.user;
     this.widget = this.cloudinaryService.myWidget;
   }
 
@@ -181,39 +179,39 @@ export class EditionComponent implements OnInit {
 
   processUserEditData() {
     this.cloudinaryService.url$
-      .pipe(
-        switchMap((imgUrl) => {
-          console.log(imgUrl);
-          const perfil: Profile = new ProfileDetails(
-            this.currUser.perfil.idPerfil,
-            +this.editForm.get('genero').value,
-            +this.editForm.get('pais').value,
-            this.editForm.get('biografia').value,
-            this.editForm.get('fechaNacimiento').value,
-            this.editForm.get('conocimientos').value,
-            this.redesSociales.value,
-            imgUrl
-          );
+      .pipe
+      // switchMap((imgUrl) => {
+      //   console.log(imgUrl);
+      //   const perfil: Profile = new ProfileDetails(
+      //     this.currUser.perfil.idPerfil,
+      //     +this.editForm.get('genero').value,
+      //     +this.editForm.get('pais').value,
+      //     this.editForm.get('biografia').value,
+      //     this.editForm.get('fechaNacimiento').value,
+      //     this.editForm.get('conocimientos').value,
+      //     this.redesSociales.value,
+      //     imgUrl
+      //   );
 
-          const newData = new EditUsers(
-            this.currUser.usuId,
-            this.editForm.get('usuNickname').value,
-            this.editForm.get('usuCorreo').value,
-            perfil
-          );
+      //   const newData = new EditUsers(
+      //     this.currUser.usuId,
+      //     this.editForm.get('usuNickname').value,
+      //     this.editForm.get('usuCorreo').value,
+      //     perfil
+      //   );
 
-          return this.editInfoService.editUserInfo(
-            newData,
-            this.userService.accessToken
-          );
-        }),
-        switchMap((response) => {
-          return this.editInfoService.getUserInfo();
-        })
-      )
+      //   // return this.editInfoService.editUserInfo(
+      //   //   newData,
+      //   //   // this.userService.accessToken
+      //   // );
+      // }),
+      // switchMap((response) => {
+      //   return this.editInfoService.getUserInfo();
+      // })
+      ()
       .subscribe((resp) => {
-        this.userService.user = resp.message;
-        this.currUser = this.userService.user;
+        // this.userService.user = resp.message;
+        // this.currUser = this.userService.user;
         this.swal.successSwal('Su información fue actualizada');
         this.router.navigate(['profile']);
         console.log(resp);

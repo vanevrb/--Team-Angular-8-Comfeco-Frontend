@@ -9,8 +9,6 @@ import { emailPattern } from '../../../core/helpers/emailPattern';
 import { SaveLocalService } from '../../../core/services/save-local.service';
 import { AuthService } from '../../../core/services/auth.service';
 import { AlertService } from '../../../core/services/alert.service';
-import { UserService } from '../../../core/services/user.service';
-import { EditInfoService } from '../../../core/services/edit-info.service';
 
 import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
@@ -23,7 +21,6 @@ import { AppState } from '../../../store/reducers/index';
   styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-  private saveEmailStoreKey = 'C0mf3c0-/S4v3-3m41l';
   login: FormGroup;
   isLoading$: Observable<boolean>;
 
@@ -95,9 +92,9 @@ export class LoginComponent implements OnInit {
      * Store the email if checkbox is checked or erase otherwise
      */
     if (this.checkbox.value) {
-      this.saveLocal.setItem(this.saveEmailStoreKey, this.email.value);
+      this.saveLocal.setItem(environment.LOCAL_KEY_EMAIL, this.email.value);
     } else {
-      this.saveLocal.removeItem(this.saveEmailStoreKey);
+      this.saveLocal.removeItem(environment.LOCAL_KEY_EMAIL);
     }
 
     /**
