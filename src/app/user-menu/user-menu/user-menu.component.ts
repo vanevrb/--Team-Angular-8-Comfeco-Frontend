@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 
 import { Store } from '@ngrx/store';
 import { AppStateWithUsers } from '../../store/reducers/index';
-import { usersActions } from 'src/app/store/actions';
+import { usersActions, loginActions } from 'src/app/store/actions';
 
 import { UsersInfoResponse } from '../../core/interfaces';
 
@@ -29,6 +29,6 @@ export class UserMenuComponent implements OnInit {
 
   logout() {
     this.isShowSubmenu = false;
-    this.store.dispatch(usersActions.unloadUser());
+    this.store.dispatch(loginActions.logout());
   }
 }

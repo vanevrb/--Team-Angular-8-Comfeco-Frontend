@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { usersActions } from 'src/app/store/actions';
+import { usersActions, loginActions } from 'src/app/store/actions';
 import { AppStateWithUsers } from '../../../store/reducers/index';
 import { Subscription } from 'rxjs';
 import { take } from 'rxjs/operators';
@@ -23,7 +23,6 @@ export class LayoutComponent implements OnInit, OnDestroy {
         if (user.loaded) {
           return;
         }
-
         this.store.dispatch(usersActions.loadUser());
       });
   }

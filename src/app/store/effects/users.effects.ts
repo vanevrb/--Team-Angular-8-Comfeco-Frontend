@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { usersActions } from '../actions';
 
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 
 import { Observable, of, from } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
@@ -13,6 +13,7 @@ import { EditInfoService } from '../../core/services/edit-info.service';
 import { SaveLocalService } from '../../core/services/save-local.service';
 
 import { environment } from '../../../environments/environment';
+import { loginActions } from 'src/app/store/actions';
 
 @Injectable()
 export class UsersEffects {
@@ -25,7 +26,7 @@ export class UsersEffects {
             if (resp.error) {
               return usersActions.loadErrorUser({ payload: resp.error.error });
             }
-
+            this.store.dispatch(loginActions.completeLogin());
             return usersActions.setUser({ user: resp.message });
           }),
           catchError(() => of(usersActions.loadErrorUser({ payload: 'error' })))
@@ -53,6 +54,7 @@ export class UsersEffects {
     private actions$: Actions,
     private editInfo: EditInfoService,
     private saveLocal: SaveLocalService,
-    private router: Router
+    private router: Router,
+    private store: Store
   ) {}
 }

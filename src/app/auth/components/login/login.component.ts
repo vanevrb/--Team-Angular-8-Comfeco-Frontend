@@ -14,6 +14,7 @@ import { environment } from '../../../../environments/environment';
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/reducers/index';
+import { loginActions } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-login',
@@ -100,38 +101,41 @@ export class LoginComponent implements OnInit {
     /**
      * Bring data from api
      */
-    this.authService
-      .login(loginData)
-      .pipe(
-        tap(({ message }) => {
-          this.saveLocal.setItem(
-            environment.LOCAL_KEY_FOR_SAVE,
-            message.access_token
-          );
-        })
-      )
-      .subscribe((data) => {
-        /**
-         * Handle error
-         */
-        if (data.error) {
-          const message =
-            data.code === 400
-              ? 'Verifica Email / Contraseña'
-              : 'Ups, algo salío mal';
 
-          return this.swal.failSwal(data.message, message);
-        }
+    this.store.dispatch(loginActions.initLogin({ loginData }));
 
-        /**
-         * Restart form
-         */
-        this.login.reset();
+    // this.authService
+    //   .login(loginData)
+    //   .pipe(
+    //     tap(({ message }) => {
+    //       this.saveLocal.setItem(
+    //         environment.LOCAL_KEY_FOR_SAVE,
+    //         message.access_token
+    //       );
+    //     })
+    //   )
+    //   .subscribe((data) => {
+    //     /**
+    //      * Handle error
+    //      */
+    //     if (data.error) {
+    //       const message =
+    //         data.code === 400
+    //           ? 'Verifica Email / Contraseña'
+    //           : 'Ups, algo salío mal';
 
-        /**
-         * go homepage
-         */
-        this.router.navigate(['home']);
-      });
+    //       return this.swal.failSwal(data.message, message);
+    //     }
+
+    //     /**
+    //      * Restart form
+    //      */
+    //     this.login.reset();
+
+    //     /**
+    //      * go homepage
+    //      */
+    //     this.router.navigate(['home']);
+    //   });
   }
 }

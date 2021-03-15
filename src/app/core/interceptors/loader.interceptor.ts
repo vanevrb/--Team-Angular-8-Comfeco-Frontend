@@ -19,7 +19,13 @@ export class LoaderInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    this.store.dispatch(uiActions.activateLoader());
+    const searchedFlag =
+      req.urlWithParams.includes('/api/usuario/buscar/') &&
+      req.method === 'GET';
+
+    if (!searchedFlag) {
+      this.store.dispatch(uiActions.activateLoader());
+    }
     return next
       .handle(req)
       .pipe(finalize(() => this.store.dispatch(uiActions.stopLoader())));

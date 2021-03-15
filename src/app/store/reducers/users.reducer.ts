@@ -1,6 +1,6 @@
-import usersActions from '../actions/users.actions';
-import { UsersInfoResponse } from '../../core/interfaces/UsersInfoResponse';
 import { createReducer, on } from '@ngrx/store';
+import { UsersInfoResponse } from '../../core/interfaces';
+import { usersActions } from '../actions';
 
 export interface UsersState {
   user: Partial<UsersInfoResponse>;
@@ -9,7 +9,7 @@ export interface UsersState {
   error: any;
 }
 
-export const initialState: UsersState = {
+export const usersInitialState: UsersState = {
   user: null,
   loaded: false,
   loadingUsers: false,
@@ -17,7 +17,7 @@ export const initialState: UsersState = {
 };
 
 const _usersReducer = createReducer(
-  initialState,
+  usersInitialState,
   on(usersActions.loadUser, (state) => ({ ...state, loadingUsers: true })),
   on(usersActions.unloadUser, (state) => ({ ...state, loadingUsers: true })),
   on(usersActions.loadErrorUser, (state, { payload }) => ({

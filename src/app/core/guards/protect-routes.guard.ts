@@ -15,7 +15,7 @@ import { Observable, of, from } from 'rxjs';
 
 import { SaveLocalService } from '../services/save-local.service';
 import { environment } from '../../../environments/environment';
-import { map, catchError, tap } from 'rxjs/operators';
+import { map, catchError, tap, take, takeLast } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 import { AppStateWithUsers } from '../../store/reducers/index';
 
@@ -32,16 +32,20 @@ export class ProtectRoutesGuard implements CanActivate, CanLoad {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> {
-    // return this.store.select('user').pipe(
-    //   map((user) => {
-    //     console.log(user);
-    //     if (!user.error && user.user != null) {
-    //       return true;
-    //     }
-    //     return false;
-    //   })
-    // );
-    return of(true);
+    return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE)).pipe(
+      map((token) => {
+        if (!token) {
+          return false;
+        }
+        return true;
+      }),
+      catchError((err) => of(false)),
+      tap((flag) => {
+        if (!flag) {
+          this.router.navigateByUrl('/');
+        }
+      })
+    );
   }
 
   canLoad(route: Route, segments: UrlSegment[]): Observable<boolean> {
