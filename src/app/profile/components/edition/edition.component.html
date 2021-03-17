@@ -7,7 +7,7 @@
     *ngIf="this.renderPaises"
   >
     <div class="form-group">
-      <img [src]="currUser.perfil.avatar" alt="avatar" />
+      <img [src]="currUser?.perfil.avatar" alt="avatar" />
       <button type="button" class="button button-fab" (click)="openWidget()">
         edit
       </button>

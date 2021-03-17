@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -12,7 +12,7 @@ import { MyValidatorsService } from '../../../core/services/my-validators.servic
 import { AlertService } from '../../../core/services/alert.service';
 import { emailPattern } from 'src/app/core/helpers/emailPattern';
 import { UsersInfoResponse } from '../../../core/interfaces';
-import { zip } from 'rxjs';
+import { zip, Subscription } from 'rxjs';
 import { EditInfoService } from '../../../core/services/edit-info.service';
 import { map, switchMap } from 'rxjs/operators';
 import { EditUsers } from '../../../core/models/EditUsers';
@@ -22,20 +22,22 @@ import { Knowledge } from '../../../core/enums/Knowledge';
 import { ProfileDetails } from '../../../core/models/ProfileDetails';
 import { SocialNames } from '../../../core/enums/SocialNames';
 import { CloudinaryService } from '../../../core/services/cloudinary.service';
+import { Store } from '@ngrx/store';
+import { AppStateWithUsers } from '../../../store/reducers/index';
 
 @Component({
   selector: 'app-edition',
   templateUrl: './edition.component.html',
   styleUrls: ['./edition.component.scss'],
 })
-export class EditionComponent implements OnInit {
+export class EditionComponent implements OnInit, OnDestroy {
   editForm: FormGroup;
   isLoading = true;
   renderPaises: any;
   renderConoc: any;
   widget: any;
 
-  currUser: UsersInfoResponse;
+  currUser: Partial<UsersInfoResponse>;
 
   get nickErrors() {
     const field = this.editForm.get('usuNickname');
@@ -74,16 +76,24 @@ export class EditionComponent implements OnInit {
     return this.editForm.get('redesSociales') as FormArray;
   }
 
+  subs: Subscription;
   constructor(
     private fb: FormBuilder,
     private myValidators: MyValidatorsService,
     private editInfoService: EditInfoService,
     private router: Router,
     private swal: AlertService,
-    private cloudinaryService: CloudinaryService
+    private cloudinaryService: CloudinaryService,
+    private store: Store<AppStateWithUsers>
   ) {
-    // this.currUser = this.userService.user;
+    this.subs = this.store.select('user').subscribe((user) => {
+      this.currUser = user.user;
+    });
     this.widget = this.cloudinaryService.myWidget;
+  }
+
+  ngOnDestroy() {
+    this.subs.unsubscribe();
   }
 
   ngOnInit(): void {
