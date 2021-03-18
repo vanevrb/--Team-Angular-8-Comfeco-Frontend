@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -41,11 +41,13 @@ import { CloudinaryService } from '../../../core/services/cloudinary.service';
   templateUrl: './edition.component.html',
   styleUrls: ['./edition.component.scss'],
 })
-export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
+export class EditionComponent implements OnInit {
+  currUser$: Observable<Partial<UsersInfoResponse>>;
   editForm: FormGroup;
-  isLoading = true;
-  renderPaises: any;
-  renderConoc: any;
+  paises: Paises[];
+  skills: Conocimientos[];
+  redes: RedesSociales[];
+
   widget: any;
 
   get nickErrors() {
@@ -82,11 +84,6 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.editForm.get('redesSociales') as FormArray;
   }
 
-  currUser$: Observable<Partial<UsersInfoResponse>>;
-
-  paises$: Paises[];
-  skills$: Conocimientos[];
-
   constructor(
     private fb: FormBuilder,
     private myValidators: MyValidatorsService,
@@ -99,10 +96,6 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
     this.widget = this.cloudinaryService.myWidget;
   }
 
-  ngOnDestroy() {}
-
-  ngAfterViewInit() {}
-  // this.editInfoService.getSkills();
   ngOnInit(): void {
     this.currUser$ = from(this.createForm()).pipe(
       tap((data) => {
@@ -111,14 +104,14 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
       switchMap(() =>
         this.editInfoService.getCountries().pipe(
           tap((data) => {
-            this.paises$ = data;
+            this.paises = data;
           })
         )
       ),
       switchMap(() =>
         this.editInfoService.getSkills().pipe(
           tap((data) => {
-            this.skills$ = data;
+            this.skills = data;
           })
         )
       ),
@@ -126,9 +119,18 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
         this.store.select('user').pipe(
           map((user) => user.user),
           tap((user) => {
+            console.log(user);
             this.editForm.patchValue({
               usuNickname: user.usuNickname,
               usuCorreo: user.usuCorreo,
+              genero: user.perfil?.genero,
+              fechaNacimiento: user.perfil?.fechaNacimiento,
+              pais: user.perfil?.pais?.nombrePais,
+              biografia: user.perfil?.biografia,
+              conocimientos: user.perfil?.conocimientos,
+            });
+            this.redesSociales.controls.forEach((ctrl, i) => {
+              ctrl.patchValue(user.perfil.redesSociales[i] || '');
             });
           })
         )
@@ -223,7 +225,6 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
       return;
     }
 
-    this.swal.sendForm();
     this.processUserEditData();
   }
 

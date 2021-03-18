@@ -98,7 +98,7 @@
             type="text"
             formControlName="pais"
           >
-            <option *ngFor="let val of this.paises$" [value]="val.idPais">
+            <option *ngFor="let val of paises" [value]="val.idPais">
               {{ val.nombrePais }}
             </option>
           </select>
@@ -126,10 +126,7 @@
           formControlName="conocimientos"
           multiple
         >
-          <option
-            *ngFor="let item of skills$ | async"
-            [value]="item.idConocimiento"
-          >
+          <option *ngFor="let item of skills" [value]="item.idConocimiento">
             {{ item.nombreConocimiento }}
           </option>
         </select>
@@ -154,9 +151,9 @@
         <button
           class="button button-primary button-block"
           type="submit"
-          [disabled]="isLoading"
           *ngIf="!editForm.pristine"
         >
+          <!-- [disabled]="isLoading" -->
           Guardar Cambios
         </button>
       </div>
