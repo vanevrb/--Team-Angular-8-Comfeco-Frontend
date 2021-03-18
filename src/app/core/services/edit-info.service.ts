@@ -12,6 +12,8 @@ import {
 
 import { environment } from '../../../environments/environment';
 import { SaveLocalService } from './save-local.service';
+import { Paises } from '../interfaces/Paises';
+import { Conocimientos } from '../interfaces/Conocimientos';
 
 @Injectable({
   providedIn: 'root',
@@ -89,12 +91,12 @@ export class EditInfoService {
       );
   }
 
-  getCountries() {
-    return this.http.get(`${this.baseUrl}/api/pais`);
+  getCountries(): Observable<Paises[]> {
+    return this.http.get<Paises[]>(`${this.baseUrl}/api/pais`);
   }
 
-  getSkills() {
-    return this.http.get(`${this.baseUrl}/api/conocimiento`);
+  getSkills(): Observable<Conocimientos[]> {
+    return this.http.get<Conocimientos[]>(`${this.baseUrl}/api/conocimiento`);
   }
 
   getSocials(): Observable<RedesSocialesResponse[]> {

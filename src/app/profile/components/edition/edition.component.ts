@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
 import {
   FormGroup,
   FormBuilder,
@@ -8,36 +8,45 @@ import {
 } from '@angular/forms';
 import { Router } from '@angular/router';
 
-import { MyValidatorsService } from '../../../core/services/my-validators.service';
-import { AlertService } from '../../../core/services/alert.service';
-import { emailPattern } from 'src/app/core/helpers/emailPattern';
-import { UsersInfoResponse } from '../../../core/interfaces';
-import { zip, Subscription } from 'rxjs';
-import { EditInfoService } from '../../../core/services/edit-info.service';
-import { map, switchMap } from 'rxjs/operators';
-import { EditUsers } from '../../../core/models/EditUsers';
-import { Profile } from '../../../core/interfaces/Profile';
-import { RedesSociales } from '../../../core/interfaces/RedesSociales';
-import { Knowledge } from '../../../core/enums/Knowledge';
-import { ProfileDetails } from '../../../core/models/ProfileDetails';
-import { SocialNames } from '../../../core/enums/SocialNames';
-import { CloudinaryService } from '../../../core/services/cloudinary.service';
 import { Store } from '@ngrx/store';
 import { AppStateWithUsers } from '../../../store/reducers/index';
+
+import { Observable, forkJoin, from } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+
+import { MyValidatorsService } from '../../../core/services/my-validators.service';
+import { AlertService } from '../../../core/services/alert.service';
+import { emailPattern } from '../../../core/helpers/emailPattern';
+import { EditInfoService } from '../../../core/services/edit-info.service';
+
+import {
+  UsersInfoResponse,
+  RedesSociales,
+  Paises,
+  Conocimientos,
+  Profile,
+  RedesSocialesResponse,
+} from '../../../core/interfaces';
+
+import { ProfileDetails } from '../../../core/models/ProfileDetails';
+import { EditUsers } from '../../../core/models/EditUsers';
+
+import { Knowledge } from '../../../core/enums/Knowledge';
+import { SocialNames } from '../../../core/enums/SocialNames';
+
+import { CloudinaryService } from '../../../core/services/cloudinary.service';
 
 @Component({
   selector: 'app-edition',
   templateUrl: './edition.component.html',
   styleUrls: ['./edition.component.scss'],
 })
-export class EditionComponent implements OnInit, OnDestroy {
+export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
   editForm: FormGroup;
   isLoading = true;
   renderPaises: any;
   renderConoc: any;
   widget: any;
-
-  currUser: Partial<UsersInfoResponse>;
 
   get nickErrors() {
     const field = this.editForm.get('usuNickname');
@@ -63,20 +72,21 @@ export class EditionComponent implements OnInit, OnDestroy {
     const field = this.editForm.get('biografia');
     return field.touched && field.errors;
   }
-
   get activeUsuClave() {
     return !!this.editForm.get('usuClave').value;
   }
-
   get email() {
     return this.editForm.get('usuCorreo');
   }
-
   get redesSociales() {
     return this.editForm.get('redesSociales') as FormArray;
   }
 
-  subs: Subscription;
+  currUser$: Observable<Partial<UsersInfoResponse>>;
+
+  paises$: Paises[];
+  skills$: Conocimientos[];
+
   constructor(
     private fb: FormBuilder,
     private myValidators: MyValidatorsService,
@@ -86,45 +96,79 @@ export class EditionComponent implements OnInit, OnDestroy {
     private cloudinaryService: CloudinaryService,
     private store: Store<AppStateWithUsers>
   ) {
-    this.subs = this.store.select('user').subscribe((user) => {
-      this.currUser = user.user;
-    });
     this.widget = this.cloudinaryService.myWidget;
   }
 
-  ngOnDestroy() {
-    this.subs.unsubscribe();
-  }
+  ngOnDestroy() {}
 
+  ngAfterViewInit() {}
+  // this.editInfoService.getSkills();
   ngOnInit(): void {
-    zip(
-      this.editInfoService.getCountries(),
-      this.editInfoService.getSkills(),
-      this.editInfoService.getSocials()
-    )
-      .pipe(
-        map(([pais, conocimientos, redesSociales]) => ({
-          pais,
-          conocimientos,
-          redesSociales,
-        }))
+    this.currUser$ = from(this.createForm()).pipe(
+      tap((data) => {
+        this.editForm = data;
+      }),
+      switchMap(() =>
+        this.editInfoService.getCountries().pipe(
+          tap((data) => {
+            this.paises$ = data;
+          })
+        )
+      ),
+      switchMap(() =>
+        this.editInfoService.getSkills().pipe(
+          tap((data) => {
+            this.skills$ = data;
+          })
+        )
+      ),
+      switchMap(() =>
+        this.store.select('user').pipe(
+          map((user) => user.user),
+          tap((user) => {
+            this.editForm.patchValue({
+              usuNickname: user.usuNickname,
+              usuCorreo: user.usuCorreo,
+            });
+          })
+        )
       )
-      .toPromise()
-      .then((data) => {
-        this.renderPaises = data.pais;
-        this.renderConoc = data.conocimientos;
-        this.editForm = this.createForm();
-        data.redesSociales.forEach((item) => {
-          const valControl = this.currUser.perfil.redesSociales.find(
-            (red) => red.redSocial.idRedSocial === item.idRedSocial
-          );
+    );
 
-          this.redesSociales.push(
-            this.fb.control(!valControl ? '' : valControl.usuario)
-          );
-          this.isLoading = false;
-        });
-      });
+    // map((fork) => {
+    //   this.paises$ = fork.paises$;
+    //   this.paises$ = fork.paises$;
+    //   this.paises$ = fork.paises$;
+    // })
+
+    // zip(
+    //   this.editInfoService.getCountries(),
+    //   this.editInfoService.getSkills(),
+    //   this.editInfoService.getSocials()
+    // )
+    //   .pipe(
+    //     map(([pais, conocimientos, redesSociales]) => ({
+    //       pais,
+    //       conocimientos,
+    //       redesSociales,
+    //     }))
+    //   )
+    //   .toPromise()
+    //   .then((data) => {
+    //     this.renderPaises = data.pais;
+    //     this.renderConoc = data.conocimientos;
+    //     this.editForm = this.createForm();
+    //     data.redesSociales.forEach((item) => {
+    //       const valControl = this.currUser.perfil.redesSociales.find(
+    //         (red) => red.redSocial.idRedSocial === item.idRedSocial
+    //       );
+
+    //       this.redesSociales.push(
+    //         this.fb.control(!valControl ? '' : valControl.usuario)
+    //       );
+    //     });
+    //     this.isLoading = false;
+    //   });
   }
 
   getRedSocialNombre(id: number) {
@@ -137,36 +181,32 @@ export class EditionComponent implements OnInit, OnDestroy {
     this.widget.open();
   }
 
-  createForm() {
+  async createForm() {
     return this.fb.group(
       {
-        usuNickname: [
-          this.currUser.usuNickname,
-          [Validators.required, Validators.minLength(3)],
-        ],
+        usuNickname: ['', [Validators.required, Validators.minLength(3)]],
         usuCorreo: [
-          this.currUser.usuCorreo,
+          '',
           [Validators.required, Validators.pattern(emailPattern)],
         ],
         usuClave: [''],
         usuClave2: [''],
 
         genero: [
-          this.currUser.perfil.genero,
+          0,
           [Validators.required, Validators.min(0), Validators.max(2)],
         ],
-        fechaNacimiento: [this.currUser.perfil.fechaNacimiento],
-        pais: [
-          this.currUser.perfil.pais ? this.currUser.perfil.pais.idPais : 0,
-        ],
-        biografia: [
-          this.currUser.perfil.biografia,
-          [Validators.maxLength(140)],
-        ],
-        conocimientos: [
-          this.currUser.perfil.conocimientos.map((val) => val.idConocimiento),
-        ],
-        redesSociales: this.fb.array([]),
+        fechaNacimiento: [''],
+        pais: [0],
+        biografia: ['', [Validators.maxLength(140)]],
+        conocimientos: [[]],
+        redesSociales: this.fb.array([
+          this.fb.control(''),
+          this.fb.control(''),
+          this.fb.control(''),
+          this.fb.control(''),
+          this.fb.control(''),
+        ]),
       },
       {
         validators: this.myValidators.confirmPass('usuClave', 'usuClave2'),

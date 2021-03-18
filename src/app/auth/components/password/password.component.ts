@@ -6,6 +6,7 @@ import { Router } from '@angular/router';
 import { AlertService } from '../../../core/services/alert.service';
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/reducers/index';
+import { loginActions } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-password',
@@ -20,13 +21,11 @@ export class PasswordComponent implements OnInit {
     return field.touched && field.errors;
   }
 
-  constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private swal: AlertService,
-    private store: Store<AppState>,
-    private authService: AuthService
-  ) {}
+  get email() {
+    return this.forgot.get('usuCorreo').value;
+  }
+
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
 
   ngOnInit(): void {
     this.forgot = this.createForm();
@@ -43,32 +42,7 @@ export class PasswordComponent implements OnInit {
       this.forgot.markAllAsTouched();
       return;
     }
-    this.authService
-      .forgotPassword(this.forgot.get('usuCorreo').value)
-      .subscribe((data) => {
-        /**
-         * Handle error
-         */
-        if (data.error) {
-          return this.swal.failSwal(data.message, 'Ups, algo salío mal');
-        }
-
-        /**
-         * Restart form
-         */
-        this.forgot.reset();
-
-        /**
-         * Send succes alert
-         */
-        this.swal.successSwal(
-          'Por favor revise la bandeja de entrada de su correo electrónico'
-        );
-
-        /**
-         * go loginpage
-         */
-        this.router.navigate(['auth', 'login']);
-      });
+    this.store.dispatch(loginActions.forgotPassword(this.email));
+    this.forgot.reset();
   }
 }
