@@ -31,6 +31,20 @@ const routes: Routes = [
     canActivate: [ProtectRoutesGuard],
   },
   {
+    path: 'learning',
+    loadChildren: () =>
+      import('./learning/learning.module').then((m) => m.LearningModule),
+    canLoad: [ProtectRoutesGuard],
+    canActivate: [ProtectRoutesGuard],
+  },
+  {
+    path: 'creators',
+    loadChildren: () =>
+      import('./creators/creators.module').then((m) => m.CreatorsModule),
+    canLoad: [ProtectRoutesGuard],
+    canActivate: [ProtectRoutesGuard],
+  },
+  {
     path: 'profile',
     loadChildren: () =>
       import('./profile/profile.module').then((m) => m.ProfileModule),
