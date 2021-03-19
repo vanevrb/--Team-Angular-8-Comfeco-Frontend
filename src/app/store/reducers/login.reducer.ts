@@ -35,6 +35,11 @@ const _loginReducer = createReducer(
     ...state,
     logged: false,
     loading: false,
+  })),
+  on(loginActions.forgotPassword, (state, { email }) => ({
+    ...state,
+    logged: false,
+    loading: false,
   }))
 );
 

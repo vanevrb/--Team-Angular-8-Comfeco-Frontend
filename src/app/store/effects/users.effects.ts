@@ -24,12 +24,17 @@ export class UsersEffects {
         this.editInfo.getUserInfo().pipe(
           map((resp) => {
             if (resp.error) {
+              this.store.dispatch(usersActions.unloadUser());
               return usersActions.loadErrorUser({ payload: resp.error.error });
             }
             this.store.dispatch(loginActions.completeLogin());
             return usersActions.setUser({ user: resp.message });
           }),
-          catchError(() => of(usersActions.loadErrorUser({ payload: 'error' })))
+          catchError(() => {
+            this.store.dispatch(usersActions.unloadUser());
+
+            return of(usersActions.loadErrorUser({ payload: 'error' }));
+          })
         )
       )
     )

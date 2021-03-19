@@ -87,6 +87,28 @@ export class LoginEffects {
       })
     )
   );
+  forgotPassword$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(loginActions.forgotPassword),
+      switchMap(({ email }) => {
+        return this.authService.forgotPassword(email).pipe(
+          map((data) => {
+            if (data.error) {
+              this.swal.failSwal(data.message, 'Ups, algo salío mal');
+            }
+
+            return usersActions.unloadUser();
+          }),
+          catchError(() => {
+            this.swal.failSwal('Intente más tarde', 'Ups, algo salío mal');
+
+            return of(usersActions.unloadUser());
+          }),
+          finalize(() => this.router.navigateByUrl('/auth/login'))
+        );
+      })
+    )
+  );
 
   constructor(
     private actions$: Actions,
