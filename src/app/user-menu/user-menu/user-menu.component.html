@@ -6,8 +6,14 @@
     <article class="user-menu__content">
       <div class="user-menu__header">
         <div class="user-menu__avatar">
-          <!-- <img [src]="user.perfil.avatar | domSanitizer" alt="avatar" /> -->
-          <span class="far user"></span>
+          <img
+            [src]="user.perfil.avatar | domSanitizer"
+            alt="avatar"
+            *ngIf="user.perfil?.avatar; else icon"
+          />
+          <ng-template #icon>
+            <span class="far user"></span>
+          </ng-template>
         </div>
         <h2
           class="user-menu__title"

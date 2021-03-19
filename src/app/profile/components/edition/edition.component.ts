@@ -1,21 +1,15 @@
-import { Component, OnInit, OnDestroy, AfterViewInit } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormArray,
-  FormControl,
-} from '@angular/forms';
+import { Component, OnInit } from '@angular/core';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { AppStateWithUsers } from '../../../store/reducers/index';
+import { imageActions, usersActions } from 'src/app/store/actions';
 
-import { Observable, forkJoin, from } from 'rxjs';
+import { Observable, from, zip } from 'rxjs';
 import { map, switchMap, tap } from 'rxjs/operators';
 
 import { MyValidatorsService } from '../../../core/services/my-validators.service';
-import { AlertService } from '../../../core/services/alert.service';
 import { emailPattern } from '../../../core/helpers/emailPattern';
 import { EditInfoService } from '../../../core/services/edit-info.service';
 
@@ -25,13 +19,11 @@ import {
   Paises,
   Conocimientos,
   Profile,
-  RedesSocialesResponse,
 } from '../../../core/interfaces';
 
 import { ProfileDetails } from '../../../core/models/ProfileDetails';
 import { EditUsers } from '../../../core/models/EditUsers';
 
-import { Knowledge } from '../../../core/enums/Knowledge';
 import { SocialNames } from '../../../core/enums/SocialNames';
 
 import { CloudinaryService } from '../../../core/services/cloudinary.service';
@@ -41,11 +33,13 @@ import { CloudinaryService } from '../../../core/services/cloudinary.service';
   templateUrl: './edition.component.html',
   styleUrls: ['./edition.component.scss'],
 })
-export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
+export class EditionComponent implements OnInit {
+  currUser$: Observable<Partial<UsersInfoResponse>>;
   editForm: FormGroup;
-  isLoading = true;
-  renderPaises: any;
-  renderConoc: any;
+  paises: Paises[];
+  skills: Conocimientos[];
+  redes: RedesSociales[];
+
   widget: any;
 
   get nickErrors() {
@@ -82,27 +76,17 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
     return this.editForm.get('redesSociales') as FormArray;
   }
 
-  currUser$: Observable<Partial<UsersInfoResponse>>;
-
-  paises$: Paises[];
-  skills$: Conocimientos[];
-
   constructor(
     private fb: FormBuilder,
     private myValidators: MyValidatorsService,
     private editInfoService: EditInfoService,
     private router: Router,
-    private swal: AlertService,
     private cloudinaryService: CloudinaryService,
     private store: Store<AppStateWithUsers>
   ) {
     this.widget = this.cloudinaryService.myWidget;
   }
 
-  ngOnDestroy() {}
-
-  ngAfterViewInit() {}
-  // this.editInfoService.getSkills();
   ngOnInit(): void {
     this.currUser$ = from(this.createForm()).pipe(
       tap((data) => {
@@ -111,14 +95,14 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
       switchMap(() =>
         this.editInfoService.getCountries().pipe(
           tap((data) => {
-            this.paises$ = data;
+            this.paises = data;
           })
         )
       ),
       switchMap(() =>
         this.editInfoService.getSkills().pipe(
           tap((data) => {
-            this.skills$ = data;
+            this.skills = data;
           })
         )
       ),
@@ -127,48 +111,23 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
           map((user) => user.user),
           tap((user) => {
             this.editForm.patchValue({
-              usuNickname: user.usuNickname,
+              usuNickname: user?.usuNickname,
               usuCorreo: user.usuCorreo,
+              genero: user.perfil?.genero,
+              fechaNacimiento: user.perfil?.fechaNacimiento,
+              pais: user.perfil?.pais?.idPais,
+              biografia: user.perfil?.biografia,
+              conocimientos: user.perfil?.conocimientos.map(
+                (item) => item.idConocimiento
+              ),
+            });
+            this.redesSociales.controls.forEach((ctrl, i) => {
+              ctrl.patchValue(user?.perfil?.redesSociales[i]?.usuario || '');
             });
           })
         )
       )
     );
-
-    // map((fork) => {
-    //   this.paises$ = fork.paises$;
-    //   this.paises$ = fork.paises$;
-    //   this.paises$ = fork.paises$;
-    // })
-
-    // zip(
-    //   this.editInfoService.getCountries(),
-    //   this.editInfoService.getSkills(),
-    //   this.editInfoService.getSocials()
-    // )
-    //   .pipe(
-    //     map(([pais, conocimientos, redesSociales]) => ({
-    //       pais,
-    //       conocimientos,
-    //       redesSociales,
-    //     }))
-    //   )
-    //   .toPromise()
-    //   .then((data) => {
-    //     this.renderPaises = data.pais;
-    //     this.renderConoc = data.conocimientos;
-    //     this.editForm = this.createForm();
-    //     data.redesSociales.forEach((item) => {
-    //       const valControl = this.currUser.perfil.redesSociales.find(
-    //         (red) => red.redSocial.idRedSocial === item.idRedSocial
-    //       );
-
-    //       this.redesSociales.push(
-    //         this.fb.control(!valControl ? '' : valControl.usuario)
-    //       );
-    //     });
-    //     this.isLoading = false;
-    //   });
   }
 
   getRedSocialNombre(id: number) {
@@ -177,7 +136,7 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
 
   openWidget() {
     this.editForm.markAsDirty();
-
+    this.store.dispatch(imageActions.initLoadImg());
     this.widget.open();
   }
 
@@ -222,49 +181,45 @@ export class EditionComponent implements OnInit, AfterViewInit, OnDestroy {
       this.editForm.markAllAsTouched();
       return;
     }
-
-    this.swal.sendForm();
     this.processUserEditData();
   }
 
+  getPuntaje() {
+    return (
+      +this.editForm.get('genero').value > 0 &&
+      +this.editForm.get('pais').value > 0 &&
+      this.editForm.get('biografia').value.length > 0 &&
+      !!this.editForm.get('fechaNacimiento').value &&
+      this.editForm.get('conocimientos').value.length > 0
+    );
+  }
+
   processUserEditData() {
-    this.cloudinaryService.url$
-      .pipe
-      // switchMap((imgUrl) => {
-      //   console.log(imgUrl);
-      //   const perfil: Profile = new ProfileDetails(
-      //     this.currUser.perfil.idPerfil,
-      //     +this.editForm.get('genero').value,
-      //     +this.editForm.get('pais').value,
-      //     this.editForm.get('biografia').value,
-      //     this.editForm.get('fechaNacimiento').value,
-      //     this.editForm.get('conocimientos').value,
-      //     this.redesSociales.value,
-      //     imgUrl
-      //   );
-
-      //   const newData = new EditUsers(
-      //     this.currUser.usuId,
-      //     this.editForm.get('usuNickname').value,
-      //     this.editForm.get('usuCorreo').value,
-      //     perfil
-      //   );
-
-      //   // return this.editInfoService.editUserInfo(
-      //   //   newData,
-      //   //   // this.userService.accessToken
-      //   // );
-      // }),
-      // switchMap((response) => {
-      //   return this.editInfoService.getUserInfo();
-      // })
-      ()
-      .subscribe((resp) => {
-        // this.userService.user = resp.message;
-        // this.currUser = this.userService.user;
-        this.swal.successSwal('Su información fue actualizada');
-        this.router.navigate(['profile']);
-        console.log(resp);
+    zip(this.store.select('user'), this.store.select('image'))
+      .pipe(
+        map(([user, image]) => {
+          const perfil: Profile = new ProfileDetails(
+            user.user.perfil.idPerfil,
+            +this.editForm.get('genero').value,
+            +this.editForm.get('pais').value,
+            this.editForm.get('biografia').value,
+            this.editForm.get('fechaNacimiento').value,
+            this.editForm.get('conocimientos').value,
+            this.redesSociales.value,
+            this.getPuntaje() ? 1 : 0,
+            image.url
+          );
+          const newData = new EditUsers(
+            user.user.usuId,
+            this.editForm.get('usuNickname').value,
+            this.editForm.get('usuCorreo').value,
+            perfil
+          );
+          this.store.dispatch(usersActions.editUser({ newUser: newData }));
+        })
+      )
+      .subscribe(() => {
+        this.router.navigateByUrl('/profile');
       });
   }
 }

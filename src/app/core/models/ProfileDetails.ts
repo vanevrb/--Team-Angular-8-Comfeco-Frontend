@@ -1,8 +1,14 @@
-import { Paises, Conocimientos, RedesSociales } from '../interfaces';
-import { Profile } from '../interfaces/Profile';
+import {
+  Paises,
+  Profile,
+  Badges,
+  Conocimientos,
+  RedesSociales,
+} from '../interfaces';
 import { CountryDetails } from './CountryDetails';
 import { KnowledgeDetails } from './KnowledgeDetails';
 import { SocialNetworks } from './SocialNetwork';
+import { myBadges } from '../../profile/mockup/myBadges';
 
 export class ProfileDetails implements Profile {
   public idPerfil: number;
@@ -12,7 +18,9 @@ export class ProfileDetails implements Profile {
   public fechaNacimiento?: string;
   public conocimientos?: Conocimientos[];
   public redesSociales?: RedesSociales[];
+  public insignias?: any[];
   public avatar?: string;
+  public puntaje?: number;
 
   constructor(
     idPerfil: number,
@@ -22,6 +30,7 @@ export class ProfileDetails implements Profile {
     fechaNacimiento: string,
     conocimientos: string[],
     redesSociales?: string[],
+    puntaje?: number,
     avatar?: string
   ) {
     this.idPerfil = idPerfil;
@@ -34,6 +43,14 @@ export class ProfileDetails implements Profile {
     ).redesSociales;
     this.biografia = biografia;
     this.fechaNacimiento = fechaNacimiento;
-    this.avatar = avatar;
+    if (puntaje > 0) {
+      this.puntaje = puntaje;
+      if (puntaje === 1) {
+        this.insignias = myBadges.filter((item) => item.idInsignia === 1);
+      }
+    }
+    if (avatar) {
+      this.avatar = avatar;
+    }
   }
 }

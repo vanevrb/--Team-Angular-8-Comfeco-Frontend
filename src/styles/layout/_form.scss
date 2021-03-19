@@ -17,6 +17,8 @@
 
 .form-group {
   width: 100%;
+  margin-bottom: 1.25em;
+
   &.wrapper {
     display: flex;
     flex-wrap: wrap;
@@ -53,10 +55,6 @@
   input[type="date"] {
     padding-right: 0;
   }
-}
-
-.form-group:not(:last-child) {
-  margin-bottom: 8px;
 }
 
 .form-group.checkbox {

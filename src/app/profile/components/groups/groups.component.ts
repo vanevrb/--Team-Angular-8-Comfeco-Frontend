@@ -1,15 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+import { EditInfoService } from '../../../core/services/edit-info.service';
+
 @Component({
   selector: 'app-groups',
   templateUrl: './groups.component.html',
-  styleUrls: ['./groups.component.scss']
+  styleUrls: ['./groups.component.scss'],
 })
 export class GroupsComponent implements OnInit {
   searchgroup: string="";
   groups: any[] = [
     {
       id:1,
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'ii',
@@ -21,7 +23,7 @@ export class GroupsComponent implements OnInit {
 
     }, {
       id:2,
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -33,7 +35,7 @@ export class GroupsComponent implements OnInit {
 
     }, {
       id:3,
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -45,7 +47,7 @@ export class GroupsComponent implements OnInit {
 
     }, {
       id:4,
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -58,7 +60,7 @@ export class GroupsComponent implements OnInit {
     }, {
       id:5,
 
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -71,7 +73,7 @@ export class GroupsComponent implements OnInit {
     }, {
       id:6,
 
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -84,7 +86,7 @@ export class GroupsComponent implements OnInit {
     },
     {
       id:7,
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'ii',
@@ -96,7 +98,7 @@ export class GroupsComponent implements OnInit {
 
     }, {
       id:8,
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -108,7 +110,7 @@ export class GroupsComponent implements OnInit {
 
     }, {
       id:9,
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -120,7 +122,7 @@ export class GroupsComponent implements OnInit {
 
     }, {
       id:10,
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -133,7 +135,7 @@ export class GroupsComponent implements OnInit {
     }, {
       id:11,
 
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -146,7 +148,7 @@ export class GroupsComponent implements OnInit {
     }, {
       id:12,
 
-      know:'Novato',rol:'Integrante',image:
+      image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
         lenguage:'Typescript',
@@ -202,30 +204,17 @@ export class GroupsComponent implements OnInit {
         'https://cdn.discordapp.com/avatars/785683857487036467/bc9ee60333180bee3e04afd2ed50bdac.png',
       link: 'link',
       lenguage_icon: 'fab javascript',
-    },
-    // ,
-    // {
-    //   "name": "Comunidad de Programadores",
-    //   "know:'Novato',rol:'Integrante',image": "https://cdn.discordapp.com/avatars/785683857487036467/bc9ee60333180bee3e04afd2ed50bdac.png",
-    //   "link": "link",
-    //   "lenguage_icon": "fab javascript"
-    // },
-    // {
-    //   "name": "Comunidad de Programadores",
-    //   "know:'Novato',rol:'Integrante',image": "https://cdn.discordapp.com/avatars/785683857487036467/bc9ee60333180bee3e04afd2ed50bdac.png",
-    //   "link": "link",
-    //   "lenguage_icon": "fab javascript"
-    // },
-    // {
-    //   "name": "Comunidad de Programadores",
-    //   "know:'Novato',rol:'Integrante',image": "https://cdn.discordapp.com/avatars/785683857487036467/bc9ee60333180bee3e04afd2ed50bdac.png",
-    //   "link": "link",
-    //   "lenguage_icon": "fab javascript"
-    // }
+    }
+    
   ];
-  constructor() { }
+  constructor(private editInfo: EditInfoService) { 
+    
 
-  ngOnInit(): void {
   }
 
+  ngOnInit(): void {
+    this.editInfo.getGrupo().subscribe((data) => {
+      console.log(data);
+    });
+  }
 }

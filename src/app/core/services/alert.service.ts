@@ -32,7 +32,7 @@ export class AlertService {
   failSwal(err: string, title: string) {
     return Swal.fire({
       icon: 'error',
-      title: 'Ups, algo salío mal',
+      title: title,
       text: err,
     });
   }

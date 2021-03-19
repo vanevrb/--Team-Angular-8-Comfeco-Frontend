@@ -3,10 +3,23 @@
   <ng-container *ngIf="currUser$ | async as currUser">
     <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form">
       <div class="form-group">
-        <img [src]="currUser?.perfil.avatar" alt="avatar" />
-        <button type="button" class="button button-fab" (click)="openWidget()">
-          edit
-        </button>
+        <div class="img__container">
+          <img
+            [src]="
+              !!currUser?.perfil.avatar
+                ? currUser?.perfil.avatar
+                : '/assets/images/user.svg'
+            "
+            alt="avatar"
+          />
+          <button
+            type="button"
+            class="button button-primary"
+            (click)="openWidget()"
+          >
+            Edit foto
+          </button>
+        </div>
       </div>
       <div class="form-group wrapper">
         <div class="form-group">
@@ -98,7 +111,7 @@
             type="text"
             formControlName="pais"
           >
-            <option *ngFor="let val of this.paises$" [value]="val.idPais">
+            <option *ngFor="let val of paises" [value]="val.idPais">
               {{ val.nombrePais }}
             </option>
           </select>
@@ -126,10 +139,7 @@
           formControlName="conocimientos"
           multiple
         >
-          <option
-            *ngFor="let item of skills$ | async"
-            [value]="item.idConocimiento"
-          >
+          <option *ngFor="let item of skills" [value]="item.idConocimiento">
             {{ item.nombreConocimiento }}
           </option>
         </select>
@@ -154,9 +164,9 @@
         <button
           class="button button-primary button-block"
           type="submit"
-          [disabled]="isLoading"
           *ngIf="!editForm.pristine"
         >
+          <!-- [disabled]="isLoading" -->
           Guardar Cambios
         </button>
       </div>

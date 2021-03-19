@@ -1,20 +1,16 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+
+import { Store } from '@ngrx/store';
+import { AppState } from '../../store/reducers/index';
+import { imageActions } from 'src/app/store/actions';
 
 @Injectable({
   providedIn: 'root',
 })
 export class CloudinaryService {
   myWidget: any;
-  private _urlResult: string;
-  private _url$: BehaviorSubject<string> = new BehaviorSubject('');
 
-  get url$() {
-    return this._url$.asObservable();
-  }
-
-  constructor() {
-    this._urlResult = undefined;
+  constructor(private store: Store<AppState>) {
     //@ts-expect-error
     this.myWidget = cloudinary.createUploadWidget(
       {
@@ -24,16 +20,18 @@ export class CloudinaryService {
       (error, result) => {
         if (!error && result && result.event === 'success') {
           // console.log('Done! Here is the image info: ', result.info);
-          this._urlResult = result.info.url;
-          this._url$.next(this._urlResult);
+
+          // this._urlResult = result.info.url;
+          this.store.dispatch(
+            imageActions.successLoadImg({ url: result.info.url })
+          );
           this.myWidget.close();
+        }
+
+        if (error) {
+          this.store.dispatch(imageActions.errorLoadImg());
         }
       }
     );
-  }
-
-  initUrl() {
-    this._urlResult = '';
-    this._url$.next(this._urlResult);
   }
 }

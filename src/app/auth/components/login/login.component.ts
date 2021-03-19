@@ -97,45 +97,6 @@ export class LoginComponent implements OnInit {
     } else {
       this.saveLocal.removeItem(environment.LOCAL_KEY_EMAIL);
     }
-
-    /**
-     * Bring data from api
-     */
-
     this.store.dispatch(loginActions.initLogin({ loginData }));
-
-    // this.authService
-    //   .login(loginData)
-    //   .pipe(
-    //     tap(({ message }) => {
-    //       this.saveLocal.setItem(
-    //         environment.LOCAL_KEY_FOR_SAVE,
-    //         message.access_token
-    //       );
-    //     })
-    //   )
-    //   .subscribe((data) => {
-    //     /**
-    //      * Handle error
-    //      */
-    //     if (data.error) {
-    //       const message =
-    //         data.code === 400
-    //           ? 'Verifica Email / Contraseña'
-    //           : 'Ups, algo salío mal';
-
-    //       return this.swal.failSwal(data.message, message);
-    //     }
-
-    //     /**
-    //      * Restart form
-    //      */
-    //     this.login.reset();
-
-    //     /**
-    //      * go homepage
-    //      */
-    //     this.router.navigate(['home']);
-    //   });
   }
 }

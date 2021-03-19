@@ -46,7 +46,13 @@
 .user-info {
   @include card;
 }
-
+.user-info__avatar {
+  max-width: 150px;
+  img {
+    max-width: 100%;
+    object-fit: contain;
+  }
+}
 .user-info__actions {
   display: flex;
   align-items: center;

@@ -23,44 +23,40 @@ export class EditInfoService {
 
   constructor(private http: HttpClient, private saveLocal: SaveLocalService) {}
 
-  editUserInfo(user: any, token: string) {
-    return this.http
-      .put(`${this.baseUrl}/api/usuario`, user, {
-        headers: new HttpHeaders({
-          authorization: `Bearer ${token}`,
-        }),
-      })
-      .pipe(
-        // tap((data) => {
-        //   console.log(data);
-        // }),
-        map<any, Response>((data) => {
-          console.log(data);
-          return {
-            code: 200,
-            message: data,
-          };
-        }),
-        catchError((err) => {
-          console.error(err);
-          if (err.message) {
-            return of({
-              code: 500,
-              message: 'algo salio mal, intenta más tarde',
-              error: err,
-            });
-          }
-        })
-      );
+  editUserInfo(user: any) {
+    return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE)).pipe(
+      switchMap((token) =>
+        this.http
+          .put(`${this.baseUrl}/api/usuario`, user, {
+            headers: new HttpHeaders({
+              authorization: `Bearer ${token}`,
+            }),
+          })
+          .pipe(
+            map<any, Response>((data) => {
+              return {
+                code: 200,
+                message: data,
+              };
+            }),
+            catchError((err) => {
+              console.error(err);
+              if (err.message) {
+                return of({
+                  code: 500,
+                  message: 'algo salio mal, intenta más tarde',
+                  error: err,
+                });
+              }
+            })
+          )
+      )
+    );
   }
 
   getUserInfo(): Observable<Response> {
     return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE))
       .pipe(
-        filter((data) => {
-          console.log('uuuuusssssss', data);
-          return true;
-        }),
         switchMap((token) =>
           this.http.get<UsersInfoResponse>(`${this.baseUrl}/api/usuario`, {
             headers: new HttpHeaders({
@@ -89,6 +85,30 @@ export class EditInfoService {
           }
         })
       );
+  }
+
+  setAvatar(avatar: string) {
+    return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE)).pipe(
+      switchMap((token) =>
+        this.http.put(`${this.baseUrl}/api/perfil/editar/avatar`, avatar, {
+          headers: new HttpHeaders({
+            authorization: `Bearer ${token}`,
+          }),
+        })
+      )
+    );
+  }
+
+  getGrupo() {
+    return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE)).pipe(
+      switchMap((token) =>
+        this.http.get(`${this.baseUrl}/api/grupo`, {
+          headers: new HttpHeaders({
+            authorization: `Bearer ${token}`,
+          }),
+        })
+      )
+    );
   }
 
   getCountries(): Observable<Paises[]> {

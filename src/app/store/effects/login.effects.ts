@@ -6,7 +6,7 @@ import { Action } from '@ngrx/store';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { loginActions, usersActions } from '../actions';
 
-import { Observable, of, from } from 'rxjs';
+import { Observable, of, from, throwError } from 'rxjs';
 import { map, catchError, switchMap, tap, finalize } from 'rxjs/operators';
 
 import { AuthService } from '../../core/services/auth.service';
@@ -24,11 +24,9 @@ export class LoginEffects {
         return this.authService.login(loginData).pipe(
           map((resp) => {
             if (resp.error) {
-              this.swal.failSwal(
-                'Por favor intenta más tarde',
-                'Ups, algo salio mal'
-              );
-              return loginActions.errorLogin();
+              console.log(resp);
+              this.swal.failSwal(resp.message, 'Verifica Email/Contraseña');
+              throwError(resp.error);
             }
             return loginActions.successLogin({
               token: resp.message.access_token,
