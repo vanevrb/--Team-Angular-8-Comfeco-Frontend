@@ -11,8 +11,8 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { AppStateWithUsers } from '../../../store/reducers/index';
 
-import { Observable, forkJoin, from } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { Observable, forkJoin, from, zip } from 'rxjs';
+import { map, switchMap, tap, take } from 'rxjs/operators';
 
 import { MyValidatorsService } from '../../../core/services/my-validators.service';
 import { AlertService } from '../../../core/services/alert.service';
@@ -35,6 +35,7 @@ import { Knowledge } from '../../../core/enums/Knowledge';
 import { SocialNames } from '../../../core/enums/SocialNames';
 
 import { CloudinaryService } from '../../../core/services/cloudinary.service';
+import { imageActions, usersActions } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-edition',
@@ -89,7 +90,6 @@ export class EditionComponent implements OnInit {
     private myValidators: MyValidatorsService,
     private editInfoService: EditInfoService,
     private router: Router,
-    private swal: AlertService,
     private cloudinaryService: CloudinaryService,
     private store: Store<AppStateWithUsers>
   ) {
@@ -119,58 +119,24 @@ export class EditionComponent implements OnInit {
         this.store.select('user').pipe(
           map((user) => user.user),
           tap((user) => {
-            console.log(user);
             this.editForm.patchValue({
-              usuNickname: user.usuNickname,
+              usuNickname: user?.usuNickname,
               usuCorreo: user.usuCorreo,
               genero: user.perfil?.genero,
               fechaNacimiento: user.perfil?.fechaNacimiento,
-              pais: user.perfil?.pais?.nombrePais,
+              pais: user.perfil?.pais?.idPais,
               biografia: user.perfil?.biografia,
-              conocimientos: user.perfil?.conocimientos,
+              conocimientos: user.perfil?.conocimientos.map(
+                (item) => item.idConocimiento
+              ),
             });
             this.redesSociales.controls.forEach((ctrl, i) => {
-              ctrl.patchValue(user.perfil.redesSociales[i] || '');
+              ctrl.patchValue(user?.perfil?.redesSociales[i]?.usuario || '');
             });
           })
         )
       )
     );
-
-    // map((fork) => {
-    //   this.paises$ = fork.paises$;
-    //   this.paises$ = fork.paises$;
-    //   this.paises$ = fork.paises$;
-    // })
-
-    // zip(
-    //   this.editInfoService.getCountries(),
-    //   this.editInfoService.getSkills(),
-    //   this.editInfoService.getSocials()
-    // )
-    //   .pipe(
-    //     map(([pais, conocimientos, redesSociales]) => ({
-    //       pais,
-    //       conocimientos,
-    //       redesSociales,
-    //     }))
-    //   )
-    //   .toPromise()
-    //   .then((data) => {
-    //     this.renderPaises = data.pais;
-    //     this.renderConoc = data.conocimientos;
-    //     this.editForm = this.createForm();
-    //     data.redesSociales.forEach((item) => {
-    //       const valControl = this.currUser.perfil.redesSociales.find(
-    //         (red) => red.redSocial.idRedSocial === item.idRedSocial
-    //       );
-
-    //       this.redesSociales.push(
-    //         this.fb.control(!valControl ? '' : valControl.usuario)
-    //       );
-    //     });
-    //     this.isLoading = false;
-    //   });
   }
 
   getRedSocialNombre(id: number) {
@@ -179,7 +145,7 @@ export class EditionComponent implements OnInit {
 
   openWidget() {
     this.editForm.markAsDirty();
-
+    this.store.dispatch(imageActions.initLoadImg());
     this.widget.open();
   }
 
@@ -224,48 +190,34 @@ export class EditionComponent implements OnInit {
       this.editForm.markAllAsTouched();
       return;
     }
-
     this.processUserEditData();
   }
 
   processUserEditData() {
-    this.cloudinaryService.url$
-      .pipe
-      // switchMap((imgUrl) => {
-      //   console.log(imgUrl);
-      //   const perfil: Profile = new ProfileDetails(
-      //     this.currUser.perfil.idPerfil,
-      //     +this.editForm.get('genero').value,
-      //     +this.editForm.get('pais').value,
-      //     this.editForm.get('biografia').value,
-      //     this.editForm.get('fechaNacimiento').value,
-      //     this.editForm.get('conocimientos').value,
-      //     this.redesSociales.value,
-      //     imgUrl
-      //   );
-
-      //   const newData = new EditUsers(
-      //     this.currUser.usuId,
-      //     this.editForm.get('usuNickname').value,
-      //     this.editForm.get('usuCorreo').value,
-      //     perfil
-      //   );
-
-      //   // return this.editInfoService.editUserInfo(
-      //   //   newData,
-      //   //   // this.userService.accessToken
-      //   // );
-      // }),
-      // switchMap((response) => {
-      //   return this.editInfoService.getUserInfo();
-      // })
-      ()
-      .subscribe((resp) => {
-        // this.userService.user = resp.message;
-        // this.currUser = this.userService.user;
-        this.swal.successSwal('Su información fue actualizada');
-        this.router.navigate(['profile']);
-        console.log(resp);
+    zip(this.store.select('user'), this.store.select('image'))
+      .pipe(
+        map(([user, image]) => {
+          const perfil: Profile = new ProfileDetails(
+            user.user.perfil.idPerfil,
+            +this.editForm.get('genero').value,
+            +this.editForm.get('pais').value,
+            this.editForm.get('biografia').value,
+            this.editForm.get('fechaNacimiento').value,
+            this.editForm.get('conocimientos').value,
+            this.redesSociales.value,
+            image.url
+          );
+          const newData = new EditUsers(
+            user.user.usuId,
+            this.editForm.get('usuNickname').value,
+            this.editForm.get('usuCorreo').value,
+            perfil
+          );
+          this.store.dispatch(usersActions.editUser({ newUser: newData }));
+        })
+      )
+      .subscribe(() => {
+        this.router.navigateByUrl('/profile');
       });
   }
 }

@@ -6,7 +6,7 @@ import { usersActions } from '../actions';
 
 import { Action, Store } from '@ngrx/store';
 
-import { Observable, of, from } from 'rxjs';
+import { Observable, of, from, throwError } from 'rxjs';
 import { map, catchError, switchMap, tap } from 'rxjs/operators';
 
 import { EditInfoService } from '../../core/services/edit-info.service';
@@ -37,6 +37,32 @@ export class UsersEffects {
           })
         )
       )
+    )
+  );
+
+  editUser$: Observable<Action> = createEffect(() =>
+    this.actions$.pipe(
+      ofType(usersActions.editUser),
+      switchMap(({ newUser }) => {
+        return this.editInfo.editUserInfo(newUser).pipe(
+          switchMap((resp) => {
+            if (resp.error) {
+              throwError(resp.error);
+            }
+            return this.editInfo.getUserInfo().pipe(
+              map((resp) => {
+                if (resp.error) {
+                  return usersActions.editError();
+                }
+                return usersActions.setUser({ user: resp.message });
+              })
+            );
+          })
+        );
+      }),
+      catchError(() => {
+        return of(usersActions.editError());
+      })
     )
   );
 

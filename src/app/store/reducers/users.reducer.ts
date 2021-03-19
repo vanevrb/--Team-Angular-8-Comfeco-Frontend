@@ -32,6 +32,27 @@ const _usersReducer = createReducer(
     loaded: true,
     loadingUsers: false,
   })),
+  on(usersActions.editUser, (state, { newUser }) => ({
+    ...state,
+    user: {
+      ...state.user,
+      perfil: newUser.perfil,
+      usuNickname: newUser.usuNickname,
+      usuCorreo: newUser.usuCorreo,
+    },
+    loaded: true,
+    loadingUsers: false,
+  })),
+  on(usersActions.editError, (state) => ({
+    ...state,
+  })),
+  on(usersActions.changeImage, (state, { image }) => ({
+    ...state,
+    user: {
+      perfil: { avatar: image, ...state.user.perfil },
+      ...state.user,
+    },
+  })),
   on(usersActions.deleteUser, (state) => ({
     ...state,
     user: null,

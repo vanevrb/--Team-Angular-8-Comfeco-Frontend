@@ -21,15 +21,16 @@ export const imageInitialState: imageState = {
 
 const _imageReducer = createReducer(
   imageInitialState,
-  on(imageActions.initLoadImg, (state) => ({ ...state, isLoading: true })),
+  on(imageActions.initLoadImg, (state) => ({ ...state, imageLoading: true })),
+  on(imageActions.updatedImg, (state) => ({ ...state, imageLoading: false })),
   on(imageActions.successLoadImg, (state, { url }) => ({
     ...state,
-    isLoading: false,
+    imageLoading: false,
     url,
   })),
   on(imageActions.errorLoadImg, (state) => ({
     ...state,
-    isLoading: false,
+    imageLoading: false,
     url: null,
   }))
 );

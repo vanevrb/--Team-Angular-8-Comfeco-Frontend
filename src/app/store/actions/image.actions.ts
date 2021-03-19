@@ -7,8 +7,11 @@ const successLoadImg = createAction(
 );
 const errorLoadImg = createAction('[Image] Error Load');
 
+const updatedImg = createAction('[Image] Updated Load');
+
 export default {
   initLoadImg,
   successLoadImg,
   errorLoadImg,
+  updatedImg,
 };

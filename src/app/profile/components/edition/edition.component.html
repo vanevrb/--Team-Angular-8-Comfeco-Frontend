@@ -3,10 +3,23 @@
   <ng-container *ngIf="currUser$ | async as currUser">
     <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form">
       <div class="form-group">
-        <img [src]="currUser?.perfil.avatar" alt="avatar" />
-        <button type="button" class="button button-fab" (click)="openWidget()">
-          edit
-        </button>
+        <div class="img__container">
+          <img
+            [src]="
+              !!currUser?.perfil.avatar
+                ? currUser?.perfil.avatar
+                : '/assets/images/user.svg'
+            "
+            alt="avatar"
+          />
+          <button
+            type="button"
+            class="button button-primary"
+            (click)="openWidget()"
+          >
+            Edit foto
+          </button>
+        </div>
       </div>
       <div class="form-group wrapper">
         <div class="form-group">

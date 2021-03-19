@@ -1,0 +1,30 @@
+button.button.button-primary {
+  margin-left: 10%;
+  margin-top: 10%;
+}
+.content {
+  margin-top: 1em;
+}
+.img__container {
+  position: relative;
+  width: 50%;
+  max-width: 150px;
+  margin: 0.3em auto;
+  padding: 1em;
+  background-color: #e1e1e1;
+  img {
+    max-width: 100%;
+    object-fit: contain;
+  }
+  button.button {
+    position: absolute;
+    left: 50%;
+    bottom: 0.5em;
+    transform: translateX(-50%);
+    opacity: 0.3;
+    &:hover {
+      opacity: 1;
+      transition: opacity 150ms linear;
+    }
+  }
+}
