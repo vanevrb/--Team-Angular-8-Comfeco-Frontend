@@ -37,7 +37,15 @@
       width: 1170px;
     }
   }
-  
+  @media (min-width: 1800px) {
+    .container {
+      margin-right: auto;
+      margin-left: auto;
+      padding-left: 15px;
+      padding-right: 15px;
+      width: 95%;
+        }
+  }
   .container-fluid {
     margin-right: auto;
     margin-left: auto;

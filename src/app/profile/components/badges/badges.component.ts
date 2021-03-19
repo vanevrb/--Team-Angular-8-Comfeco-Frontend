@@ -28,6 +28,13 @@ export class BadgesComponent implements OnInit {
         category:'Donador',
         description:'Insignia otorgada a patrocinador del evento',
         description_win:'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
+    }, {
+      image:
+        'https://i.picsum.photos/id/473/200/200.jpg?hmac=lXsJQxtsh73ygSCMmcWA-YqIpQ4FjdxUYkkuLTAPBfM',
+        title:'Generoso',
+        category:'Donador',
+        description:'Insignia otorgada a patrocinador del evento',
+        description_win:'Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim velit mollit.',
     }
   ];
   constructor() { }
