@@ -1,21 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {
-  FormGroup,
-  FormBuilder,
-  Validators,
-  FormArray,
-  FormControl,
-} from '@angular/forms';
+import { FormGroup, FormBuilder, Validators, FormArray } from '@angular/forms';
 import { Router } from '@angular/router';
 
 import { Store } from '@ngrx/store';
 import { AppStateWithUsers } from '../../../store/reducers/index';
+import { imageActions, usersActions } from 'src/app/store/actions';
 
-import { Observable, forkJoin, from, zip } from 'rxjs';
-import { map, switchMap, tap, take } from 'rxjs/operators';
+import { Observable, from, zip } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
 
 import { MyValidatorsService } from '../../../core/services/my-validators.service';
-import { AlertService } from '../../../core/services/alert.service';
 import { emailPattern } from '../../../core/helpers/emailPattern';
 import { EditInfoService } from '../../../core/services/edit-info.service';
 
@@ -25,17 +19,14 @@ import {
   Paises,
   Conocimientos,
   Profile,
-  RedesSocialesResponse,
 } from '../../../core/interfaces';
 
 import { ProfileDetails } from '../../../core/models/ProfileDetails';
 import { EditUsers } from '../../../core/models/EditUsers';
 
-import { Knowledge } from '../../../core/enums/Knowledge';
 import { SocialNames } from '../../../core/enums/SocialNames';
 
 import { CloudinaryService } from '../../../core/services/cloudinary.service';
-import { imageActions, usersActions } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-edition',
@@ -193,6 +184,16 @@ export class EditionComponent implements OnInit {
     this.processUserEditData();
   }
 
+  getPuntaje() {
+    return (
+      +this.editForm.get('genero').value > 0 &&
+      +this.editForm.get('pais').value > 0 &&
+      this.editForm.get('biografia').value.length > 0 &&
+      !!this.editForm.get('fechaNacimiento').value &&
+      this.editForm.get('conocimientos').value.length > 0
+    );
+  }
+
   processUserEditData() {
     zip(this.store.select('user'), this.store.select('image'))
       .pipe(
@@ -205,6 +206,7 @@ export class EditionComponent implements OnInit {
             this.editForm.get('fechaNacimiento').value,
             this.editForm.get('conocimientos').value,
             this.redesSociales.value,
+            this.getPuntaje() ? 1 : 0,
             image.url
           );
           const newData = new EditUsers(

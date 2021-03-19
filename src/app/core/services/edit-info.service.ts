@@ -99,6 +99,18 @@ export class EditInfoService {
     );
   }
 
+  getGrupo() {
+    return from(this.saveLocal.getItem(environment.LOCAL_KEY_FOR_SAVE)).pipe(
+      switchMap((token) =>
+        this.http.get(`${this.baseUrl}/api/grupo`, {
+          headers: new HttpHeaders({
+            authorization: `Bearer ${token}`,
+          }),
+        })
+      )
+    );
+  }
+
   getCountries(): Observable<Paises[]> {
     return this.http.get<Paises[]>(`${this.baseUrl}/api/pais`);
   }

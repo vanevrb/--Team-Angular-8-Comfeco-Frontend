@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { EditInfoService } from '../../../core/services/edit-info.service';
 
 @Component({
   selector: 'app-groups',
@@ -107,7 +108,11 @@ export class GroupsComponent implements OnInit {
       link_unirse: '',
     },
   ];
-  constructor() {}
+  constructor(private editInfo: EditInfoService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.editInfo.getGrupo().subscribe((data) => {
+      console.log(data);
+    });
+  }
 }

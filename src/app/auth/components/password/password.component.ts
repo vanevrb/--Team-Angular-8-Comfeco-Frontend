@@ -42,7 +42,8 @@ export class PasswordComponent implements OnInit {
       this.forgot.markAllAsTouched();
       return;
     }
-    this.store.dispatch(loginActions.forgotPassword(this.email));
+    console.log(this.email);
+    this.store.dispatch(loginActions.forgotPassword({ email: this.email }));
     this.forgot.reset();
   }
 }
