@@ -186,11 +186,11 @@ export class EditionComponent implements OnInit {
 
   getPuntaje() {
     return (
-      +this.editForm.get('genero').value > 0 &&
-      +this.editForm.get('pais').value > 0 &&
-      this.editForm.get('biografia').value.length > 0 &&
-      !!this.editForm.get('fechaNacimiento').value &&
-      this.editForm.get('conocimientos').value.length > 0
+      +this.editForm.get('genero')?.value > 0 &&
+      +this.editForm.get('pais')?.value > 0 &&
+      this.editForm.get('biografia').value &&
+      !!this.editForm.get('fechaNacimiento')?.value &&
+      this.editForm.get('conocimientos')?.value.length
     );
   }
 

@@ -45,9 +45,9 @@ export class ProfileDetails implements Profile {
     this.fechaNacimiento = fechaNacimiento;
     if (puntaje > 0) {
       this.puntaje = puntaje;
-      if (puntaje === 1) {
-        this.insignias = myBadges.filter((item) => item.idInsignia === 1);
-      }
+      // if (puntaje === 1) {
+      //   this.insignias = myBadges.filter((item) => item.idInsignia === 1);
+      // }
     }
     if (avatar) {
       this.avatar = avatar;
