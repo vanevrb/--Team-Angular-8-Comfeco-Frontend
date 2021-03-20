@@ -1,0 +1,11 @@
+div#slider {
+    position: relative;
+    transition: 500ms;
+    display: inline-flex;
+    left: -0px;
+}
+.slider-box{
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    user-select: none;
+}

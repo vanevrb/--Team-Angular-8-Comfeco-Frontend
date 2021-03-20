@@ -1,1 +1,24 @@
-<p>creators works!</p>
+<!-- <p>creators works!</p> -->
+<div class="container">
+    <div #frame id="frame" >
+        <div #slider id="slider">
+          <!-- Box start -->
+          <div *ngFor="let creator of creators" class="slider-box slide">
+            <div class="slider-photo">
+              <!-- <a href="{{creator.link}}"> -->
+              <div class="col-sm-4">
+                <img src="{{ creator.image }}" />
+              </div>
+              <div class="creator_info col-sm-8">
+                <div class="lenguage_icon">
+                  <span class="{{ creator.lenguage_icon }}"></span>
+                </div>
+                <b>{{ creator.name }}</b>
+              </div>
+              <!-- </a> -->
+            </div>
+          </div>
+          <!-- Box end -->
+        </div>
+      </div>
+</div>

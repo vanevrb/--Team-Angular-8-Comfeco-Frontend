@@ -1,36 +1,36 @@
 <h2>Sponsors:</h2>
-<div class="slider-container-sponsors">
+{{count}}
+<div #sliderc id="sliderc" class="slider-container-sponsors">
   <!-- nav arrows -->
   <div class="slider-arrows">
     <div class="slider-arrow-left arrowLeft">
-      <svg width="16" height="30" class="svg-arrow">
-        <polyline
-          style="
+      <a (click)="bleft()">
+        <svg width="16" height="30" class="svg-arrow">
+          <polyline style="
             stroke-linejoin: miter;
             stroke: #00275a;
             stroke-width: 3;
             fill: none;
-          "
-          points="15 2, 2 15, 15 28"
-        />
-      </svg>
+          " points="15 2, 2 15, 15 28" />
+        </svg>
+      </a>
     </div>
     <div class="slider-arrow-right arrowRight">
-      <svg width="16" height="30" class="svg-arrow">
-        <polyline
-          style="
+      <a id="bright" (click)="bright(sponsors)" class="counter">
+        <svg width="16" class="svg-arrow">
+          <polyline style="
             stroke-linejoin: miter;
             stroke: #00275a;
             stroke-width: 3;
             fill: none;
-          "
-          points="2 2, 14 15, 2 28"
-        />
-      </svg>
+          " points="2 2, 14 15, 2 28" />
+        </svg>
+      </a>
     </div>
+
   </div>
   <div #frame id="frame">
-    <div #slider id="slider">
+    <div #slider id="slider" style="left: -{{count}};">
       <!-- Box start -->
       <div *ngFor="let creator of sponsors" class="slider-box slide">
         <div class="slider-photo">
@@ -46,10 +46,21 @@
     </div>
   </div>
 </div>
+
 <div class="select-sliders">
-  <div class="sel"><span class="radio r" ng-click="showevent(1)"></span></div>
-  <div class="sel"><span class="radio r" ng-click="showevent(2)"></span></div>
-  <div class="sel"><span class="radio r" ng-click="showevent(3)"></span></div>
-  <div class="sel"><span class="radio r" ng-click="showevent(4)"></span></div>
-  <div class="sel"><span class="radio r" ng-click="showevent(5)"></span></div>
+  <div class="sel">
+    <span class="radio r" (click)="count ='0%'"></span>
+  </div>
+  <div class="sel">
+    <span class="radio r" (click)="count ='20%'"></span>
+  </div>
+  <div class="sel">
+    <span class="radio r" (click)="count ='50%'"></span>
+  </div>
+  <div class="sel">
+    <span class="radio r" (click)="count ='80%'"></span>
+  </div>
+  <div class="sel">
+    <span class="radio r" (click)="count ='100%'"></span>
+  </div>
 </div>
