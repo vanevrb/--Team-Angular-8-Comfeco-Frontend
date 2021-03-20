@@ -3,17 +3,26 @@
     <div #frame id="frame" >
         <div #slider id="slider">
           <!-- Box start -->
-          <div *ngFor="let creator of creators" class="slider-box slide">
+          <div *ngFor="let creator of creators" class="slider-box slide col-md-3">
             <div class="slider-photo">
-              <!-- <a href="{{creator.link}}"> -->
-              <div class="col-sm-4">
+              <!-- <a href="{{creator.link}}">  class="col-sm-4"-->
+              <div class="creator_image">
                 <img src="{{ creator.image }}" />
               </div>
-              <div class="creator_info col-sm-8">
+              <!-- col-sm-8 -->
+              <div class="creator_info" >
                 <div class="lenguage_icon">
                   <span class="{{ creator.lenguage_icon }}"></span>
                 </div>
                 <b>{{ creator.name }}</b>
+                <p>Bezael Pèrez es una apasionado del desarrollo web. 
+
+                  Inició su carrera como programador de aplicaciones de escritorio con Visual Basic 5 &amp; 6. 
+                  
+                  Desde 2007 está en el mundo del desarrollo web, realizando aplicaciones en  PHP, HTML, CSS, JavaScript vanilla. 
+                  Tambien con el gestor de contenido WordPress. 
+                  
+                  </p>
               </div>
               <!-- </a> -->
             </div>

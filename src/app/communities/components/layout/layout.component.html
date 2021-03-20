@@ -1,1 +1,25 @@
-<p>layout works!</p>
+<h2 class="center">Comunidades</h2>
+<!-- <p>communities works!</p> -->
+<div class="container">
+<div *ngFor="let com of communities " class="col-md-3">
+  
+  <div class="card-com hover">
+      <div class="card-e-img">
+        <!-- <div class="share">
+            <a href="{{com.link_share}}">
+         
+             </a> 
+        </div>-->
+        <img src="{{com.image}}"> 
+      </div>
+      <div class="card-e-content">
+        <p class="description">{{com.description}}</p>
+        <div class="row">
+            <!-- <h1 class="col-sm-5 title ">
+                <a href="{{com.link_info}}">Mas información</a></h1> -->
+                <!-- col-sm-7 -->
+    <div class=" card-e-foot"><div class="right"><a  href="{{com.link_unirse}}" class="button_ap">Unirse</a></div></div>
+     </div> </div>
+    </div>
+  </div>
+</div>
