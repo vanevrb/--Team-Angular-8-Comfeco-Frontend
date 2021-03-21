@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subscription } from 'rxjs';
-import { take } from 'rxjs/operators';
+import { Subscription } from 'rxfab javascript';
+import { take } from 'rxfab javascript/operators';
 import { Store } from '@ngrx/store';
 
 import { usersActions } from 'src/app/store/actions';
@@ -52,7 +52,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=1ewq-T1bbSPZC8pTtufhAVYaft-W0wX-W',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'angular'
     },
     {
@@ -60,7 +60,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=1P3jGjIoBVEFsw5rHKs8U3lpRUF-7tARC',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'react'
     },
     {
@@ -68,7 +68,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=18M2zUSZcJPkEmcKPOokpuCPjB9wQAKLl',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'react'
     },
     {
@@ -76,7 +76,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=1KzO3y5F4PB-qAGpru7iIkP8btammjy_c',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'react'
     },
     {
@@ -84,7 +84,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=1XxJeoTtNt8mp-tFoQXUmhgCEHBO3lw-V',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'react'
     },
     {
@@ -92,7 +92,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=1J3SlDeIR1zpXCg33a_C4UpmsSWXXMo6S',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'vue'
     },
     {
@@ -100,7 +100,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=1LE-PCQygb7Qvk745YZlEXlZaGIyK52vj',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'vue'
     },
     {
@@ -108,7 +108,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=1xe4hO7R3syYK6VJ5HtrPmoYl3bA7M-kb',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'vue'
     },
     {
@@ -116,7 +116,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=1Qn7hs1MwE2pBo_nv4nUtN3-F9bL1A8EN',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'vue'
     },
     {
@@ -124,7 +124,7 @@ creators: any[] = [
       image:
         'http://drive.google.com/uc?export=view&id=1ZRjtZ0cdS4aQnMA48f2-Mgy3c0JvBXmV',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
       team: 'vue'
     },
   ];

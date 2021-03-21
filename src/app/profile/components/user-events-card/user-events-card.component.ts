@@ -1,12 +1,12 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-events-card',
   templateUrl: './user-events-card.component.html',
-  styleUrls: ['./user-events-card.component.scss']
+  styleUrls: ['./user-events-card.component.scss'],
 })
 export class UserEventsCardComponent implements OnInit {
-
   events: any[] = [
     {
       name: 'Evento 1',
@@ -36,10 +36,14 @@ export class UserEventsCardComponent implements OnInit {
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
     },
-  ]
-  constructor() { }
+  ];
+  constructor(private router: Router) {}
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  navTo() {
+    this.router.navigate(['profile', 'events'], {
+      skipLocationChange: true,
+    });
   }
-
 }
