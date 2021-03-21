@@ -1,1 +1,23 @@
-<p>learning works!</p>
+<h2 class="center">Talleres</h2>
+<!-- <p>workshops works!</p> -->
+<div class="container">
+<div *ngFor="let workshop of workshops " class="col-md-3">
+  
+  <div class="card-workshop hover">
+      <div class="card-e-img">
+        <!-- <div class="share">
+            <a href="{{workshop.link_share}}">
+         
+             </a> 
+        </div>-->
+        <img src="{{workshop.image}}"> 
+      </div>
+      <div class="card-e-content">
+        <p class="description">{{workshop.description}}</p>
+        <div class="row">
+            <h1 class="col-sm-5 title "><a href="{{workshop.link_info}}">Mas información</a></h1>
+    <div class="col-sm-7 card-e-foot"><div  class="right"><a  href="{{workshop.link_unirse}}" class="button_ap">Participar</a></div></div>
+     </div> </div>
+    </div>
+  </div>
+</div>
