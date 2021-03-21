@@ -1,74 +1,46 @@
-header {
-  height: 80px;
-  background-color: white;
-  text-align: left;
+.header {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 60px;
+  background-color: $bg-color;
   color: $color-p-darken;
-  display: contents;
-  font-family: "Roboto", sans-serif;
-  font-weight: 700;
-  .label {
-    font-size: 20px;
-  }
-  img {
-    margin: 0;
-    float: left;
-    padding: 10px;
-    box-sizing: border-box;
-  }
-
-  ul {
-    list-style-type: none;
-    flex-flow: column wrap;
-    align-items: center;
-    justify-content: center;
-
-    li {
-      cursor: pointer;
-      display: inline;
-      a {
-        margin: 0 5px;
-        padding: 1px;
-        font-size: 20px;
-        cursor: pointer;
-        color: #d5c5c5;
-        display: inline-block;
-        background-color: $color-primary;
-        width: 31px;
-        height: 30px;
-        border-radius: 15px;
-      }
-      svg {
-        color: white;
-      }
-    }
-  }
-
   text-align: center;
-  margin: 0 auto;
-  font-size: 25px;
-}
+  font-size: 1.5rem;
+  font-weight: 700;
+  font-family: "Roboto", sans-serif;
+  padding: 2vh 0;
+  .nav__container {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
 
-@media screen and (max-width: 600px) {
-  header {
-    order: 0;
-    img {
-      float: none;
-    }
-    nav {
-      line-height: 31px;
-      margin-top: -20px;
-    }
-    .label {
-      display: block;
-    }
-    ul {
-      flex-flow: column wrap;
-      align-items: center;
-      justify-content: center;
-      margin-left: -40px;
-      li {
-        margin-bottom: 2px;
+    width: 90%;
+    min-width: 250px;
+    margin: 0 auto;
+    .image__container {
+      flex: 1;
+      width: 150px;
+      min-width: 150px;
+      text-align: left;
+      img {
+        max-width: 100%;
+        -o-object-fit: contain;
+        object-fit: contain;
+        -o-object-position: center left;
+        object-position: center left;
       }
+    }
+    .navbar__wrapper {
+      flex: 2;
+      min-width: 200px;
+    }
+  }
+
+  .user-menu__wrapper {
+    flex: 1;
+    &:empty {
+      display: none;
     }
   }
 }

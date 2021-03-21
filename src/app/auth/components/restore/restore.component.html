@@ -1,0 +1,44 @@
+<section class="content">
+  <app-wrapper-form>
+    <div class="tab-pane fade in active">
+      <form [formGroup]="restore" (ngSubmit)="onSubmit()" class="form">
+        <div class="form-group">
+          <label class="form-label">CONTRASEÑA</label>
+          <input
+            class="form-control"
+            [class.error]="passErrors"
+            placeholder="Escriba su contraseña"
+            type="password"
+            formControlName="clave"
+          />
+          <span class="input__error" *ngIf="passErrors">
+            {{ passErrors | validationErrors }}
+          </span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CONFIRMAR CONTRASEÑA</label>
+          <input
+            class="form-control"
+            placeholder="Confirme su contraseña"
+            [class.error]="confirmErrors"
+            type="password"
+            formControlName="usuClave2"
+          />
+          <span class="input__error" *ngIf="confirmErrors">
+            {{ confirmErrors | validationErrors }}
+          </span>
+        </div>
+
+        <div class="form-group btn-container">
+          <button
+            class="button button-primary button-block"
+            type="submit"
+            [disabled]="isLoading"
+          >
+            Recuperar contraseña
+          </button>
+        </div>
+      </form>
+    </div>
+  </app-wrapper-form>
+</section>

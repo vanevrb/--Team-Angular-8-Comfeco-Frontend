@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { RegisterComponent } from './components/register/register.component';
 import { PasswordComponent } from './components/password/password.component';
 import { LayoutComponent } from './components/layout/layout.component';
+import { RestoreComponent } from './components/restore/restore.component';
 
 const routes: Routes = [
   {
@@ -21,6 +22,10 @@ const routes: Routes = [
       {
         path: 'forgot',
         component: PasswordComponent,
+      },
+      {
+        path: 'restore/:token',
+        component: RestoreComponent,
       },
       {
         path: '',

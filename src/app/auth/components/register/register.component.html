@@ -14,6 +14,13 @@
           <span class="input__error" *ngIf="nickErrors">
             {{ nickErrors | validationErrors }}
           </span>
+          <a
+            routerLink="/auth/forgot"
+            class="link input__error"
+            *ngIf="nickErrors && nickErrors.notAvailable"
+          >
+            <strong> ¿Olvido su contraseña? ¡Click Aqui! </strong>
+          </a>
         </div>
         <div class="form-group">
           <label class="form-label">CORREO ELECTRÓNICO</label>
@@ -27,6 +34,13 @@
           <span class="input__error" *ngIf="emailErrors">
             {{ emailErrors | validationErrors }}
           </span>
+          <a
+            routerLink="/auth/forgot"
+            class="link input__error"
+            *ngIf="emailErrors && emailErrors.notAvailable"
+          >
+            <strong> ¿Olvido su contraseña? ¡Click Aqui! </strong>
+          </a>
         </div>
         <div class="form-group">
           <label class="form-label">CONTRASEÑA</label>
@@ -41,7 +55,7 @@
             {{ passErrors | validationErrors }}
           </span>
         </div>
-        <div class="form-group">
+        <div class="form-group" *ngIf="activeUsuClave">
           <label class="form-label">CONFIRMAR CONTRASEÑA</label>
           <input
             class="form-control"
@@ -55,12 +69,6 @@
           </span>
         </div>
         <div class="form-group checkbox">
-          <fa-icon
-            class="fa-icon"
-            [class.checked]="isChecked"
-            [icon]="!checkbox.value ? iconCheck : iconUncheck"
-            (click)="onChecked()"
-          ></fa-icon>
           <input
             type="checkbox"
             name="accept-terms"
@@ -82,17 +90,20 @@
           <button
             class="button button-primary button-block"
             type="submit"
-            [disabled]="isLoading"
+            [disabled]="isLoading$ | async"
           >
-            Signup
+            <ng-container *ngIf="isLoading$ | async">
+              <span class="fas sync spin"></span> &nbsp; &nbsp;
+            </ng-container>
+            Registrate
           </button>
         </div>
         <div class="form-group register-terms">
           Al registrarse acepta la
-          <!--  NEEDS SANITIZER  -->
-          <button class="link bold">
+
+          <a routerLink="/conditions" class="link bold" target="_blank">
             Política de privacidad y protección de datos.
-          </button>
+          </a>
         </div>
       </form>
     </div>

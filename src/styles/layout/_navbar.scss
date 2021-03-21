@@ -1,0 +1,23 @@
+.navbar {
+  width: 100%;
+  height: 100%;
+  &__links {
+    @extend %link;
+  }
+  &__item {
+    width: 100%;
+    height: 100%;
+  }
+  &__link {
+    position: relative;
+    &.active-route::after {
+      content: "";
+      position: absolute;
+      bottom: -30%;
+      left: 0;
+      width: 100%;
+      height: 20%;
+      background-color: $color-primary;
+    }
+  }
+}

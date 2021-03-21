@@ -1,14 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
-import Swal from 'sweetalert2';
-import { faCheckSquare } from '@fortawesome/free-solid-svg-icons';
-import { faSquare } from '@fortawesome/free-regular-svg-icons';
-
-import { emailPattern } from '../../helpers/emailPattern';
+import { emailPattern } from '../../../core/helpers/emailPattern';
 import { AuthService } from '../../../core/services/auth.service';
 import { ModalService } from '../../../core/services/modal.service';
 import { MyValidatorsService } from '../../../core/services/my-validators.service';
+import { AlertService } from '../../../core/services/alert.service';
+import { Observable } from 'rxjs';
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/reducers/index';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-register',
@@ -17,10 +19,7 @@ import { MyValidatorsService } from '../../../core/services/my-validators.servic
 })
 export class RegisterComponent implements OnInit {
   register: FormGroup;
-  isLoading = false;
-  isChecked = false;
-  iconCheck = faSquare;
-  iconUncheck = faCheckSquare;
+  isLoading$: Observable<boolean>;
 
   get nickErrors() {
     const field = this.register.get('usuNickname');
@@ -39,6 +38,13 @@ export class RegisterComponent implements OnInit {
     return field.touched && field.errors;
   }
 
+  get activeUsuClave() {
+    return !!this.register.get('usuClave').value;
+  }
+
+  get email() {
+    return this.register.get('usuCorreo');
+  }
   get checkbox() {
     return this.register.get('checkBoxAceptar');
   }
@@ -51,12 +57,18 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private authService: AuthService,
     private modalService: ModalService,
-    private myValidators: MyValidatorsService
-  ) {
+    private myValidators: MyValidatorsService,
+    private router: Router,
+    private swal: AlertService,
+    private store: Store<AppState>
+  ) {}
+
+  ngOnInit(): void {
+    this.isLoading$ = this.store
+      .select('loader')
+      .pipe(map((data) => data.isLoading));
     this.register = this.createForm();
   }
-
-  ngOnInit(): void {}
 
   onChecked() {
     this.checkbox.patchValue(!this.checkbox.value);
@@ -69,10 +81,15 @@ export class RegisterComponent implements OnInit {
   createForm() {
     return this.fb.group(
       {
-        usuNickname: ['', [Validators.required, Validators.minLength(3)]],
+        usuNickname: [
+          '',
+          [Validators.required, Validators.minLength(3)],
+          [this.myValidators.validNick(this.authService)],
+        ],
         usuCorreo: [
           '',
           [Validators.required, Validators.pattern(emailPattern)],
+          [this.myValidators.validEmail(this.authService)],
         ],
         usuClave: ['', [Validators.required, Validators.minLength(6)]],
         usuClave2: ['', [Validators.required]],
@@ -85,50 +102,43 @@ export class RegisterComponent implements OnInit {
   }
 
   onSubmit() {
+    /**
+     * Validate form changes or invalid data
+     */
     if (this.register.pristine || this.register.invalid) {
       this.register.markAllAsTouched();
       return;
     }
-    this.isLoading = true;
-
+    /**
+     * Spread operator to separate usefull data
+     */
     const { usuClave2, checkBoxAceptar, ...dataRegister } = this.register.value;
 
-    this.initSwalInfo();
+    /**
+     * Bring data from api
+     */
     this.authService.newUser(dataRegister).subscribe((data) => {
+      /**
+       * Handle error
+       */
       if (data.error) {
-        return this.failSwal(data.message);
+        return this.swal.failSwal(data.message, 'Ups, algo salío mal');
       }
-      this.successSwal(data.message);
-      this.isLoading = false;
+
+      /**
+       * Restart form
+       */
       this.register.reset();
-    });
-  }
 
-  initSwalInfo() {
-    return Swal.fire({
-      icon: 'info',
-      title: 'Registro enviado',
-      text: 'Por favor espere...',
-      allowOutsideClick: false,
-      allowEscapeKey: false,
-      showConfirmButton: false,
-      willOpen: () => Swal.showLoading(),
-    });
-  }
+      /**
+       * Send succes alert
+       */
+      this.swal.successSwal('Regitro exitoso');
 
-  successSwal(data: string) {
-    return Swal.fire({
-      icon: 'success',
-      title: '¡Gracias!',
-      text: data,
-      timer: 3500,
-    });
-  }
-  failSwal(err: string) {
-    return Swal.fire({
-      icon: 'error',
-      title: 'Ups, algo salío mal',
-      text: err,
+      /**
+       * go loginpage
+       */
+      this.router.navigate(['auth', 'login']);
     });
   }
 }

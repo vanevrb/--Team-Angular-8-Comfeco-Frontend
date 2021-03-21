@@ -1,0 +1,47 @@
+<nav class="navbar" *ngIf="user; else socials">
+<div class="menu">
+    <a  id="menu-checkbox" (click)="showmenu()"> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 30 30" width="30" height="30" focusable="false"><title>Menu</title><path stroke="#5a215c" stroke-width="2" stroke-linecap="round" stroke-miterlimit="10" d="M4 7h22M4 15h22M4 23h22"></path></svg></a>
+</div>
+<br>
+  <ul #navbarl class="navbar__links">
+    <li class="navbar__item">
+      <a
+        routerLink="/home"
+        class="link navbar__link"
+        routerLinkActive="active-route"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Home
+      </a>
+    </li>
+    <li class="navbar__item">
+      <a
+        routerLink="/communities"
+        class="link navbar__link"
+        routerLinkActive="active-route"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Comunidades
+      </a>
+    </li>
+    <li class="navbar__item">
+      <a
+        routerLink="/learning"
+        class="link navbar__link"
+        routerLinkActive="active-route"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Talleres
+      </a>
+    </li>
+    <li class="navbar__item">
+      <a
+        routerLink="/creators"
+        class="link navbar__link"
+        routerLinkActive="active-route"
+        [routerLinkActiveOptions]="{ exact: true }"
+        >Creadores de contenido
+      </a>
+    </li>
+  </ul>
+</nav>
+<ng-template #socials>
+  <app-social></app-social>
+</ng-template>

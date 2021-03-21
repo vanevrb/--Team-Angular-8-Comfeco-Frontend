@@ -1,7 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { emailPattern } from '../../helpers/emailPattern';
-import { AuthService } from '../../../core/services/auth.service';
+
+import { Store } from '@ngrx/store';
+import { AppState } from '../../../store/reducers/index';
+import { loginActions } from 'src/app/store/actions';
+
+import { emailPattern } from '../../../core/helpers/emailPattern';
 
 @Component({
   selector: 'app-password',
@@ -16,11 +20,15 @@ export class PasswordComponent implements OnInit {
     return field.touched && field.errors;
   }
 
-  constructor(private fb: FormBuilder, private authService: AuthService) {
-    this.forgot = this.createForm();
+  get email() {
+    return this.forgot.get('usuCorreo').value;
   }
 
-  ngOnInit(): void {}
+  constructor(private fb: FormBuilder, private store: Store<AppState>) {}
+
+  ngOnInit(): void {
+    this.forgot = this.createForm();
+  }
 
   createForm() {
     return this.fb.group({
@@ -33,11 +41,7 @@ export class PasswordComponent implements OnInit {
       this.forgot.markAllAsTouched();
       return;
     }
-    this.authService
-      .forgotPassword(this.forgot.get('usuCorreo').value)
-      .subscribe((data) => {
-        console.log(data);
-      });
+    this.store.dispatch(loginActions.forgotPassword({ email: this.email }));
     this.forgot.reset();
   }
 }

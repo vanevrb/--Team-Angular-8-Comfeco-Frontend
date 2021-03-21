@@ -1,0 +1,22 @@
+<h2 class="center">Insignias</h2>
+<div class="container">
+  <div class="row">
+    <div *ngFor="let badge of badges" class="col-md-3">
+      <div class="card-badge">
+        <div class="card-b-img">
+          <img src="{{ badge.icono }}" />
+          <h1>{{ badge.nombreInsignia }}</h1>
+        </div>
+        <div class="card-b-body">
+          <h2>{{ getInsigniaNombre(badge.idInsignia) }}</h2>
+          <p class="description">{{ badge.description }}</p>
+          <hr />
+          <h2>¿Como ganarla?</h2>
+          <div class="card-b-body">
+            <p>{{ badge.description_win }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,12 +1,18 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Users } from '../interfaces/Users';
-import { environment } from '../../../environments/environment';
-import { catchError, map, tap } from 'rxjs/operators';
+
 import { Observable, of } from 'rxjs';
-import { Response } from '../interfaces/Response';
-import { Login } from '../interfaces/Login';
-import { LoginResponse } from '../interfaces/loginResponse';
+import { catchError, map, tap } from 'rxjs/operators';
+
+import {
+  UsersInfoResponse,
+  Users,
+  Response,
+  Login,
+  LoginResponse,
+} from '../interfaces';
+
+import { environment } from '../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
@@ -15,7 +21,7 @@ export class AuthService {
   private credentials = btoa(
     `${environment.TOKEN_USERNAME}:${environment.TOKEN_PASSWORD}`
   );
-  private httpHeaders = new HttpHeaders({
+  private basicAuthHeaders = new HttpHeaders({
     'Content-Type': 'application/x-www-form-urlencoded',
     Authorization: `Basic ${this.credentials}`,
   });
@@ -24,9 +30,6 @@ export class AuthService {
 
   newUser(user: Users): Observable<Response> {
     return this.http.post<Response>(`${this.baseUrl}/api/usuario`, user).pipe(
-      tap((data) => {
-        console.log(data);
-      }),
       catchError((err) => {
         console.error(err);
         return of({
@@ -38,6 +41,21 @@ export class AuthService {
     );
   }
 
+  restorePassword(dataPassword: any): Observable<any> {
+    return this.http
+      .post(`${this.baseUrl}/api/confirmation/change-password`, dataPassword)
+      .pipe(
+        catchError((err) => {
+          console.error(err);
+          return of({
+            code: 400,
+            message: 'Upss, algo salío mal, por favor reintenta más tarde',
+            error: err,
+          });
+        })
+      );
+  }
+
   login(user: Login): Observable<Response> {
     const param = new URLSearchParams();
     param.set('grant_type', environment.grant_type);
@@ -46,12 +64,9 @@ export class AuthService {
 
     return this.http
       .post<LoginResponse>(`${this.baseUrl}/api/login`, param.toString(), {
-        headers: this.httpHeaders,
+        headers: this.basicAuthHeaders,
       })
       .pipe(
-        tap((data) => {
-          console.log(data);
-        }),
         map<LoginResponse, Response>((data) => ({
           code: 200,
           message: data,
@@ -75,15 +90,16 @@ export class AuthService {
       );
   }
 
-  getUsers(page = 1) {
-    return this.http.get(`${this.baseUrl}/api/usuario/${page}`);
+  forgotPassword(email: string): Observable<Response> {
+    return this.http.get<Response>(
+      `${this.baseUrl}/api/usuario/recuperar/${email}`
+    );
   }
 
-  getUser(id: number) {
-    return this.http.get(`${this.baseUrl}/api/${id}`);
+  canRegisterEmail(email: string) {
+    return this.http.get(`${this.baseUrl}/api/usuario/buscar/correo/${email}`);
   }
-
-  forgotPassword(email: string) {
-    return this.http.get(`${this.baseUrl}/api/usuario/recuperar/${email}`);
+  canRegisterNick(nick: string) {
+    return this.http.get(`${this.baseUrl}/api/usuario/buscar/nickname/${nick}`);
   }
 }

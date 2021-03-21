@@ -11,6 +11,7 @@ import { LayoutComponent } from './components/layout/layout.component';
 import { ModalTermsComponent } from './components/modal-terms/modal-terms.component';
 import { WrapperFormComponent } from './components/wrapper-form/wrapper-form.component';
 import { FormNavigationComponent } from './components/form-navigation/form-navigation.component';
+import { RestoreComponent } from './components/restore/restore.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { FormNavigationComponent } from './components/form-navigation/form-navig
     ModalTermsComponent,
     WrapperFormComponent,
     FormNavigationComponent,
+    RestoreComponent,
   ],
   exports: [LoginComponent, RegisterComponent, PasswordComponent],
   imports: [CommonModule, AuthRoutingModule, CoreModule],

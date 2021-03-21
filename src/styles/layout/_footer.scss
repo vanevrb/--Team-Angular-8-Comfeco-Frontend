@@ -1,4 +1,9 @@
-footer {
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
+  min-height: 60px;
   color: white;
   background-color: #9c3a9e;
 }

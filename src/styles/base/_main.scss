@@ -15,11 +15,18 @@
   --bg-color3: #{$color-secondary};
   --bg-color4: #{$color-p-darken};
   --bg-color5: #{$color-bg};
+  --bg-color: #{$bg-color};
+  --font-color: #{$font-color};
 }
 *,
 *:before,
 *:after {
   box-sizing: border-box;
+}
+
+::-moz-selection {
+  color: $color-white;
+  background-color: var(--bg-color3);
 }
 
 ::selection {
@@ -35,7 +42,6 @@ body {
   line-height: 1.428571429;
   color: $color-bg;
   margin: 0px;
-  // background-color: $color-white;
   background-image: url("../../assets/images/logo-light.svg");
   background-size: 500px 500px;
   background-position: 100px;
@@ -43,19 +49,16 @@ body {
   background-repeat: space;
   background-position: unset;
 }
-body::after {
-  content: "";
-  background-color: #9c3a9e;
-  /* margin: 10px; */
-  height: 60vh;
-  /* opacity: 0.7; */
-  /* top: 0; */
-  left: 0;
-  bottom: -100px;
-  right: 0;
-  position: absolute;
-  z-index: -1;
-}
+// body::after {
+//   content: "";
+//   height: 60vh;
+//   left: 0;
+//   bottom: -100px;
+//   right: 0;
+//   position: absolute;
+//   z-index: -1;
+// }
+
 .fade.in {
   opacity: 1;
 }
@@ -65,10 +68,10 @@ body::after {
 }
 
 label {
-  // margin-bottom: 5px;
   font-weight: bold;
   -webkit-user-select: none;
   -moz-user-select: none;
+  -ms-user-select: none;
   user-select: none;
 }
 svg {
@@ -77,8 +80,13 @@ svg {
 .center {
   text-align: center;
 }
-.margin-5 {
+.right {
+  text-align: right;
 }
+.left {
+  text-align: left;
+}
+
 .margin-15 {
   margin: 15px;
 }

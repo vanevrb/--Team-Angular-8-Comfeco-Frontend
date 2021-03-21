@@ -1,0 +1,62 @@
+// .count-style .counter__container {
+//   display: grid;
+//   align-items: center;
+//   grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+//   /* width: 50%; */
+//   min-width: 300px;
+//   height: 25%;
+//   min-height: 100px;
+//   margin: 2em auto;
+//   font-family: "KaushanScript", Verdana, Geneva, Tahoma, sans-serif;
+//   /* background: red; */
+// }
+
+// .count-style .counter__container .counter__block:nth-child(n) {
+//   border-radius: 10px;
+//   background: #fff;
+//   margin: 19px;
+//   background-color: #484848;
+//   color: white;
+//   border: 6px solid white;
+//   text-shadow: 1px 1px 3px rgb(247 223 30);
+// }
+// .count-style .counter__container .counter__block {
+//   position: relative;
+//   display: flex;
+//   align-items: center;
+//   justify-content: space-evenly;
+//   width: 100%;
+//   min-width: 70px;
+//   height: 100%;
+//   padding-right: 1em;
+//   /* background-color: red; */
+// }
+
+// .counter__container .counter__days::before,
+// .counter__container .counter__hours::before,
+// .counter__container .counter__minutes::before,
+// .counter__container .counter__seconds::before {
+//   position: absolute;
+//   display: flex;
+//   align-items: flex-end;
+//   justify-content: center;
+//   width: 100%;
+//   height: 100%;
+//   top: 0;
+//   left: 0;
+//   margin: 0 auto;
+//   z-index: 10;
+// }
+// .count-style .counter__container .counter__block .counter__digit {
+//   position: relative;
+//   display: flex;
+//   align-items: center;
+//   width: 100%;
+//   height: 100%;
+//   font-size: clamp(2em, 5vw, 4em);
+//   font-weight: 600;
+//   text-shadow: 1px 1px 3px rgb(247 223 30);
+//   transform-origin: center;
+//   transform-style: preserve-3d;
+//   color: #ffb703;
+// }

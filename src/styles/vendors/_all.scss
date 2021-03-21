@@ -37,7 +37,15 @@
       width: 1170px;
     }
   }
-  
+  @media (min-width: 1800px) {
+    .container {
+      margin-right: auto;
+      margin-left: auto;
+      padding-left: 15px;
+      padding-right: 15px;
+      width: 95%;
+        }
+  }
   .container-fluid {
     margin-right: auto;
     margin-left: auto;
@@ -853,3 +861,73 @@
     }
   }
   /* end */
+  .menu {
+    float: right;
+    margin-right: -30px;
+    margin-top: -5px;
+  }
+  
+  .menu:hover {
+    cursor: pointer;
+  }
+  
+  .navbarl {
+    display: block !important;
+    background-color: whitesmoke;
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+  }
+  
+  #menu-checkbox {
+    display: none;
+  }
+  
+  @media (max-width: 511px) {
+    .header .nav__container .image__container {
+      /* flex: 1; */
+      width: 150px;
+      min-width: 150px;
+      text-align: left;
+      top: 13px;
+    }
+  
+    ul.navbar__links.navbarl {
+      position: relative;
+      z-index: 7000;
+      /* padding-left: 149px; */
+      text-align: left;
+      /* margin-top: -4px; */
+      margin-right: -3px;
+      margin-bottom: -77px;
+      margin-left: -2px;
+      width: 100%;
+      float: initial;
+      display: block;
+      width: 100%;
+    }
+  
+    .image__container {
+      position: absolute;
+      top: 2px;
+      text-align: center;
+    }
+  
+    ul.navbar__links.navbarl li {
+      padding: 8px;
+      border-top: 1px solid #ffb703;
+    }
+  
+    .navbar__links {
+      display: none;
+    }
+  
+    #menu-checkbox {
+      display: inline-block;
+      margin-right: 30px;
+    }
+  }

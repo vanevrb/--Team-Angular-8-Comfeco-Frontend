@@ -1,0 +1,42 @@
+<ng-container *ngIf="user">
+  <div class="user-menu__container">
+    <button class="button user-menu__notification">
+      <span class="far bell"></span>
+    </button>
+    <article class="user-menu__content">
+      <div class="user-menu__header">
+        <div class="user-menu__avatar">
+          <img
+            [src]="user.perfil.avatar | domSanitizer"
+            alt="avatar"
+            *ngIf="user.perfil?.avatar; else icon"
+          />
+          <ng-template #icon>
+            <span class="far user"></span>
+          </ng-template>
+        </div>
+        <h2
+          class="user-menu__title"
+          [class.active]="isShowSubmenu"
+          (click)="showSubmenu()"
+        >
+          <small>Welcome &nbsp;</small><br />
+          @{{ user.usuNickname }}
+        </h2>
+      </div>
+
+      <div class="user-menu__actions" [class.active]="isShowSubmenu">
+        <div class="actions__content">
+          <button
+            class="link"
+            routerLink="/profile"
+            (click)="isShowSubmenu = false"
+          >
+            Mi perfil
+          </button>
+          <button class="link" (click)="logout()">Cerrar sesión</button>
+        </div>
+      </div>
+    </article>
+  </div>
+</ng-container>

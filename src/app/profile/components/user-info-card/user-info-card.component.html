@@ -1,0 +1,51 @@
+<!-- <p>user-activities-card works!</p> -->
+<div class="">
+  <div class="">
+<div class="user-info__wrapper col-sm-12" *ngIf="user$ | async as user">
+  <article class="user-info">
+    <button class="link user-info__edit" (click)="goEdit()">
+      Editar perfil
+    </button>
+    <div class="user-info__avatar">
+      <img
+        [src]="user.perfil.avatar | domSanitizer"
+        alt="user avatar"
+        *ngIf="user.perfil?.avatar; else icon"
+      />
+      <ng-template #icon>
+        <img src="/assets/images/user.svg" alt="empty avatar" />
+      </ng-template>
+    </div>
+    <div class="user-info__content">
+      <h2>@{{ user.usuNickname }}</h2>
+      <p>
+        <small>{{ user.perfil.pais && user.perfil.pais.nombrePais }}</small>
+        <br />
+        {{ user.perfil.biografia }}
+      </p>
+    </div>
+    <div class="user-info__badges">
+      <span *ngFor="let skill of user.perfil.conocimientos">
+        {{ skill.nombreConocimiento }}
+      </span>
+    </div>
+    <hr>
+    <div class="user-info__actions">
+      <ul>
+        <li *ngFor="let red of user.perfil.redesSociales">
+          <a
+            *ngIf="red.usuario"
+            class="link"
+            [href]="red.redSocial.idRedSocial | redes: red.usuario"
+            target="_blank"
+            referrerpolicy="no-referrer"
+          >
+            {{ red.usuario }}
+          </a>
+        </li>
+      </ul>
+    </div>
+  </article>
+</div>
+</div>
+</div>

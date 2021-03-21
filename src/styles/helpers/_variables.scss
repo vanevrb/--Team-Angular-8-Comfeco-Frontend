@@ -3,26 +3,45 @@
                     Color
 -------------------------------------------
 */
+$bg-color: #f5f5f5;
+$font-color: #0d0d0d;
+
 $color-white: #fff;
+$color-black: #000;
 
 $color-gray0: #e5e5e5;
 $color-gray1: #ddd;
 $color-gray2: #666;
+$color-gray3: #484848;
+
+$bg-color-loader: #0d0d0d22;
+$border-color-loader: #efefefef;
 
 $color-bg: #333;
 $color-font: #e5e5e5;
 $color-primary: #69156a;
+
 $color-secondary: #ffb703;
 $color-p-lighten: #8a178c;
 $color-p-darken: #521e87;
+
 $color-danger: #c40b00;
 $color-danger-alpha: #c40b0050;
+
+/*
+-------------------------------------------
+                   Measures
+-------------------------------------------
+*/
+
+$header-icons-measure: 50px;
 
 /*
 -------------------------------------------
                     Border
 -------------------------------------------
 */
+$border-radius-50: 50px;
 $border-radius-10: 10px;
 $border-radius-3: 3px;
 $border-decoration: 1px solid $color-gray0;

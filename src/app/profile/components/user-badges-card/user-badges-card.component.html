@@ -1,0 +1,51 @@
+<div class="">
+  <div class="">
+    <div class="badges-card col-md-12">
+      <b class="subtitle">Insignias</b>
+      <div class="container list" *ngIf="badge$ | async as badge; else empty">
+        <div class="row">
+          <div class="col-md-2">
+            <div class="card-badge">
+              <div class="card-b-img">
+                <b>{{ badge.nombreInsignia }}</b>
+                <img src="{{ badge.icono }}" />
+                <div class="card-b-body">
+                  <h2>{{ getInsigniaNombre(badge.idInsignia) }}</h2>
+                  <p class="description">{{ badge.description }}</p>
+                  <hr />
+                  <h2>¿Como ganarla?</h2>
+                  <div class="card-b-body">
+                    <p>{{ badge.description_win }}</p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+      </div>
+      <ng-template #empty>
+        <div class="">
+          <div class="row">
+            <div class="col-md-12">
+              <div class="card-badge">
+                <div class="card-b-img">
+                  <h1>Gana tu primera insignia</h1>
+                </div>
+                <div class="card-b-body">
+                  <h2>Solo necesitas</h2>
+                  <p class="description">Completar la info de tu perfil</p>
+                  <hr />
+
+                  <div class="card-b-body">
+                    <button (click)="goThere()">Ir a editar perfil</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-template>
+    </div>
+  </div>
+</div>

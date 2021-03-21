@@ -1,27 +1,3 @@
-<!-- 
-<div class="pace pace-inactive">
-  <div
-    class="pace-progress"
-    data-progress-text="100%"
-    data-progress="99"
-    style="transform: translate3d(100%, 0px, 0px)"
-  >
-    <div class="pace-progress-inner"></div>
-  </div>
-  <div class="pace-activity"></div>
-</div>
-<div class="pace pace-inactive">
-  <div
-    class="pace-progress"
-    data-progress-text="100%"
-    data-progress="99"
-    style="transform: translate3d(100%, 0px, 0px)"
-  >
-    <div class="pace-progress-inner"></div>
-  </div>
-  <div class="pace-activity"></div>
-</div> -->
-
 <section class="content">
   <app-wrapper-form>
     <div class="tab-pane fade in active" *ngIf="login">
@@ -61,12 +37,6 @@
         <div class="form-group">
           <div class="utility">
             <div class="animated-checkbox">
-              <fa-icon
-                class="fa-icon"
-                [class.checked]="isChecked"
-                [icon]="!checkbox.value ? iconCheck : iconUncheck"
-                (click)="onChecked()"
-              ></fa-icon>
               <input
                 type="checkbox"
                 name="recordar"
@@ -84,20 +54,19 @@
           <button
             class="button button-primary button-block"
             type="submit"
-            [disabled]="isLoading"
+            [disabled]="isLoading$ | async"
           >
+            <ng-container *ngIf="isLoading$ | async">
+              <span class="fas sync spin"></span> &nbsp; &nbsp;
+            </ng-container>
             INICIAR SESIÓN
           </button>
         </div>
         <div class="form-group">
-          <span class="">Mas informacion en:</span>
-          <!--  NEEDS SANITIZER  -->
-          <a
-            class="link bold"
-            [href]="'https://comfeco.com' | domSanitizer"
-            target="_blank"
-            >www.comfeco.com</a
-          >
+          Consulte la
+          <a routerLink="/conditions" class="link bold" target="_blank">
+            Política de privacidad y protección de datos.
+          </a>
         </div>
       </form>
     </div>

@@ -1,4 +1,34 @@
+@font-face {
+  font-family: "KaushanScript";
+  src: local("KaushanScript"),
+    url("./assets/fonts/KaushanScript-Regular.otf") format("opentype");
+  font-display: swap;
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Regular";
+  src: url("./assets/fonts/fa-regular-400.woff") format("woff");
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Solid";
+  src: url("./assets/fonts/fa-solid-900.woff") format("woff");
+  font-style: bold;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Font Awesome 5 Brands";
+  src: url("./assets/fonts/fa-brands-400.woff") format("woff");
+  font-style: normal;
+  font-display: swap;
+}
+
 @import "./styles/helpers/index-helpers";
 @import "./styles/base/index-base";
-@import "./styles/vendors/all";
 @import "./styles/layout/index-layout";
+@import "./styles/vendors/all";

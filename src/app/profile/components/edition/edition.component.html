@@ -1,0 +1,175 @@
+<button class="button button-primary" routerLink="/profile">Regresar</button>
+<section class="content">
+  <ng-container *ngIf="currUser$ | async as currUser">
+    <form [formGroup]="editForm" (ngSubmit)="onSubmit()" class="form">
+      <div class="form-group">
+        <div class="img__container">
+          <img
+            [src]="
+              !!currUser?.perfil.avatar
+                ? currUser?.perfil.avatar
+                : '/assets/images/user.svg'
+            "
+            alt="avatar"
+          />
+          <button
+            type="button"
+            class="button button-primary"
+            (click)="openWidget()"
+          >
+            Edit foto
+          </button>
+        </div>
+      </div>
+      <div class="form-group wrapper">
+        <div class="form-group">
+          <label class="form-label">NICKNAME</label>
+          <input
+            class="form-control"
+            [class.error]="nickErrors"
+            type="text"
+            placeholder="Escriba su nickname"
+            formControlName="usuNickname"
+          />
+          <span class="input__error" *ngIf="nickErrors">
+            {{ nickErrors | validationErrors }}
+          </span>
+        </div>
+        <div class="form-group">
+          <label class="form-label">CORREO ELECTRÓNICO</label>
+          <input
+            class="form-control"
+            [class.error]="emailErrors"
+            placeholder="Escriba su email"
+            type="email"
+            formControlName="usuCorreo"
+          />
+          <span class="input__error" *ngIf="emailErrors">
+            {{ emailErrors | validationErrors }}
+          </span>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">CONTRASEÑA</label>
+        <input
+          class="form-control"
+          [class.error]="passErrors"
+          placeholder="Escriba su contraseña"
+          type="password"
+          formControlName="usuClave"
+        />
+        <span class="input__error" *ngIf="passErrors">
+          {{ passErrors | validationErrors }}
+        </span>
+      </div>
+      <div class="form-group" *ngIf="activeUsuClave">
+        <label class="form-label">CONFIRMAR CONTRASEÑA</label>
+        <input
+          class="form-control"
+          placeholder="Confirme su contraseña"
+          [class.error]="confirmErrors"
+          type="password"
+          formControlName="usuClave2"
+        />
+        <span class="input__error" *ngIf="confirmErrors">
+          {{ confirmErrors | validationErrors }}
+        </span>
+      </div>
+
+      <div class="form-group wrapper">
+        <div class="form-group">
+          <label class="form-label">GENERO</label>
+          <select
+            class="form-control"
+            [class.error]="generoErrors"
+            type="text"
+            formControlName="genero"
+          >
+            <option value="1">Se identifica con hombre</option>
+            <option value="2">Se identifica con mujer</option>
+            <option value="3">Prefiero no contestar</option>
+          </select>
+          <span class="input__error" *ngIf="generoErrors">
+            {{ generoErrors | validationErrors }}
+          </span>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">FECHA DE NACIMIENTO</label>
+          <input
+            class="form-control"
+            type="date"
+            formControlName="fechaNacimiento"
+          />
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">PAÍS</label>
+          <select
+            class="form-control"
+            placeholder="Escriba su país"
+            type="text"
+            formControlName="pais"
+          >
+            <option *ngFor="let val of paises" [value]="val.idPais">
+              {{ val.nombrePais }}
+            </option>
+          </select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">BIOGRAFÍA</label>
+        <textarea
+          class="form-control"
+          [class.error]="biografiaErrors"
+          placeholder="Escriba un pequeño fragmento que lo describa"
+          type="text"
+          formControlName="biografia"
+        ></textarea>
+        <span class="input__error" *ngIf="biografiaErrors">
+          {{ biografiaErrors | validationErrors }}
+        </span>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">CONOCIMIENTOS</label>
+        <select
+          class="form-control"
+          type="text"
+          formControlName="conocimientos"
+          multiple
+        >
+          <option *ngFor="let item of skills" [value]="item.idConocimiento">
+            {{ item.nombreConocimiento }}
+          </option>
+        </select>
+      </div>
+
+      <div class="form-group wrapper" formArrayName="redesSociales">
+        <div
+          class="form-group"
+          *ngFor="let red of redesSociales.controls; index as i"
+        >
+          <label class="form-label">{{ getRedSocialNombre(i + 1) }}</label>
+          <input
+            class="form-control"
+            [placeholder]="(getRedSocialNombre(i + 1) | titlecase) + ' user'"
+            type="text"
+            [formControlName]="i"
+          />
+        </div>
+      </div>
+
+      <div class="form-group btn-container">
+        <button
+          class="button button-primary button-block"
+          type="submit"
+          *ngIf="!editForm.pristine"
+        >
+          <!-- [disabled]="isLoading" -->
+          Guardar Cambios
+        </button>
+      </div>
+    </form>
+  </ng-container>
+</section>

@@ -1,0 +1,96 @@
+.far::before {
+  display: inline-block;
+  text-rendering: auto;
+  font-variant: normal;
+  text-rendering: auto;
+  -webkit-font-smoothing: antialiased;
+}
+
+.fas::before {
+  display: inline-block;
+  text-rendering: auto;
+  font-variant: normal;
+}
+
+.fab::before {
+  display: inline-block;
+  font-variant: normal;
+  text-rendering: auto;
+}
+
+.user::before {
+  content: "\f007";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Regular";
+}
+
+.square::before {
+  content: "\f0c8";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Regular";
+}
+.bell::before {
+  content: "\f0f3";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Regular";
+}
+
+.sync::before {
+  content: "\f021";
+  font-weight: 900;
+  font-family: "Font Awesome 5 Solid";
+}
+span.spin::before {
+  animation-name: spin;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  animation-duration: 2000ms;
+}
+
+.check-square::before {
+  content: "\f14a";
+  font-weight: 900;
+  font-family: "Font Awesome 5 Solid";
+}
+
+.java::before {
+  content: "\f4e4";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Brands";
+}
+.javascript::before {
+  content: "\f3b8";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Brands";
+}
+.times::before {
+  content: "\f00d";
+  font-weight: 900;
+  font-family: "Font Awesome 5 Solid";
+}
+
+.twitter::before {
+  content: "\f099";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Brands";
+}
+.github::before {
+  content: "\f09b";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Brands";
+}
+.facebook::before {
+  content: "\f082";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Brands";
+}
+.discord::before {
+  content: "\f392";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Brands";
+}
+.youtube::before {
+  content: "\f167";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Brands";
+}
