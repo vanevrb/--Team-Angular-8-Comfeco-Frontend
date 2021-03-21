@@ -1,8 +1,6 @@
 <h2 class="center">Mis grupos</h2>
 <!-- container layout -->
-<div class="container" style="
-
-">
+<div class="container">
   <div class="row">
     <div class="col-sm-3 communities">
       <div class="f-title">
@@ -60,9 +58,9 @@ Ir al chat -->
         <!-- g-model="name" -->
         <div class="search_group">
         <div class="row" >
-
-        <select class="col-sm-3 form-control "  ng-change="change()">
-          <option  ng-value="{{group.lenguage}}"  *ngFor="let group of groups">{{group.lenguage}}</option>
+<!-- ng-change="change()" -->
+        <select class="col-sm-3 form-control " [(ngModel)]="selectgroup" (change)="mchange($event.target.value)">
+          <option [value]="lenguage.lenguage"  *ngFor="let lenguage of lenguages">{{lenguage.lenguage}}</option>
           <!-- filtrar por lenguage -->
         </select>
         <input class="col-sm-9 form-control " [(ngModel)]="searchgroup"  type="text" placeholder="Buscar grupo" >
@@ -73,7 +71,7 @@ Ir al chat -->
   <!--       
         <input class="form-control" ng-model="searchgroup" type="text" placeholder="Search Recipes" >
        -->
-       <div *ngFor="let group of groups | filter:'id,title': searchgroup" class="col-md-3">
+       <div *ngFor="let group of filtered | filter:'id,title': searchgroup" class="col-md-3">
   
   <div class="card-group hover">
       <div class="card-g-img">

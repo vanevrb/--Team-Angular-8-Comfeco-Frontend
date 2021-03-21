@@ -8,13 +8,14 @@ import { EditInfoService } from '../../../core/services/edit-info.service';
 })
 export class GroupsComponent implements OnInit {
   searchgroup: string="";
+  selectgroup: string="";
   groups: any[] = [
     {
       id:1,
       image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
-        lenguage:'ii',
+        lenguage:'React',
         title:'Los crypto',
         description:'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.',
         link_unirse:''
@@ -89,7 +90,7 @@ export class GroupsComponent implements OnInit {
       image:
         'https://cronicaglobal.elespanol.com/uploads/s1/99/84/55/5/escuela-informaticos.jpeg',
         link_share: 'https://www.comfeco.com/',
-        lenguage:'ii',
+        lenguage:'React',
         title:'Los crypto',
         description:'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s.',
         link_unirse:''
@@ -159,8 +160,13 @@ export class GroupsComponent implements OnInit {
 
 
     }
-  ];
+  ]; 
+   filtered:  any[] = this.groups;
 
+  lenguages: any[] = [{lenguage:'React'},{lenguage:'Typescript'
+
+  }
+  ];
   mygroup_persons: any[] = [
     {
       name: 'JuanSecu',
@@ -209,6 +215,23 @@ export class GroupsComponent implements OnInit {
   ];
   constructor(private editInfo: EditInfoService) { 
     
+
+  }
+  mchange(valor: string): void {
+    console.log(valor);
+    this.filtered=this.groups;
+   this.filtered = this.filtered.filter(
+     function(result) {
+      return result.lenguage == valor;
+  }
+     );
+        console.log(this.groups);
+
+   console.log(this.filtered);
+       console.log(this.groups);
+      // this.groups=this.filtered;
+
+
 
   }
 

@@ -1,4 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import {   Component,
+  OnInit,
+  ViewChild,
+  ElementRef,
+  AfterViewInit,OnDestroy} from '@angular/core';
 import { Router, NavigationEnd } from '@angular/router';
 import { map } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
@@ -11,6 +15,7 @@ import { Observable, Subscription } from 'rxjs';
 export class SubmenuComponent implements OnInit, OnDestroy {
   private endpoint$: Subscription;
   actualPath: string;
+
 
   constructor(private router: Router) {
     this.endpoint$ = this.router.events
@@ -30,7 +35,12 @@ export class SubmenuComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {}
-
+  @ViewChild('subb') subb: ElementRef;
+  c_color: string;
+  changecolor(classchange){
+    this.c_color = classchange;
+    
+  }
   ngOnDestroy() {
     this.endpoint$.unsubscribe();
   }

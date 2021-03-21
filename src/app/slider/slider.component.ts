@@ -14,41 +14,118 @@ import {
 export class SliderComponent implements OnInit, AfterViewInit {
   @ViewChild('frame') frame: ElementRef;
   @ViewChild('slider') slider: ElementRef;
-  creators: any[] = [
+creators: any[] = [
     {
-      name: 'Bezael Perez',
+      name: 'Anartz Mugika Ledo',
       image:
-        'https://static.guiainfantil.com/pictures/662-3-un-bebe-dormido-o-muy-atento.jpg',
+        'http://drive.google.com/uc?export=view&id=1d3P_3KOquBmH-f3Li8MYrjHLFNhLV8z2',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
+      team: 'angular'
     },
     {
       name: 'Bezael Perez',
       image:
-        'https://static.guiainfantil.com/pictures/661-3-bebe-con-gorrito-de-flor-durmiendo.jpg',
+        'http://drive.google.com/uc?export=view&id=1L3HT5jFpCaPSqtdq_419ZEdvIPxnqqcJ',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab java',
+      team: 'angular'
     },
     {
-      name: 'Bezael Perez',
+      name: 'Diego Montoya',
       image:
-        'https://static.guiainfantil.com/pictures/660-3-bebe-dormido-en-un-frutero.jpg',
+        'http://drive.google.com/uc?export=view&id=1N1DO4ARkY3R_hJZLOkdm5aoe-62LzGIi',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
+      team: 'angular'
     },
     {
-      name: 'Bezael Perez',
+      name: 'Nicolas Molina',
       image:
-        'https://static.guiainfantil.com/pictures/662-3-un-bebe-dormido-o-muy-atento.jpg',
+        'http://drive.google.com/uc?export=view&id=125RUEMtylMdE_SlPwCa6nwZWc6pPsfUX',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
+      team: 'angular'
     },
     {
-      name: 'Bezael Perez',
+      name: 'Mayra Rodríguez',
       image:
-        'https://static.guiainfantil.com/pictures/663-3-dos-gemelas-duermen-a-juego.jpg',
+        'http://drive.google.com/uc?export=view&id=1ewq-T1bbSPZC8pTtufhAVYaft-W0wX-W',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'js',
+      team: 'angular'
+    },
+    {
+      name: 'Alejandro Ñáñez Ortiz',
+      image:
+        'http://drive.google.com/uc?export=view&id=1P3jGjIoBVEFsw5rHKs8U3lpRUF-7tARC',
+      link: 'https://www.comfeco.com/',
+      lenguage_icon: 'js',
+      team: 'react'
+    },
+    {
+      name: 'Diego Plascencia',
+      image:
+        'http://drive.google.com/uc?export=view&id=18M2zUSZcJPkEmcKPOokpuCPjB9wQAKLl',
+      link: 'https://www.comfeco.com/',
+      lenguage_icon: 'js',
+      team: 'react'
+    },
+    {
+      name: 'Lara Diaz',
+      image:
+        'http://drive.google.com/uc?export=view&id=1KzO3y5F4PB-qAGpru7iIkP8btammjy_c',
+      link: 'https://www.comfeco.com/',
+      lenguage_icon: 'js',
+      team: 'react'
+    },
+    {
+      name: 'Vanessa Marely',
+      image:
+        'http://drive.google.com/uc?export=view&id=1XxJeoTtNt8mp-tFoQXUmhgCEHBO3lw-V',
+      link: 'https://www.comfeco.com/',
+      lenguage_icon: 'js',
+      team: 'react'
+    },
+    {
+      name: 'Cristopher Paniagua',
+      image:
+        'http://drive.google.com/uc?export=view&id=1J3SlDeIR1zpXCg33a_C4UpmsSWXXMo6S',
+      link: 'https://www.comfeco.com/',
+      lenguage_icon: 'js',
+      team: 'vue'
+    },
+    {
+      name: 'Fernando de la Rosa',
+      image:
+        'http://drive.google.com/uc?export=view&id=1LE-PCQygb7Qvk745YZlEXlZaGIyK52vj',
+      link: 'https://www.comfeco.com/',
+      lenguage_icon: 'js',
+      team: 'vue'
+    },
+    {
+      name: 'Ignacio Anaya',
+      image:
+        'http://drive.google.com/uc?export=view&id=1xe4hO7R3syYK6VJ5HtrPmoYl3bA7M-kb',
+      link: 'https://www.comfeco.com/',
+      lenguage_icon: 'js',
+      team: 'vue'
+    },
+    {
+      name: 'Manuel Ojeda',
+      image:
+        'http://drive.google.com/uc?export=view&id=1Qn7hs1MwE2pBo_nv4nUtN3-F9bL1A8EN',
+      link: 'https://www.comfeco.com/',
+      lenguage_icon: 'js',
+      team: 'vue'
+    },
+    {
+      name: 'Noemi Leon',
+      image:
+        'http://drive.google.com/uc?export=view&id=1ZRjtZ0cdS4aQnMA48f2-Mgy3c0JvBXmV',
+      link: 'https://www.comfeco.com/',
+      lenguage_icon: 'js',
+      team: 'vue'
     },
   ];
 

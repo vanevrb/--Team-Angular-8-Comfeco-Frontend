@@ -1,0 +1,37 @@
+.badges-card {
+    background-color: #f5f5f5;
+}
+
+.badges-card {
+    text-align: center;
+    color: #545454;
+    padding: 10px;
+}
+
+.list .card-b-img img {
+    height: 70px;
+    width: 70px;
+    border-radius: 50%;
+    margin: 0 auto;
+    cursor:pointer;
+}
+
+.list .card-b-img  {
+    text-align: center;
+}
+
+.list .card-b-body {
+    display: none;
+}
+    
+ .list .card-b-img:hover  .card-b-body {
+    display: block;
+}
+.list .card-b-body {
+    position: absolute;
+    width: 230px;
+    /* margin-left: -90px; */
+    background-color: #69156a;
+    color: white;
+    border-radius: 20px;
+}
