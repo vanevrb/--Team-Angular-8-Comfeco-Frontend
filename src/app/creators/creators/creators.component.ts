@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 
-import { Subscription } from 'rxfab javascript';
-import { take } from 'rxfab javascript/operators';
+import { Subscription } from 'rxjs';
+import { take } from 'rxjs/operators';
 import { Store } from '@ngrx/store';
 
 import { usersActions } from 'src/app/store/actions';
@@ -14,14 +14,14 @@ import { AppStateWithUsers } from '../../store/reducers';
 })
 export class CreatorsComponent implements OnInit, OnDestroy {
   userStoreSub$: Subscription;
-creators: any[] = [
+  creators: any[] = [
     {
       name: 'Anartz Mugika Ledo',
       image:
         'http://drive.google.com/uc?export=view&id=1d3P_3KOquBmH-f3Li8MYrjHLFNhLV8z2',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'angular'
+      team: 'angular',
     },
     {
       name: 'Bezael Perez',
@@ -29,7 +29,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1L3HT5jFpCaPSqtdq_419ZEdvIPxnqqcJ',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab java',
-      team: 'angular'
+      team: 'angular',
     },
     {
       name: 'Diego Montoya',
@@ -37,7 +37,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1N1DO4ARkY3R_hJZLOkdm5aoe-62LzGIi',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'angular'
+      team: 'angular',
     },
     {
       name: 'Nicolas Molina',
@@ -45,7 +45,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=125RUEMtylMdE_SlPwCa6nwZWc6pPsfUX',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'angular'
+      team: 'angular',
     },
     {
       name: 'Mayra Rodríguez',
@@ -53,7 +53,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1ewq-T1bbSPZC8pTtufhAVYaft-W0wX-W',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'angular'
+      team: 'angular',
     },
     {
       name: 'Alejandro Ñáñez Ortiz',
@@ -61,7 +61,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1P3jGjIoBVEFsw5rHKs8U3lpRUF-7tARC',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'react'
+      team: 'react',
     },
     {
       name: 'Diego Plascencia',
@@ -69,7 +69,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=18M2zUSZcJPkEmcKPOokpuCPjB9wQAKLl',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'react'
+      team: 'react',
     },
     {
       name: 'Lara Diaz',
@@ -77,7 +77,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1KzO3y5F4PB-qAGpru7iIkP8btammjy_c',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'react'
+      team: 'react',
     },
     {
       name: 'Vanessa Marely',
@@ -85,7 +85,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1XxJeoTtNt8mp-tFoQXUmhgCEHBO3lw-V',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'react'
+      team: 'react',
     },
     {
       name: 'Cristopher Paniagua',
@@ -93,7 +93,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1J3SlDeIR1zpXCg33a_C4UpmsSWXXMo6S',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'vue'
+      team: 'vue',
     },
     {
       name: 'Fernando de la Rosa',
@@ -101,7 +101,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1LE-PCQygb7Qvk745YZlEXlZaGIyK52vj',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'vue'
+      team: 'vue',
     },
     {
       name: 'Ignacio Anaya',
@@ -109,7 +109,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1xe4hO7R3syYK6VJ5HtrPmoYl3bA7M-kb',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'vue'
+      team: 'vue',
     },
     {
       name: 'Manuel Ojeda',
@@ -117,7 +117,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1Qn7hs1MwE2pBo_nv4nUtN3-F9bL1A8EN',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'vue'
+      team: 'vue',
     },
     {
       name: 'Noemi Leon',
@@ -125,7 +125,7 @@ creators: any[] = [
         'http://drive.google.com/uc?export=view&id=1ZRjtZ0cdS4aQnMA48f2-Mgy3c0JvBXmV',
       link: 'https://www.comfeco.com/',
       lenguage_icon: 'fab javascript',
-      team: 'vue'
+      team: 'vue',
     },
   ];
   constructor(private store: Store<AppStateWithUsers>) {}

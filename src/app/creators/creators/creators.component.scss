@@ -1,17 +1,16 @@
-#slider{
-    text-align: center;
+#slider {
+  text-align: center;
 }
-.slider-photo img {
-    border-radius: 50%;
-}
-
-.creator_info.col-sm-8 {
-    height: 250px;
-    border-radius: 10px;
+img {
+  border-radius: 50%;
 }
 
-.creator_image{
+.creator_info .col-sm-8 {
+  height: 250px;
+  border-radius: 10px;
+}
 
-background-color: #e0c9b0;
-padding: 10px;
+.creator_image {
+  background-color: #e0c9b0;
+  padding: 10px;
 }
