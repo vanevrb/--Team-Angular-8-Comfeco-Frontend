@@ -1,6 +1,7 @@
 #slider {
   text-align: center;
 }
+
 img {
   border-radius: 50%;
 }
@@ -13,4 +14,9 @@ img {
 .creator_image {
   background-color: #e0c9b0;
   padding: 10px;
+
+  img {
+    height: 250px;
+    width: 250px;
+  }
 }
