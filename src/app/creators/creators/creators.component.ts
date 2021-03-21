@@ -48,7 +48,7 @@ export class CreatorsComponent implements OnInit, OnDestroy {
       image:
         'https://static.guiainfantil.com/pictures/663-3-dos-gemelas-duermen-a-juego.jpg',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
     },
   ];
 

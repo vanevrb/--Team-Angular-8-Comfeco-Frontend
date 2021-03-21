@@ -1,12 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
-import { emailPattern } from '../../../core/helpers/emailPattern';
-import { AuthService } from '../../../core/services/auth.service';
-import { Router } from '@angular/router';
-import { AlertService } from '../../../core/services/alert.service';
+
 import { Store } from '@ngrx/store';
 import { AppState } from '../../../store/reducers/index';
 import { loginActions } from 'src/app/store/actions';
+
+import { emailPattern } from '../../../core/helpers/emailPattern';
 
 @Component({
   selector: 'app-password',
@@ -42,7 +41,6 @@ export class PasswordComponent implements OnInit {
       this.forgot.markAllAsTouched();
       return;
     }
-    console.log(this.email);
     this.store.dispatch(loginActions.forgotPassword({ email: this.email }));
     this.forgot.reset();
   }

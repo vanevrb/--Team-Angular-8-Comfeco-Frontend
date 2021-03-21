@@ -53,6 +53,16 @@ span.spin::before {
   font-family: "Font Awesome 5 Solid";
 }
 
+.java::before {
+  content: "\f4e4";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Brands";
+}
+.javascript::before {
+  content: "\f3b8";
+  font-weight: 400;
+  font-family: "Font Awesome 5 Brands";
+}
 .times::before {
   content: "\f00d";
   font-weight: 900;

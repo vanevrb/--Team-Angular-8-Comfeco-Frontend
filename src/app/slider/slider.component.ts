@@ -48,50 +48,47 @@ export class SliderComponent implements OnInit, AfterViewInit {
       image:
         'https://static.guiainfantil.com/pictures/663-3-dos-gemelas-duermen-a-juego.jpg',
       link: 'https://www.comfeco.com/',
-      lenguage_icon: 'js',
+      lenguage_icon: 'fab javascript',
     },
   ];
 
-  constructor() { var i;}
-  
+  constructor() {
+    var i;
+  }
+
   showevent(n) {
-    alert("entre"+n);
+    alert('entre' + n);
     console.log('as');
     // sliderevents(i = n);
-  } 
+  }
   sliderevents(n) {
-    var img = "";
-      var radio =  this.slider.nativeElement;
-    
+    var img = '';
+    var radio = this.slider.nativeElement;
 
-      
-     var cant = img.length;
-
-   }
- 
+    var cant = img.length;
+  }
 
   ngOnInit(): void {}
   @ViewChild('sliders') sliderc: ElementRef;
   cts: number = 0;
-  counts: string = 0 + "px";
+  counts: string = 0 + 'px';
   // elemento:HTMLElement
   bright(list) {
-
     console.log(this.sliderc.nativeElement.offsetWidth);
 
-    if ((this.cts + this.sliderc.nativeElement.offsetWidth) <= list.length * 268) {
+    if (
+      this.cts + this.sliderc.nativeElement.offsetWidth <=
+      list.length * 268
+    ) {
       this.cts = this.cts + this.sliderc.nativeElement.offsetWidth;
     }
-    this.counts = this.cts + "px";
-
+    this.counts = this.cts + 'px';
   }
   bleft() {
     if (this.cts > 0) {
-
       this.cts = this.cts - this.sliderc.nativeElement.offsetWidth;
     }
-    this.counts = this.cts + "px";
-
+    this.counts = this.cts + 'px';
   }
   ngAfterViewInit() {
     this.frame.nativeElement.classList.add('frame');
