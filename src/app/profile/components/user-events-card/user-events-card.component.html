@@ -1,41 +1,38 @@
 <div class="user-events__wrapper">
-
-
-    <div class="col-sm-8 communities">
-        <div class="f-title">
-            <div class="row">
-                <h3 class="col-md-8" style="margin-top: auto; color: white;">Eventos de tu interes</h3>
-                <a routerLink="/events" class="col-md-4" style="color: white">
-      Ver más</a
-    >
-  </div>
-</div>
-<div class="list_data">
-  <ul>
-    <li *ngFor="let event of events">
-      <div class="item-thumbnail">
-        <a title=" " href="{{ event.link }}" target="_blank" style="text-align: center;">
-          <img
-            alt="{{ event.name }}"
-            class="circle"
-            src="{{ event.image }}"
-            title=""
-            border="0"
-            height="72"
-            width="72"
-          /> </a
-        ><span class="title row" style="margin: 0px 0px 0px 0px"
-          ><a class="col-sm-8" title=" " href="{{ event.link }}">{{
-            event.name
-          }}</a>
-                <div>
-                    <button type="button" class="button button-secondary" style="margin-left: 15px;">Mas información</button>
-                </div>
-                </span>
-            </div>
-            <div style="clear: both"></div>
-            </li>
-            </ul>
-        </div>
+  <div class="col-sm-8 communities">
+    <div class="f-title">
+      <div class="row">
+        <h3 class="col-md-8" style="margin-top: auto; color: white">
+          Eventos de tu interes
+        </h3>
+        <a routerLink="/events" class="col-md-4" style="color: white">
+          Ver más</a
+        >
+      </div>
     </div>
+    <div class="list_data">
+      <ul>
+        <li *ngFor="let event of events">
+          <div class="item-thumbnail">
+            <img
+              alt="{{ event.name }}"
+              class="circle"
+              src="{{ event.image }}"
+              title=""
+              border="0"
+              height="72"
+              width="72"
+            /><span class="title row" style="margin: 0px 0px 0px 0px">
+              <div>
+                <button class="button button-primary" (click)="navTo()">
+                  Mas info...
+                </button>
+              </div>
+            </span>
+          </div>
+          <div style="clear: both"></div>
+        </li>
+      </ul>
+    </div>
+  </div>
 </div>

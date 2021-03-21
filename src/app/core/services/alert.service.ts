@@ -36,4 +36,12 @@ export class AlertService {
       text: err,
     });
   }
+  joinEvent() {
+    return Swal.fire({
+      icon: 'success',
+      title: '¡Te ha unido!',
+      text: '!Gracias por unirte al evento!',
+      showCancelButton: false,
+    });
+  }
 }
